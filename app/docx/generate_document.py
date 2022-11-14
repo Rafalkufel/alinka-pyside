@@ -56,12 +56,6 @@ class DocumentGenerator:
 
 class Documents:
     def __init__(self, documents: list[DocumentsTypes], document_data: dict, destination_path: str):
-        """
-        params:
-        documents: list of documents types to be genarated eg [specjalne, zarzadzenie, zawiadomienie, protokol]
-        document_data: dict with data for documents
-        destination_path: main path to dir where we want to save documents
-        """
         self.documents = documents
         self.document_data = DocumentData(**document_data)
         self.destination_path = os.path.join(destination_path, self.dir_name)
