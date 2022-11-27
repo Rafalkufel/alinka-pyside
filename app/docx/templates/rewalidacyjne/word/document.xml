@@ -11,16 +11,9 @@
   <w:body>
     <w:p>
       <w:pPr>
-        <w:rPr>
-          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
-          <w:lang w:val="pl-PL"/>
-        </w:rPr>
+        <w:pStyle w:val="Uppercase"/>
       </w:pPr>
       <w:r>
-        <w:rPr>
-          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
-          <w:lang w:val="pl-PL"/>
-        </w:rPr>
         <w:t>SYGNATURA</w:t>
       </w:r>
     </w:p>
@@ -29,7 +22,7 @@
         <w:pStyle w:val="City-and-date"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ supportCenter.city }}, {{ meeting.date }}</w:t>
+        <w:t>{{ support_center.city }}, {{ meeting_data.date.strftime("%Y.%m.%d") }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -37,7 +30,7 @@
         <w:pStyle w:val="Title-uppercase"/>
       </w:pPr>
       <w:r>
-        <w:t>ORZECZENIE NR ......</w:t>
+        <w:t>ORZECZENIE NR {{ no }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -76,7 +69,7 @@
         <w:rPr>
           <w:rStyle w:val="SubtitledRunZnak"/>
         </w:rPr>
-        <w:t>{{ applicant.onRequest }}</w:t>
+        <w:t>{{ on_request }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -92,7 +85,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ supportCenter.nameNominative }}, {{ supportCenter.address }}, {{ supportCenter.post }}</w:t>
+        <w:t>Zespół Orzekający przy {{ support_center.name_nominative }}, {{ support_center.full_address }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -111,20 +104,20 @@
         <w:t>w składzie:</w:t>
       </w:r>
     </w:p>
-    {% for member in meeting.members %}
+      {% for member in meeting_data.members %}
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Staff"/>
       </w:pPr>
       <w:r>
-                {% if member == meeting.members[0] %}
+        {% if member == meeting_data.members[0] %}
         <w:t>{{ member.name }} - Przewodniczący Zespołu Orzekającego</w:t>
-                {% else %}
+          {% else %}
         <w:t>{{ member.name }} - {{ member.function }}</w:t>
-                {% endif %}
+        {% endif %}
       </w:r>
     </w:p>
-    {% endfor %}
+      {% endfor %}
     <w:p>
       <w:pPr>
         <w:pStyle w:val="sentence"/>
@@ -137,7 +130,7 @@
       </w:r>
       <w:r>
         <w:rPr>
-            {% if activityForm == "INDYWIDUALNE" %}
+            {% if activity_form == "indywidualne" %}
           <w:strike/>
             {% endif %}
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
@@ -150,7 +143,7 @@
       </w:r>
       <w:r>
         <w:rPr>
-            {% if activityForm == "ZESPOLOWE" %}
+            {% if activity_form == "zespolowe" %}
           <w:strike/>
             {% endif %}
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
@@ -176,7 +169,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ child.firstName }} {{ child.lastName }}</w:t>
+        <w:t>{{ child.full_name }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -192,7 +185,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ child.birthDate }}r., {{ child.birthPlace }}</w:t>
+        <w:t>{{ child.birth_date }}r., {{ child.birth_place }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -224,7 +217,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ child.address }}, {{ child.postalCode }} {{ child.city }}</w:t>
+        <w:t>{{ child.full_address }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -240,7 +233,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ school }}</w:t>
+        <w:t>{{ school.school_description }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -265,7 +258,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ applicant.parentsDescription }}</w:t>
+        <w:t>{{ parent_descriptions }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -317,7 +310,7 @@
         <w:footnoteReference w:id="4"/>
       </w:r>
       <w:r>
-        <w:t xml:space="preserve"> {{ applicant.period }}</w:t>
+        <w:t xml:space="preserve"> {{ period }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -352,14 +345,16 @@
     <w:p>
       <w:pPr>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>TEKST DIAGNOZY</w:t>
+        <w:t>Tekst diagnozy.</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -388,15 +383,18 @@
     </w:p>
     <w:p>
       <w:pPr>
+        <w:jc w:val="both"/>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>TEKST ZALECENIA</w:t>
+        <w:t>Tekst zaleceń</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -409,15 +407,18 @@
     </w:p>
     <w:p>
       <w:pPr>
+        <w:jc w:val="both"/>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>TEKST ZALECENIA</w:t>
+        <w:t>Tekst zaleceń</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -430,15 +431,18 @@
     </w:p>
     <w:p>
       <w:pPr>
+        <w:jc w:val="both"/>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>TEKST ZALECENIA</w:t>
+        <w:t>Tekst zaleceń</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -451,15 +455,18 @@
     </w:p>
     <w:p>
       <w:pPr>
+        <w:jc w:val="both"/>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>TEKST ZALECENIA</w:t>
+        <w:t>Tekst zaleceń</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -480,15 +487,18 @@
     </w:p>
     <w:p>
       <w:pPr>
+        <w:jc w:val="both"/>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>DODATKOWE INFO</w:t>
+        <w:t>Opis</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -510,15 +520,18 @@
     </w:p>
     <w:p>
       <w:pPr>
+        <w:jc w:val="both"/>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>DODATKOWE INFO</w:t>
+        <w:t>Opis</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -568,7 +581,7 @@
         <w:pStyle w:val="Revocation"/>
       </w:pPr>
       <w:r>
-        <w:t>Od niniejszego orzeczenia przysługuje odwołanie do Kuratora Oświaty w {{ kurator }} za pośrednictwem Zespołu Orzekającego, który wydał orzeczenie, w terminie 14 dni od dnia jego doręczenia.</w:t>
+        <w:t>Od niniejszego orzeczenia przysługuje odwołanie do Kuratora Oświaty w {{ support_center.kurator }} za pośrednictwem Zespołu Orzekającego, który wydał orzeczenie, w terminie 14 dni od dnia jego doręczenia.</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -599,11 +612,15 @@
     <w:p>
       <w:pPr>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:b/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:b/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
         <w:t>Otrzymuje:</w:t>
@@ -612,17 +629,19 @@
     <w:p>
       <w:pPr>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
       </w:pPr>
       <w:r>
         <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>Wnioskodawca</w:t>
+        <w:t>Wnioskodawca:</w:t>
       </w:r>
     </w:p>
-    {% for applicantData in applicant.applicants %}
+    {% for applicant_data in applicants %}
       {% include "template_parts/receiver.xml" %}
     {% endfor %}
     <w:sectPr>

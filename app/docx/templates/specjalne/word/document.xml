@@ -22,7 +22,7 @@
         <w:pStyle w:val="City-and-date"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ support_center.city }}, {{ meeting_data.date }}</w:t>
+        <w:t>{{ support_center.city }}, {{ meeting_data.date.strftime("%Y.%m.%d") }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -85,7 +85,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>Zespół Orzekający przy {{ support_center.name_genetive }}, {{ support_center.address }}, {{ support_center.post }}</w:t>
+        <w:t>Zespół Orzekający przy {{ support_center.name_genetive }}, {{ support_center.full_address }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -131,7 +131,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ child.first_name }} {{ child.last_name }}</w:t>
+        <w:t>{{ child.full_name }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -220,7 +220,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ parents_description }}</w:t>
+        <w:t>{{ parent_descriptions }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -478,14 +478,14 @@
           <w:u w:val="single"/>
         </w:rPr>
                 {% endif %}
-        <w:t>: </w:t>
+        <w:t xml:space="preserve">: </w:t>
       </w:r>
             {% if reason == "sprzezona" %}
       <w:r>
         <w:rPr>
           <w:u w:val="single"/>
         </w:rPr>
-        <w:t>{{ multiple_disability|join(", ") }}</w:t>
+        <w:t>{{ multiple_disability_nominative }}</w:t>
       </w:r>
             {% endif %}
     </w:p>

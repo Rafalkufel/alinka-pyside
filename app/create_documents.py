@@ -1,7 +1,7 @@
 import argparse
 import os
 
-from docx.constants import ActivityForm, DocumentsTypes, Issues, Reasons
+from docx.constants import ActivityForm, DocumentsTypes, Issue, Reason
 from docx.generate_document import Documents
 from tests.fixtures import common_data
 
@@ -16,31 +16,45 @@ parser.add_argument(
     "-t",
     dest="document_type",
     default="specjalne",
-    help=f"List of issue type. Possible values: {', '.join(Issues._value2member_map_.keys())}. Eg. --type specjalne.",
+    help=f"List of issue type. Possible values: {', '.join(Issue._value2member_map_.keys())}. Eg. --type specjalne.",
     type=DocumentsTypes,
 )
 args = parser.parse_args()
-
 match args.document_type:
     case DocumentsTypes.SPECJALNE:
         document_data = {
             **common_data,
+            "issue": Issue.SPECJALNE,
             "period": "pierwszy etap edukacyjny",
-            "reason": Reasons.NIESLYSZACE,
-            "second_reason": Reasons.LEKKIE,
+            "reasons": [Reason.NIESLYSZACE, Reason.LEKKIE],
         }
     case DocumentsTypes.INDYWIDUALNE:
         document_data = {
             **common_data,
+            "issue": Issue.INDYWIDUALNE,
             "period": "styczeń 2018 - listopad 2019",
-            "reason": Reasons.ZNACZNIE_UTRUDNIAJACY,
+            "reasons": [Reason.ZNACZNIE_UTRUDNIAJACY],
         }
     case DocumentsTypes.INDYWIDUALNE_ROCZNE:
-        document_data = {**common_data, "period": "styczeń 2018 - listopad 2019", "reason": Reasons.UNIEMOZLIWIAJACY}
+        document_data = {
+            **common_data,
+            "issue": Issue.INDYWIDUALNE_ROCZNE,
+            "period": "styczeń 2018 - listopad 2019",
+            "reasons": [Reason.UNIEMOZLIWIAJACY],
+        }
     case DocumentsTypes.REWALIDACYJNE:
-        document_data = {**common_data, "period": "5-ciu lat.", "activity_form": ActivityForm.INDYWIDUALNE}
+        document_data = {
+            **common_data,
+            "issue": Issue.REWALIDACYJNE,
+            "period": "5-ciu lat.",
+            "activity_form": ActivityForm.INDYWIDUALNE,
+        }
     case DocumentsTypes.OPINIA:
-        document_data = {**common_data, "period": "do rozpoczęcia spełniania obowiązku szkolnego"}
+        document_data = {
+            **common_data,
+            "issue": Issue.OPINIA,
+            "period": "do rozpoczęcia spełniania obowiązku szkolnego",
+        }
     case _:
         raise Exception("Invalid document type.")
 

@@ -9,6 +9,7 @@ child_data = {
     "address": "Mostowa 38",
     "klass": "3b",
     "profession": "murarz",
+    "student": True,
 }
 
 school_data = {
@@ -38,7 +39,7 @@ applicants_data = [
 
 meeting_data = {
     "date": "2019-07-15",
-    "hour": "9.15",
+    "time": "16:00",
     "members": [
         {"name": "Antoni Stąsz-Lebieź", "function": "przewodniczący zespołu"},
         {"name": "mgr Leonia Witek-Konuś", "function": "psycholog, tyflopedagog"},
@@ -47,7 +48,7 @@ meeting_data = {
 }
 
 support_center_data = {
-    "name_nominative": "Poradnia Psychologiczno - Pedagogiczna we Wrześni",
+    "name_nominative": "Poradnia Psychologiczno - Pedagogiczna we Poznaniu",
     "name_genetive": "Poradni Psychologiczno-Pedagogicznej we Wrześni",
     "institute_name": "Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Grodzisku Wlkp.",
     "city": "Grodzisk Wlkp.",
@@ -61,11 +62,13 @@ common_data = {
     "addres_first_parent_checkbox": False,
     "issue": "specjalne",
     "period": "nauki w klasach I - III",
-    "reason": "umiarkowane",
+    "reasons": ["umiarkowane"],
+    "activity_form": "indywidualne",
     "no": "42",
     "child": child_data,
     "school": school_data,
     "applicants": applicants_data,
     "meeting_data": meeting_data,
     "support_center": support_center_data,
+    "application_date": "2019-07-01",
 }

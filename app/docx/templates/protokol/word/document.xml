@@ -30,7 +30,7 @@
         <w:pStyle w:val="inDay"/>
       </w:pPr>
       <w:r>
-        <w:t>w dniu {{ meeting_data.date }} r.</w:t>
+        <w:t>w dniu {{ meeting_data.date.strftime("%Y.%m.%d") }} r.</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -77,43 +77,7 @@
         <w:pStyle w:val="chosenReasonLabel"/>
       </w:pPr>
       <w:r>
-        <w:t>Orzeczenia o potrzebie kształcenia specjalnego z uwagi na niepełnosprawność dziecka lub ucznia:</w:t>
-      </w:r>
-    </w:p>
-    <w:p>
-      <w:pPr>
-        <w:pStyle w:val="chosenReason"/>
-      </w:pPr>
-      <w:r>
-        {% if reason == "LEKKIE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu lekkim</w:t>
-        {% elif reason == "UMIARKOWANE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu umiarkowanym</w:t>
-        {% elif reason == "ZNACZNE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu znacznym</w:t>
-        {% elif reason == "GŁĘBOKIE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu głębokim</w:t>
-        {% elif reason == "RUCHOWA" %}
-        <w:t>z niepełnosprawnością ruchową, w tym z afazją</w:t>
-        {% elif reason == "SLABOSLYSZACE" %}
-        <w:t>ze słabosłyszeniem</w:t>
-        {% elif reason == "NIESLYSZACE" %}
-        <w:t>z niesłyszeniem</w:t>
-        {% elif reason == "SLABOWIDZACE" %}
-        <w:t>ze słabowidzeniem</w:t>
-        {% elif reason == "NIEWIDZACE" %}
-        <w:t>z niewidzeniem</w:t>
-        {% elif reason == "AUTYZM" %}
-        <w:t>z autyzmem, w tym z zespołem Aspergera</w:t>
-        {% elif reason == "UNIEMOZLIWIAJACY" %}
-        <w:t>ze stanem zdrowia uniemożliwiający uczęszczanie do szkoły</w:t>
-        {% elif reason == "ZNACZNIE_UTRUDNIAJACY" %}
-        <w:t>ze stanem zdrowia znacznie utrudniającym uczęszczanie do szkoły</w:t>
-        {% elif reason == "ZAGROŻENIE" %}
-        <w:t>z zagrożeniem niedostosowania społecznego</w:t>
-        {% elif reason == "NIEDOSTOSOWANIE" %}
-        <w:t>z niedostosowaniem społecznym</w:t>
-        {% endif %}
+        <w:t>{{ issue_type_genetive_long }} z uwagi na {{ reason_description_accusative_long }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -193,7 +157,7 @@
         <w:pStyle w:val="childrenDetails"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ parents_name }}</w:t>
+        <w:t>{{ parent_descriptions }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -242,7 +206,7 @@
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t xml:space="preserve">{{ on_request }} zgodnie z zawiadomieniem z dnia ........................... r.</w:t>
+        <w:t xml:space="preserve">{{ on_request }} zgodnie z zawiadomieniem z dnia {{ application_date }} r.</w:t>
       </w:r>
       <w:r>
         <w:rPr>
@@ -414,7 +378,7 @@
         <w:pStyle w:val="boldText"/>
       </w:pPr>
       <w:r>
-        <w:t>W związku z powyższym Zespół Orzekający orzeka o:</w:t>
+        <w:t>W związku z powyższym Zespół Orzekający orzeka o potrzebie:</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -426,46 +390,7 @@
         <w:rPr>
           <w:i/>
         </w:rPr>
-        <w:t>o potrzebie kształcenia specjalnego z uwagi na niepełnosprawność dziecka lub ucznia:</w:t>
-      </w:r>
-    </w:p>
-    <w:p>
-      <w:pPr>
-        <w:pStyle w:val="chosenReason"/>
-      </w:pPr>
-      <w:r>
-        <w:rPr>
-          <w:i/>
-        </w:rPr>
-        {% if reason == "LEKKIE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu lekkim.</w:t>
-        {% elif reason == "UMIARKOWANE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu umiarkowanym.</w:t>
-        {% elif reason == "ZNACZNE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu znacznym.</w:t>
-        {% elif reason == "GŁĘBOKIE" %}
-        <w:t>z niepełnosprawnością intelektualną w stopniu głębokim.</w:t>
-        {% elif reason == "RUCHOWA" %}
-        <w:t>z niepełnosprawnością ruchową, w tym z afazją.</w:t>
-        {% elif reason == "SLABOSLYSZACE" %}
-        <w:t>ze słabosłyszeniem.</w:t>
-        {% elif reason == "NIESLYSZACE" %}
-        <w:t>z niesłyszeniem.</w:t>
-        {% elif reason == "SLABOWIDZACE" %}
-        <w:t>ze słabowidzeniem.</w:t>
-        {% elif reason == "NIEWIDZACE" %}
-        <w:t>z niewidzeniem.</w:t>
-        {% elif reason == "AUTYZM" %}
-        <w:t>z autyzmem, w tym z zespołem Aspergera.</w:t>
-        {% elif reason == "UNIEMOZLIWIAJACY" %}
-        <w:t>ze stanem zdrowia uniemożliwiający uczęszczanie do szkoły.</w:t>
-        {% elif reason == "ZNACZNIE_UTRUDNIAJACY" %}
-        <w:t>ze stanem zdrowia znacznie utrudniającym uczęszczanie do szkoły.</w:t>
-        {% elif reason == "ZAGROŻENIE" %}
-        <w:t>z zagrożeniem niedostosowania społecznego.</w:t>
-        {% elif reason == "NIEDOSTOSOWANIE" %}
-        <w:t>z niedostosowaniem społecznym.</w:t>
-        {% endif %}
+        <w:t>o potrzebie {{ issue_subject_genetive }} z uwagi na {{ reason_description_accusative_long }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -477,42 +402,7 @@
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t xml:space="preserve">Uzasadnienie – z uwagi na: niepełnosprawność dziecka lub ucznia: </w:t>
-      </w:r>
-      <w:r>
-        <w:rPr>
-          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
-          <w:lang w:val="pl-PL"/>
-        </w:rPr>
-        {% if reason == "LEKKIE" %}
-        <w:t>niepełnosprawność intelektualna w stopniu lekkim.</w:t>
-        {% elif reason == "UMIARKOWANE" %}
-        <w:t>niepełnosprawność intelektualna w stopniu umiarkowanym.</w:t>
-        {% elif reason == "ZNACZNE" %}
-        <w:t>niepełnosprawność intelektualna w stopniu znacznym.</w:t>
-        {% elif reason == "GŁĘBOKIE" %}
-        <w:t>niepełnosprawność intelektualna w stopniu głębokim.</w:t>
-        {% elif reason == "RUCHOWA" %}
-        <w:t>niepełnosprawność ruchowa, w tym z afazją.</w:t>
-        {% elif reason == "SLABOSLYSZACE" %}
-        <w:t>słabosłyszenie.</w:t>
-        {% elif reason == "NIESLYSZACE" %}
-        <w:t>niesłyszenie.</w:t>
-        {% elif reason == "SLABOWIDZACE" %}
-        <w:t>słabowidzenie.</w:t>
-        {% elif reason == "NIEWIDZACE" %}
-        <w:t>niewidzenie.</w:t>
-        {% elif reason == "AUTYZM" %}
-        <w:t>autyzmem, w tym z zespół Aspergera.</w:t>
-        {% elif reason == "UNIEMOZLIWIAJACY" %}
-        <w:t>stan zdrowia uniemożliwiający uczęszczanie do szkoły.</w:t>
-        {% elif reason == "ZNACZNIE_UTRUDNIAJACY" %}
-        <w:t>stan zdrowia znacznie utrudniającym uczęszczanie do szkoły.</w:t>
-        {% elif reason == "ZAGROŻENIE" %}
-        <w:t>zagrożenie niedostosowania społecznego.</w:t>
-        {% elif reason == "NIEDOSTOSOWANIE" %}
-        <w:t>niedostosowanie społeczne.</w:t>
-        {% endif %}
+        <w:t xml:space="preserve">Uzasadnienie – z uwagi na: {{ reason_description_accusative_long }} </w:t>
       </w:r>
     </w:p>
     <w:p>

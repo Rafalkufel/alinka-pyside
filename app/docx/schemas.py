@@ -1,7 +1,7 @@
 from datetime import date, time
 
-from docx.constants import Issues, Reasons
-from pydantic import BaseModel, root_validator
+from docx.constants import ActivityForm, Issue, Reason
+from pydantic import BaseModel, Field, root_validator
 
 
 class AddressData(BaseModel):
@@ -40,7 +40,14 @@ class ChildData(PersonalData):
     birth_date: date
     birth_place: str
     klass: str | None
+    student: bool
     profession: str | None
+    student_description_genetive: str | None
+
+    @root_validator
+    def calculate_student_description_genetive(cls, values):
+        values["student_description_genetive"] = "ucznia" if values["student"] else "dziecka"
+        return values
 
 
 class SchoolData(AddressData):
@@ -56,9 +63,9 @@ class MeetingMemberData(BaseModel):
 
 
 class MeetingData(BaseModel):
-    date: date
-    hour: time
     members: list[MeetingMemberData]
+    date: date
+    time: time
 
 
 class SupportCenterData(AddressData):
@@ -69,29 +76,117 @@ class SupportCenterData(AddressData):
 
 
 class DocumentData(BaseModel):
+    # raw
     child: ChildData
     address_child_checkbox: bool = False
     address_first_parent_checkbox: bool = False
-    issue: Issues
-    issue_short: str | None
+    issue: Issue
     period: str
-    reason: Reasons
-    second_reason: Reasons | None
-    reason_genetive: str | None
-    application_description_genetive: str | None
-    multiple_disability: list[str] = []
+    reasons: list[Reason] = Field(None, description="Can be one or moe reasons")
+    activity_form: ActivityForm | None
     no: str
     school: SchoolData
-    school_description: str | None
     applicants: list[PersonalData]
+    application_date: date
     meeting_data: MeetingData
     support_center: SupportCenterData
+    # calculated
+    reason: Reason | None = Field(None, example="Reason.SPRZEZONA | Reason.AUTYZM")
+    multiple_disability_nominative: str | None
+    multiple_disability_genetive: str | None
+    multiple_disability_accusative: str | None
+    issue_short: str | None = Field(None, example="'spec', 'ind_rocz', 'indy'")
+    issue_type_nominative_short: str | None = Field(None, example="'orzeczenie', 'opinia'")
+    issue_type_genetive_short: str | None = Field(None, example="'orzeczenia', 'opinii'")
+    issue_subject_nominative: str | None = Field(None, example="kształcenie specjalne")
+    issue_subject_genetive: str | None = Field(None, example="kształcenia specjalnego")
+    issue_type_nominative_long: str | None = Field(None, example="orzeczenie o potrzebie kształcenia specjalnego")
+    issue_type_genetive_long: str | None = Field(None, example="orzeczenia o potrzebie kształcenia specjalnego")
+    reason_description_nominative_short: str | None = Field(None, example="'niepełnosprawność', 'stan zdrowia'")
+    reason_description_genetive_short: str | None = Field(None, example="'niepełnospraności', 'stanu zdrowia'")
+    reason_description_nominative_long: str | None = Field(None, example="niepełnosprawność sprzężona")
+    reason_description_genetive_long: str | None = Field(None, example="niepełnosprawności sprzężonej")
+    reason_description_accusative_long: str | None = Field(None, example="niepełnosprawność sprzężoną")
     on_request: str | None
     parent_descriptions: str | None
     parents_names: str | None
+    school_description: str | None
 
     class Config:
         use_enum_values = True
+
+    @root_validator
+    def check_activity_form_required(cls, values):
+        issue, activity_form = values["issue"], values.get("activity_form")
+        if issue == Issue.REWALIDACYJNE and not activity_form:
+            raise ValueError(
+                "If issue is of type 'rewalidacyjno-wychowawcze' activity form (eg 'grupowe') have to be selected."
+            )
+        return values
+
+    @root_validator
+    def check_multiple_disability(cls, values):
+        """Check excluded together disabilities was selected"""
+        reasons = values["reasons"]
+        if Reason.UNIEMOZLIWIAJACY.value in reasons and Reason.ZNACZNIE_UTRUDNIAJACY.value in reasons:
+            raise ValueError(f"Reasons: {', '.join(reasons)} can't be issued together.")
+        if intelecual_reasons := [reason for reason in reasons if reason in Reason.intelectual_reasons()]:
+            if len(intelecual_reasons) > 1:
+                raise ValueError(f"Two intelecutal reasons: {', '.join(intelecual_reasons)} can't be issued together.")
+        if Reason.GLEBOKIE.value in reasons and len(reasons) > 1:
+            raise ValueError("Profound intelectual disability can't be cupled.")
+        if any([reason for reason in reasons if reason in Reason.social_maladjustment_reasons()]) and len(reasons) > 1:
+            raise ValueError("Social maladjustment reasons can be coupled with any other reason.")
+        return values
+
+    @root_validator
+    def calculate_reason(cls, values):
+        if len(values["reasons"]) > 1:
+            values["reason"] = Reason.SPRZEZONA
+        else:
+            values["reason"] = values["reasons"][0]
+        return values
+
+    @root_validator
+    def calculate_multiple_disability(cls, values):
+        reason, reasons = values["reason"], values["reasons"]
+        if reason == Reason.SPRZEZONA:
+            for key, source in [
+                ("multiple_disability_nominative", "reason_description_nominative_long"),
+                ("multiple_disability_genetive", "reason_description_genetive_long"),
+                ("multiple_disability_accusative", "reason_description_accusative_long"),
+            ]:
+                values[key] = ", ".join([getattr(Reason(reason), source) for reason in reasons])
+        return values
+
+    @root_validator
+    def calculate_issue_forms(cls, values):
+        issue = Issue(values["issue"])
+        values["issue_type_nominative_short"] = issue.issue_type_nominative_short
+        values["issue_type_genetive_short"] = issue.issue_type_genetive_short
+        values["issue_subject_nominative"] = issue.issue_description_nominative
+        values["issue_subject_genetive"] = issue.issue_description_genetive
+        values["issue_type_nominative_long"] = issue.issue_type_nominative_long
+        values["issue_type_genetive_long"] = issue.issue_type_genetive_long
+        return values
+
+    @root_validator
+    def calculate_reason_description_short(cls, values):
+        values["reason_description_nominative_short"] = Reason(values["reason"]).reason_description_nominative_short
+        values["reason_description_genetive_short"] = Reason(values["reason"]).reason_description_genetive_short
+        return values
+
+    @root_validator
+    def calculate_reason_description_long(cls, values):
+        reason = Reason(values["reason"])
+        values["reason_description_nominative_long"] = reason.reason_description_nominative_long
+        values["reason_description_genetive_long"] = reason.reason_description_genetive_long
+        values["reason_description_accusative_long"] = reason.reason_description_accusative_long
+        if reason == Reason.SPRZEZONA:
+            values["reason_description_nominative_long"] += f": {values['multiple_disability_nominative']}"
+            values["reason_description_genetive_long"] += f": {values['multiple_disability_genetive']}"
+            values["reason_description_accusative_long"] += f": {values['multiple_disability_accusative']}"
+        return values
 
     @root_validator
     def calculate_on_request(cls, values):
@@ -125,22 +220,33 @@ class DocumentData(BaseModel):
     @root_validator
     def calculate_issue_short(cls, values):
         issue = values["issue"]
-        if issue == Issues.INDYWIDUALNE_ROCZNE:
+        if issue == Issue.INDYWIDUALNE_ROCZNE.value:
             values["issue_short"] = "ind_rocz"
         else:
             values["issue_short"] = issue[:4]
         return values
 
     @root_validator
-    def calculate_multiple_disability(cls, values):
-        reason, second_reason = values["reason"], values["second_reason"]
-        if reason and second_reason:
-            values["multiple_disability"] = [reason, second_reason]
-            values["reason"] = Reasons.SPRZEZONA
-        return values
-
-    @root_validator
     def calculate_parents_names(cls, values):
         applicants = values["applicants"]
         values["parents_names"] = ", ".join([parent.full_name for parent in applicants])
+        return values
+
+    @root_validator
+    def calculate_reason_short_description_nominative(cls, values):
+        reason = values["reason"]
+        if reason:
+            description = "sprzężoną niepełnosprawność"
+        elif reason == Reason.AUTYZM.value:
+            description = "autyzm"
+        elif reason == Reason.RUCHOWA.value:
+            description = "niepełnosprawność ruchową"
+        elif Reason(reason) in [*Reason.intelectual_reasons(), *Reason.perception_deficites_reasons()]:
+            description = "stwierdzoną niepełnosprawność"
+        elif reason == Reason.NIEDOSTOSOWANIE.value:
+            description = "niedostosowanie społeczne"
+        elif reason == Reason.ZAGROZENIE_NIEDOSTOSOWANIEM.value:
+            description = "zagrożenie niedostosowaniem społecznym"
+
+        values["reason_short_description_nominative"] = description
         return values

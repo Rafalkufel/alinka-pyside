@@ -73,11 +73,11 @@ class Documents:
 
     @property
     def __full_name_date(self):
-        return f"{self.document_data.child.full_name}_{self.document_data.meeting_data.date.strftime('%Y.%m.%d')}"
+        return f"{self.document_data.child.full_name}_{self.document_data.meeting_data.date}"
 
     @property
     def dir_name(self):
-        """name of dir for current child eg "Erwin_Frankl_spec_24_12_2010"""
+        """name of dir for current child eg "Erwin_Frankl_24_12_2010_spec"""
         return f"{self.__full_name_date}_{self.document_data.issue_short}"
 
     def get_document_name(self, document):

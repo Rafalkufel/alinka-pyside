@@ -15,7 +15,7 @@
         <w:pStyle w:val="City-and-date" />
       </w:pPr>
       <w:r>
-        <w:t>{{ support_center.city }}, {{ meeting_data.date }}</w:t>
+        <w:t>{{ support_center.city }}, {{ application_date }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -99,7 +99,7 @@
         <w:rPr>
           <w:b />
         </w:rPr>
-        <w:t>{{ application_description_genetive }}</w:t>
+        <w:t>{{ issue_type_genetive_long }}</w:t>
       </w:r>
       <w:r>
         <w:t>,</w:t>
@@ -114,7 +114,7 @@
         <w:rPr>
           <w:b />
         </w:rPr>
-        <w:t>{{ reason_genetive }}</w:t>
+        <w:t>{{ reason_description_nominative_short }}</w:t>
       </w:r>
       <w:r>
         <w:t>,</w:t>
@@ -187,7 +187,7 @@
         <w:pStyle w:val="plane-text" />
       </w:pPr>
       <w:r>
-        <w:t xml:space="preserve">Informuję, że Rodzice dziecka lub ucznia, jak i pełnoletni uczeń mają prawo wziąć udział w posiedzeniu Zespołu i przedstawić swoje stanowisko. Obecność wnioskodawcy na posiedzeniu Zespołu nie jest obowiązkowa. Informację o przebiegu posiedzenia i podjętym rozstrzygnięciu wnioskodawca może uzyskać od Przewodniczącego Zespołu. </w:t>
+        <w:t xml:space="preserve">Informuję, że rodzice dziecka lub ucznia, jak i pełnoletni uczeń mają prawo wziąć udział w posiedzeniu Zespołu i przedstawić swoje stanowisko. Obecność wnioskodawcy na posiedzeniu Zespołu nie jest obowiązkowa. Informację o przebiegu posiedzenia i podjętym rozstrzygnięciu wnioskodawca może uzyskać od Przewodniczącego Zespołu. </w:t>
       </w:r>
     </w:p>
     <w:p>

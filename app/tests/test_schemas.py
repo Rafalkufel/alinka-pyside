@@ -1,5 +1,7 @@
 import pytest
+from docx.constants import Reason
 from docx.schemas import AddressData, DocumentData
+from pydantic import ValidationError
 from tests.fixtures import applicants_data, child_data, school_data, support_center_data
 
 
@@ -105,3 +107,56 @@ class TestParentDescription:
         document_data = DocumentData(**common_data_fixture)
 
         assert document_data.parent_descriptions == expected_description
+
+
+class TestMultipleDisabilityCheck:
+    @pytest.mark.parametrize(
+        "_, reasons, exception_message",
+        [
+            (
+                "uniemozliwiajacy and utrudniajacy together",
+                [Reason.UNIEMOZLIWIAJACY, Reason.ZNACZNIE_UTRUDNIAJACY],
+                f"Reasons: {Reason.UNIEMOZLIWIAJACY.value}, {Reason.ZNACZNIE_UTRUDNIAJACY.value} can't be issued together.",
+            ),
+            (
+                "two intelectual reasons together",
+                [Reason.SLABOSLYSZACE, Reason.UMIARKOWANE, Reason.LEKKIE],
+                f"Two intelecutal reasons: {Reason.UMIARKOWANE.value}, {Reason.LEKKIE.value} can't be issued together.",
+            ),
+            (
+                "profound disability coupled with other reasons",
+                [Reason.GLEBOKIE, Reason.RUCHOWA],
+                "Profound intelectual disability can't be cupled.",
+            ),
+            (
+                "social maladjustment cupled with other reasons.",
+                [Reason.ZAGROZENIE_NIEDOSTOSOWANIEM, Reason.LEKKIE],
+                "Social maladjustment reasons can be coupled with any other reason.",
+            ),
+        ],
+    )
+    def test_multiple_disability_check(self, _, reasons, exception_message, common_data_fixture):
+        common_data_fixture["reasons"] = reasons
+        with pytest.raises(ValidationError) as exception:
+            DocumentData(**common_data_fixture)
+        assert exception.value.errors()[0]["msg"] == exception_message
+
+
+class TestMultipleDisabilityDescription:
+    @pytest.mark.parametrize(
+        "reasons, expected_description",
+        [
+            (
+                [Reason.LEKKIE, Reason.RUCHOWA],
+                "niepełnosprawność intelektualna w stopniu lekkim, niepełnosprawność ruchowa",
+            ),
+            (
+                [Reason.LEKKIE, Reason.AUTYZM, Reason.RUCHOWA],
+                "niepełnosprawność intelektualna w stopniu lekkim, autyzm, niepełnosprawność ruchowa",
+            ),
+        ],
+    )
+    def test_multiple_disability_description(self, reasons, expected_description, common_data_fixture):
+        common_data_fixture["reasons"] = reasons
+        document_data = DocumentData(**common_data_fixture)
+        assert document_data.multiple_disability_nominative == expected_description
