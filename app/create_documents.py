@@ -46,7 +46,7 @@ match args.document_type:
         document_data = {
             **common_data,
             "issue": Issue.REWALIDACYJNE,
-            "period": "5-ciu lat.",
+            "period": "5. lat.",
             "activity_form": ActivityForm.INDYWIDUALNE,
         }
     case DocumentsTypes.OPINIA:

@@ -48,7 +48,7 @@ meeting_data = {
 }
 
 support_center_data = {
-    "name_nominative": "Poradnia Psychologiczno - Pedagogiczna we Poznaniu",
+    "name_nominative": "Poradnia Psychologiczno - Pedagogiczna w Poznaniu",
     "name_genetive": "Poradni Psychologiczno-Pedagogicznej we Wrześni",
     "institute_name": "Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Grodzisku Wlkp.",
     "city": "Grodzisk Wlkp.",

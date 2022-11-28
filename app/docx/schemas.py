@@ -134,7 +134,7 @@ class DocumentData(BaseModel):
             if len(intelecual_reasons) > 1:
                 raise ValueError(f"Two intelecutal reasons: {', '.join(intelecual_reasons)} can't be issued together.")
         if Reason.GLEBOKIE.value in reasons and len(reasons) > 1:
-            raise ValueError("Profound intelectual disability can't be cupled.")
+            raise ValueError("Profound intelectual disability can't be coupled.")
         if any([reason for reason in reasons if reason in Reason.social_maladjustment_reasons()]) and len(reasons) > 1:
             raise ValueError("Social maladjustment reasons can be coupled with any other reason.")
         return values

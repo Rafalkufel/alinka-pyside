@@ -126,10 +126,10 @@ class TestMultipleDisabilityCheck:
             (
                 "profound disability coupled with other reasons",
                 [Reason.GLEBOKIE, Reason.RUCHOWA],
-                "Profound intelectual disability can't be cupled.",
+                "Profound intelectual disability can't be coupled.",
             ),
             (
-                "social maladjustment cupled with other reasons.",
+                "social maladjustment coupled with other reasons.",
                 [Reason.ZAGROZENIE_NIEDOSTOSOWANIEM, Reason.LEKKIE],
                 "Social maladjustment reasons can be coupled with any other reason.",
             ),
