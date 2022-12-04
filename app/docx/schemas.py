@@ -197,22 +197,3 @@ class DocumentData(BaseModel):
         applicants = values["applicants"]
         values["parents_names"] = ", ".join([parent.full_name for parent in applicants])
         return values
-
-    @root_validator
-    def calculate_reason_short_description_nominative(cls, values):
-        reason = values["reason"]
-        if reason:
-            description = "sprzężoną niepełnosprawność"
-        elif reason == Reason.AUTYZM:
-            description = "autyzm"
-        elif reason == Reason.RUCHOWA:
-            description = "niepełnosprawność ruchową"
-        elif Reason(reason) in [*Reason.intelectual_reasons(), *Reason.perception_deficites_reasons()]:
-            description = "stwierdzoną niepełnosprawność"
-        elif reason == Reason.NIEDOSTOSOWANIE:
-            description = "niedostosowanie społeczne"
-        elif reason == Reason.ZAGROZENIE_NIEDOSTOSOWANIEM:
-            description = "zagrożenie niedostosowaniem społecznym"
-
-        values["reason_short_description_nominative"] = description
-        return values
