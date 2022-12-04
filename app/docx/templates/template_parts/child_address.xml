@@ -1,0 +1,16 @@
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="SubtitledRun"/>
+  </w:pPr>
+  <w:r>
+    <w:t>{{ child.full_address }}</w:t>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="Subtitle1"/>
+  </w:pPr>
+  <w:r>
+    <w:t>(adres zamieszkania {{ issue.recipient_description_genetive }})</w:t>
+  </w:r>
+</w:p>

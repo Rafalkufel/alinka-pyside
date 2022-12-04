@@ -1,0 +1,16 @@
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="SubtitledRun"/>
+  </w:pPr>
+  <w:r>
+    <w:t>{{ child.pesel }}</w:t>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="Subtitle1"/>
+  </w:pPr>
+  <w:r>
+    <w:t>(numer PESEL {{ issue.recipient_description_genetive }}, a w przypadku braku numeru PESEL – seria i numer dokumentu potwierdzającego jego tożsamość)</w:t>
+  </w:r>
+</w:p>

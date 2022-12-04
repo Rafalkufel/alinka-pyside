@@ -4,7 +4,7 @@ from enum import Enum
 class Reason(str, Enum):
     NIESLYSZACE = "nieslyszace"
     SLABOSLYSZACE = "slaboslyszace"
-    NIEWIDZACE = "niewidzące"
+    NIEWIDZACE = "niewidzace"
     SLABOWIDZACE = "slabowidzace"
     RUCHOWA = "ruchowa"
     LEKKIE = "lekkie"
@@ -20,15 +20,15 @@ class Reason(str, Enum):
 
     @classmethod
     def individual_reasons(cls):
-        return [cls.UNIEMOZLIWIAJACY.value, cls.ZNACZNIE_UTRUDNIAJACY.value]
+        return [cls.UNIEMOZLIWIAJACY, cls.ZNACZNIE_UTRUDNIAJACY]
 
     @classmethod
     def intelectual_reasons(cls):
-        return [cls.LEKKIE.value, cls.UMIARKOWANE.value, cls.ZNACZNE.value]
+        return [cls.LEKKIE, cls.UMIARKOWANE, cls.ZNACZNE]
 
     @classmethod
     def perception_deficites_reasons(cls):
-        return [cls.NIESLYSZACE.value, cls.SLABOSLYSZACE.value, cls.NIEWIDZACE.value, cls.SLABOWIDZACE.value]
+        return [cls.NIESLYSZACE, cls.SLABOSLYSZACE, cls.NIEWIDZACE, cls.SLABOWIDZACE]
 
     @classmethod
     def social_maladjustment_reasons(cls):
@@ -37,7 +37,8 @@ class Reason(str, Enum):
     @classmethod
     def special_reasons(cls):
         return [
-            *cls.intelectual_reasons() * cls.perception_deficites_reasons(),
+            *cls.intelectual_reasons(),
+            *cls.perception_deficites_reasons(),
             *cls.social_maladjustment_reasons(),
             cls.RUCHOWA.value,
             cls.AUTYZM.value,
@@ -56,7 +57,7 @@ class Reason(str, Enum):
             self.NIESLYSZACE: "niesłyszenie",
             self.SLABOSLYSZACE: "słabosłyszenie",
             self.NIEWIDZACE: "niewidzenie",
-            self.SLABOWIDZACE: "słabowididzenie",
+            self.SLABOWIDZACE: "słabowidzenie",
             self.RUCHOWA: "niepełnosprawność ruchowa",
             self.GLEBOKIE: "niepełnosprawność",
             self.AUTYZM: "autyzm",
@@ -77,15 +78,36 @@ class Reason(str, Enum):
             self.NIESLYSZACE: "niesłyszenia",
             self.SLABOSLYSZACE: "słabosłyszenia",
             self.NIEWIDZACE: "niewidzenia",
-            self.SLABOWIDZACE: "słabowididzenia",
+            self.SLABOWIDZACE: "słabowidzenia",
             self.RUCHOWA: "niepełnosprawności ruchowej",
             self.GLEBOKIE: "niepełnosprawności",
             self.AUTYZM: "autyzmu",
-            self.SPRZEZONA: "niepełnosprawności",
+            self.SPRZEZONA: "niepełnosprawności sprzężonej",
             self.NIEDOSTOSOWANIE: "niedostosowania społecznego",
             self.ZAGROZENIE_NIEDOSTOSOWANIEM: "zagrożenia niedostosowaniem społecznym",
             self.UNIEMOZLIWIAJACY: "stanu zdrowia",
             self.ZNACZNIE_UTRUDNIAJACY: "stanu zdrowia",
+        }
+        return mapper[self]
+
+    @property
+    def reason_description_accusative_short(self):
+        mapper = {
+            self.LEKKIE: "niepełnosprawność",
+            self.UMIARKOWANE: "niepełnosprawność",
+            self.ZNACZNE: "niepełnosprawność",
+            self.NIESLYSZACE: "niesłyszenie",
+            self.SLABOSLYSZACE: "słabosłyszenie",
+            self.NIEWIDZACE: "niewidzenie",
+            self.SLABOWIDZACE: "słabowidzenie",
+            self.RUCHOWA: "niepełnosprawność ruchową",
+            self.GLEBOKIE: "niepełnosprawność",
+            self.AUTYZM: "autyzm",
+            self.SPRZEZONA: "niepełnosprawność sprzężoną",
+            self.NIEDOSTOSOWANIE: "niedostosowanie społeczne",
+            self.ZAGROZENIE_NIEDOSTOSOWANIEM: "zagrożenie niedostosowaniem społecznym",
+            self.UNIEMOZLIWIAJACY: "stan zdrowia",
+            self.ZNACZNIE_UTRUDNIAJACY: "stan zdrowia",
         }
         return mapper[self]
 
@@ -98,7 +120,7 @@ class Reason(str, Enum):
             self.NIESLYSZACE: "niesłyszenie",
             self.SLABOSLYSZACE: "słabosłyszenie",
             self.NIEWIDZACE: "niewidzenie",
-            self.SLABOWIDZACE: "słabowididzenie",
+            self.SLABOWIDZACE: "słabowidzenie",
             self.RUCHOWA: "niepełnosprawność ruchowa",
             self.GLEBOKIE: "niepełnosprawność intelektualna w stopniu głębokim",
             self.AUTYZM: "autyzm",
@@ -119,7 +141,7 @@ class Reason(str, Enum):
             self.NIESLYSZACE: "niesłyszenia",
             self.SLABOSLYSZACE: "słabosłyszenia",
             self.NIEWIDZACE: "niewidzenia",
-            self.SLABOWIDZACE: "słabowididzenia",
+            self.SLABOWIDZACE: "słabowidzenia",
             self.RUCHOWA: "niepełnosprawności ruchowej",
             self.GLEBOKIE: "niepełnosprawności intelektualnej w stopniu głębokim",
             self.AUTYZM: "autyzmu",
@@ -140,7 +162,7 @@ class Reason(str, Enum):
             self.NIESLYSZACE: "niesłyszenie",
             self.SLABOSLYSZACE: "słabosłyszenie",
             self.NIEWIDZACE: "niewidzenie",
-            self.SLABOWIDZACE: "słabowididzenie",
+            self.SLABOWIDZACE: "słabowidzenie",
             self.RUCHOWA: "niepełnosprawność ruchową",
             self.GLEBOKIE: "niepełnosprawność intelektualną w stopniu głębokim",
             self.AUTYZM: "autyzm",
@@ -184,17 +206,11 @@ class Issue(Enum):
 
     @property
     def issue_type_nominative_short(self):
-        if self == self.OPINIA:
-            return "opinia"
-        else:
-            return "orzeczenie"
+        return "opinia" if self == self.OPINIA else "orzeczenie"
 
     @property
     def issue_type_genetive_short(self):
-        if self == self.OPINIA:
-            return "opinii"
-        else:
-            return "orzeczenia"
+        return "opinii" if self == self.OPINIA else "orzeczenia"
 
     @property
     def issue_type_nominative_long(self):
@@ -203,6 +219,17 @@ class Issue(Enum):
     @property
     def issue_type_genetive_long(self):
         return f"{self.issue_type_genetive_short} o potrzebie {self.issue_description_genetive}"
+
+    @property
+    def recipient_description_genetive(self):
+        mapper = {
+            self.SPECJALNE: "dziecka lub ucznia",
+            self.INDYWIDUALNE: "ucznia",
+            self.INDYWIDUALNE_ROCZNE: "dziecka",
+            self.REWALIDACYJNE: "dziecka",
+            self.OPINIA: "dziecka",
+        }
+        return mapper[self]
 
 
 class DocumentsTypes(Enum):

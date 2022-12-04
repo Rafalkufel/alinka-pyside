@@ -86,7 +86,7 @@
         <w:t xml:space="preserve">{{ parents_description }} </w:t>
       </w:r>
       <w:r>
-        <w:t xml:space="preserve">w sprawie wydania {{ issue_type_genetive_long }} dla </w:t>
+        <w:t xml:space="preserve">w sprawie wydania {{ issue.issue_type_genetive_long }} dla </w:t>
       </w:r>
       <w:r>
         <w:rPr>

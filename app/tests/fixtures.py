@@ -49,12 +49,12 @@ meeting_data = {
 
 support_center_data = {
     "name_nominative": "Poradnia Psychologiczno - Pedagogiczna w Poznaniu",
-    "name_genetive": "Poradni Psychologiczno-Pedagogicznej we Wrześni",
-    "institute_name": "Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Grodzisku Wlkp.",
-    "city": "Grodzisk Wlkp.",
-    "postal_code": "62-055",
+    "name_genetive": "Poradni Psychologiczno - Pedagogicznej w Poznaniu",
+    "institute_name": "Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Poznaniu",
+    "city": "Poznań",
+    "postal_code": "12-345",
     "address": "ul. Zbąszyńska 11",
-    "kurator": "w Poznaniu, ul Kościuszki 38, 64-400 Poznań",
+    "kurator": "Poznaniu, ul Kościuszki 38, 64-400 Poznań",
 }
 
 common_data = {

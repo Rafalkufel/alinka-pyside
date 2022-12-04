@@ -1,6 +1,6 @@
 import pytest
 from docx.constants import Reason
-from docx.schemas import AddressData, DocumentData
+from docx.schemas import AddressData, ChildData, DocumentData
 from pydantic import ValidationError
 from tests.fixtures import applicants_data, child_data, school_data, support_center_data
 
@@ -116,12 +116,12 @@ class TestMultipleDisabilityCheck:
             (
                 "uniemozliwiajacy and utrudniajacy together",
                 [Reason.UNIEMOZLIWIAJACY, Reason.ZNACZNIE_UTRUDNIAJACY],
-                f"Reasons: {Reason.UNIEMOZLIWIAJACY.value}, {Reason.ZNACZNIE_UTRUDNIAJACY.value} can't be issued together.",
+                f"Reasons: {Reason.UNIEMOZLIWIAJACY}, {Reason.ZNACZNIE_UTRUDNIAJACY} can't be issued together.",
             ),
             (
                 "two intelectual reasons together",
                 [Reason.SLABOSLYSZACE, Reason.UMIARKOWANE, Reason.LEKKIE],
-                f"Two intelecutal reasons: {Reason.UMIARKOWANE.value}, {Reason.LEKKIE.value} can't be issued together.",
+                f"Two intelecutal reasons: {Reason.UMIARKOWANE}, {Reason.LEKKIE} can't be issued together.",
             ),
             (
                 "profound disability coupled with other reasons",
@@ -131,7 +131,7 @@ class TestMultipleDisabilityCheck:
             (
                 "social maladjustment coupled with other reasons.",
                 [Reason.ZAGROZENIE_NIEDOSTOSOWANIEM, Reason.LEKKIE],
-                "Social maladjustment reasons can be coupled with any other reason.",
+                "Social maladjustment reasons can't be coupled with any other reason.",
             ),
         ],
     )

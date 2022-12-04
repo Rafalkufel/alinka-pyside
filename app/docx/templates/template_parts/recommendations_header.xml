@@ -1,0 +1,16 @@
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="Section"/>
+  </w:pPr>
+  <w:r>
+    <w:t>Zalecenia</w:t>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="Section-desc"/>
+  </w:pPr>
+  <w:r>
+    <w:t>Zespół Orzekający zaleca:</w:t>
+  </w:r>
+</w:p>
