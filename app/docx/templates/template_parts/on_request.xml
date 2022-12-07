@@ -1,0 +1,31 @@
+<w:p>
+    <w:pPr>
+    <w:spacing w:after="0"/>
+    <w:jc w:val="center"/>
+    <w:rPr>
+        <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+        <w:lang w:val="pl-PL"/>
+    </w:rPr>
+    </w:pPr>
+    <w:r>
+    <w:rPr>
+        <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+        <w:lang w:val="pl-PL"/>
+    </w:rPr>
+    <w:t xml:space="preserve">na wniosek </w:t>
+    </w:r>
+    <w:r>
+    <w:rPr>
+        <w:rStyle w:val="SubtitledRunZnak"/>
+    </w:rPr>
+    <w:t>{{ on_request }}</w:t>
+    </w:r>
+</w:p>
+<w:p>
+    <w:pPr>
+    <w:pStyle w:val="Subtitle1"/>
+    </w:pPr>
+    <w:r>
+    <w:t>(imię i nazwisko wnioskodawcy)</w:t>
+    </w:r>
+</w:p>

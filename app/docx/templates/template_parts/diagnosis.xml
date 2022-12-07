@@ -1,0 +1,31 @@
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="Section"/>
+  </w:pPr>
+  <w:r>
+    <w:t>Diagnoza</w:t>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr>
+    <w:pStyle w:val="Section-desc"/>
+  </w:pPr>
+  <w:r>
+    <w:t>{{ diagnosis_header }}</w:t>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr>
+    <w:rPr>
+      <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+      <w:lang w:val="pl-PL"/>
+    </w:rPr>
+  </w:pPr>
+  <w:r>
+    <w:rPr>
+      <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+      <w:lang w:val="pl-PL"/>
+    </w:rPr>
+    <w:t>Tekst diagnozy.</w:t>
+  </w:r>
+</w:p>

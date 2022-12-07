@@ -1,0 +1,243 @@
+{% extends "template_parts/base_document.xml" %}
+{% block body %}
+{% include "template_parts/signature_city_date.xml" %}
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Title-uppercase"/>
+      </w:pPr>
+      <w:r>
+        <w:t>ORZECZENIE NR {{ no }}</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Title-lowercase"/>
+      </w:pPr>
+      <w:r>
+        <w:t>o potrzebie indywidualnego obowiązkowego rocznego przygotowania przedszkolnego</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="LegalBasis"/>
+      </w:pPr>
+      <w:r>
+        <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2017 r. poz. 59 i 949),</w:t>
+      </w:r>
+    </w:p>
+    {% include "template_parts/on_request.xml" %}
+    {% include "template_parts/supporting_center.xml" %}
+{% include "template_parts/meeting.xml" %}
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="sentence"/>
+      </w:pPr>
+      <w:r>
+        <w:t>orzeka o potrzebie indywidualnego obowiązkowego rocznego przygotowania przedszkolnego</w:t>
+      </w:r>
+    </w:p>
+    {% include "template_parts/child_name.xml" %}
+    {% include "template_parts/child_birth.xml" %}
+    {% include "template_parts/pesel.xml" %}
+    {% include "template_parts/child_address.xml" %}
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="SubtitledRun"/>
+      </w:pPr>
+      <w:r>
+        <w:t>{{ school.school_description }}</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Subtitle1"/>
+      </w:pPr>
+      <w:r>
+        <w:t>(nazwa i adres przedszkola, szkoły podstawowej, w której zorganizowano oddział przedszkolny, lub innej formy wychowania przedszkolnego)</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="SubtitledRun"/>
+      </w:pPr>
+      <w:r>
+        <w:t>{{ parent_descriptions }}</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Subtitle1"/>
+      </w:pPr>
+      <w:r>
+        <w:lastRenderedPageBreak/>
+        <w:t>(imiona i nazwiska rodziców</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+        </w:rPr>
+        <w:footnoteReference w:id="1"/>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> oraz adres ich zamieszkania)</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:sz w:val="18"/>
+          <w:szCs w:val="16"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:br w:type="page"/>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Subtitle1"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="time-span"/>
+      </w:pPr>
+      <w:r>
+        <w:t>na okres</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+        </w:rPr>
+        <w:footnoteReference w:id="2"/>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve">: {{ period }}</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:jc w:val="both"/>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ze względu na stan zdrowia dziecka </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+            {% if reason == "znacznie_utrudniajacy" %}
+          <w:strike/>
+            {% endif %}
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t>uniemożliwiający</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve">/ </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+            {% if reason == "uniemozliwiajacy" %}
+          <w:strike/>
+            {% endif %}
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t>znacznie utrudniający</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:strike w:val="0"/>
+        </w:rPr>
+        <w:t/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:footnoteReference w:id="3"/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> uczęszczanie do przedszkola, oddziału przedszkolnego w szkole podstawowej lub innej formy wychowania przedszkolnego.</w:t>
+      </w:r>
+    </w:p>
+    {% with diagnosis_header="Zespół Orzekający określa ograniczenia w funkcjonowaniu dziecka wynikające z przebiegu choroby lub procesu terapeutycznego:" %}"
+      {% include "template_parts/diagnosis.xml" %}
+    {% endwith %}
+    {% include "template_parts/recommendations_header.xml" %}
+    {% with recommendation="(należy określić zalecane, w zależności od potrzeb, warunki i formy wsparcia umożliwiające realizację indywidualnych potrzeb rozwojowych i edukacyjnych oraz możliwości psychofizycznych dziecka, w tym warunki rozwijania jego potencjalnych możliwości i mocnych stron, wraz z uzasadnieniem)" %}
+      {% include "template_parts/recommendation.xml" %}
+    {% endwith %}
+    {% with recommendation="(należy określić zalecane działania sprzyjające integracji dziecka ze środowiskiem przedszkolnym oraz ułatwiające powrót dziecka do przedszkola, oddziału przedszkolnego w szkole podstawowej lub innej formy wychowania przedszkolnego, wraz z uzasadnieniem)" %}
+      {% include "template_parts/recommendation.xml" %}
+    {% endwith %}
+    {% with recommendation="(należy określić zalecane, w zależności od potrzeb, cele rozwojowe i terapeutyczne do realizacji podczas zajęć indywidualnego obowiązkowego rocznego przygotowania przedszkolnego oraz w ramach pomocy psychologiczno-pedagogicznej udzielanej dziecku i, w zależności od potrzeb, jego rodzicom, przez przedszkole, szkołę podstawową, w której zorganizowano oddział przedszkolny, lub inną formę wychowania przedszkolnego oraz poradnię, wraz ze wskazaniem zalecanych form pomocy psychologiczno-pedagogicznej, wraz z uzasadnieniem)" %}
+      {% include "template_parts/recommendation.xml" %}
+    {% endwith %}
+    {% include "template_parts/aac_information.xml" %}
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="newdocumentreason"/>
+      </w:pPr>
+      <w:r>
+        <w:t>W przypadku wydania nowego orzeczenia o potrzebie indywidualnego obowiązkowego rocznego przygotowania przedszkolnego należy wskazać okoliczności, które Zespół Orzekający uznał za istotne dla rozstrzygnięcia, oraz wyjaśnić powody, na podstawie których stwierdzono potrzebę wydania nowego orzeczenia</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+        </w:rPr>
+        <w:footnoteReference w:id="4"/>
+      </w:r>
+      <w:r>
+        <w:t>:</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t>okolicznosci</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="repeal"/>
+      </w:pPr>
+      <w:r>
+        <w:t>Orzeczenie uchyla orzeczenie nr ...... o potrzebie indywidualnego obowiązkowego rocznego przygotowania przedszkolnego z dnia .............................. wydane przez........................................</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+        </w:rPr>
+        <w:footnoteReference w:id="5"/>
+      </w:r>
+    </w:p>
+  {% include "template_parts/appeal.xml" %}
+  {% include "template_parts/director_signature.xml" %}
+  {% include "template_parts/recipients.xml" %}
+{% endblock %}
