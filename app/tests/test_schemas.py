@@ -1,7 +1,9 @@
+from datetime import date
+
 import pytest
-from docx.constants import Reason
-from docx.schemas import AddressData, ChildData, DocumentData
+from constants import Reason
 from pydantic import ValidationError
+from schemas import AddressData, DocumentData
 from tests.fixtures import applicants_data, child_data, school_data, support_center_data
 
 
@@ -27,6 +29,30 @@ class TestAddressData:
         address = AddressData(**address_data)
 
         assert address.post == expected_address
+
+
+class TestChildDateOfBirth:
+    @pytest.mark.parametrize(
+        "pesel, date_of_birth",
+        [
+            ("12121244441", date(1912, 12, 12)),
+            ("12120244441", date(1912, 12, 2)),
+            ("12220244441", date(2012, 2, 2)),
+            ("12320244441", date(2012, 12, 2)),
+        ],
+    )
+    def test_calculate_date_of_birth_from_pesel(self, pesel, date_of_birth, common_data_fixture):
+        common_data_fixture["child"]["pesel"] = pesel
+        common_data_fixture["child"]["birth_date"] = None
+        document_data = DocumentData(**common_data_fixture)
+        assert document_data.child.birth_date == date_of_birth
+
+    def test_child_date_of_birth_dont_calculate_if_exists(self, common_data_fixture):
+        expected_birth_date = date(1999, 1, 1)
+        common_data_fixture["child"]["pesel"] = "12320244441"
+        common_data_fixture["child"]["birth_date"] = expected_birth_date
+        document_data = DocumentData(**common_data_fixture)
+        assert document_data.child.birth_date == expected_birth_date
 
 
 class TestParentDescription:

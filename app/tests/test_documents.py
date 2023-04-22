@@ -1,7 +1,7 @@
 import pytest
-from docx.constants import DocumentsTypes
+from constants import DocumentsTypes
 from docx.generate_document import DocumentGenerator
-from docx.schemas import DocumentData
+from schemas import DocumentData
 from tests.fixtures import common_data
 
 CONTENT = "content"

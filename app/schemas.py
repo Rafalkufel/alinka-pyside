@@ -1,7 +1,66 @@
-from datetime import date, time
+from datetime import date, datetime, time
 
-from docx.constants import ActivityForm, Issue, Reason
+from constants import ActivityForm, Issue, Reason
 from pydantic import BaseModel, Field, root_validator
+
+
+class DecissionDbSchema(BaseModel):
+    id: int
+    created_at: datetime
+    modified_at: datetime
+
+    child_first_name: str
+    child_last_name: str
+    child_address: str
+    child_city: str
+    child_postal_code: str | None
+    child_pesel: str
+    child_birth_date: date
+    child_birth_place: str
+    child_student: bool = True
+    klass: str | None
+    profession: str | None
+
+    school_parent_organisation: str | None
+    school_type: str
+    school_name: str
+    school_address: str
+    school_city: str
+    school_postal_code: str
+
+    address_child_checkbox: bool = False
+    address_first_parent_checkbox: bool = False
+    first_parent_first_name: str
+    first_parent_last_name: str
+    first_parent_address: str
+    first_parent_city: str
+    first_parent_postal_code: str | None
+    second_parent_first_name: str | None
+    second_parent_last_name: str | None
+    second_parent_address: str | None
+    second_parent_city: str | None
+    second_parent_postal_code: str | None
+
+    support_center_name_nominative: str | None
+    support_center_name_genetive: str | None
+    support_center_institute_name: str | None
+    support_center_kurator: str | None
+    support_center_address: str | None
+    support_center_city: str | None
+    support_center_postal_code: str | None
+
+    issue: str
+    period: str
+    reasons: list
+    activity_form: str | None
+    no: str
+    application_date: date
+    meeting_date: date
+    meeting_time: time
+    meeting_members: list
+
+    class Config:
+        orm_mode = True
 
 
 class AddressData(BaseModel):
@@ -37,29 +96,40 @@ class PersonalData(AddressData):
 
 class ChildData(PersonalData):
     pesel: str
-    birth_date: date
     birth_place: str
     klass: str | None = Field(None, description="'klass' to avoid overriding 'class' keyword", example="3b or IVa")
     student: bool
+    birth_date: date | None
     profession: str | None
-    student_description_genetive: str | None
+    student_description_genetive: str | None = Field(None, description="'ucznia' or 'dziecka'")
 
     @root_validator
     def calculate_student_description_genetive(cls, values):
         values["student_description_genetive"] = "ucznia" if values["student"] else "dziecka"
         return values
 
+    @root_validator
+    def calculate_date_of_birth(cls, values):
+        if values["birth_date"]:
+            return values
+        pesel = values["pesel"]
+        year_part, month_part, day = int(pesel[0:2]), int(pesel[2:4]), int(pesel[4:6])
+        year = 2000 + year_part if month_part > 20 else 1900 + year_part
+        month = month_part - 20 if month_part > 20 else month_part
+        values["birth_date"] = date(year, month, day)
+        return values
+
 
 class SchoolData(AddressData):
-    school_type: str
+    parent_organisation: str | None = Field(None, description="eg. 'Zespół Szkół Budowlanych'")
+    school_type: str = Field(..., description="'przedszkole', 'szkoła podstawowa'")
     school_name: str
-    post: str
     school_description: str | None
 
 
 class MeetingMemberData(BaseModel):
-    name: str
-    function: str
+    name: str = Field(..., description="Krystyna Czarnecka")
+    function: str = Field(..., description="psycholog, logopeda")
 
 
 class MeetingData(BaseModel):
@@ -69,9 +139,11 @@ class MeetingData(BaseModel):
 
 
 class SupportCenterData(AddressData):
-    name_nominative: str
-    name_genetive: str
-    institute_name: str
+    name_nominative: str = Field(..., description="Poradnia Psychologiczno - Pedagogiczna w Poznaniu")
+    name_genetive: str = Field(..., description="Poradni Psychologiczno - Pedagogicznej w Poznaniu")
+    institute_name: str = Field(
+        ..., description="Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Poznaniu"
+    )
     kurator: str
 
 
