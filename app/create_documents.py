@@ -5,7 +5,6 @@ from constants import ActivityForm, DocumentsTypes, Issue, Reason
 from docx.generate_document import Documents
 from tests.fixtures import common_data
 
-
 GREEN = "\033[32m"
 
 parser = argparse.ArgumentParser()

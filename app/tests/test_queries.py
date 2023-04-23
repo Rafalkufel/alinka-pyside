@@ -9,7 +9,7 @@ from tests.fixtures import decission_data
 
 
 class TestQuery:
-    def setup(self):
+    def setup_method(self):
         DecissionFactory()
         DecissionFactory()
         self.decission_data = decission_data.copy()
