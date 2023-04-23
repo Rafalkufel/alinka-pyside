@@ -10,7 +10,7 @@ phases:
       - pip install poetry==1.4.0
       - poetry install --with dev --no-interaction
 
-  post_build:
+  build:
     commands:
       - pytest .
       - black . --check
