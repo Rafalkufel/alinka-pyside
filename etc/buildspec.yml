@@ -9,10 +9,11 @@ phases:
       - pip --version
       - pip install poetry==1.4.0
       - poetry install --no-interaction
+      - echo $PATH
 
-  build:
+  post_build:
     commands:
-      - make test
       - black . --check
       - isort . --check
       - flake8 .
+      - pytest .
