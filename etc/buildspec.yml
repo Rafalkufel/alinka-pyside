@@ -12,7 +12,7 @@ phases:
 
   post_build:
     commands:
-      - python -m black . --check
-      - python -m isort . --check
-      - python -m flake8 .
-      - python -m pytest .
+      - black . --check
+      - isort . --check
+      - flake8 .
+      - pytest .
