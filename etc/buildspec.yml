@@ -10,7 +10,7 @@ phases:
       python: 3.10
     commands:
       - pip install poetry==1.4.0
-      - poetry install --with dev --no-interaction
+      - poetry install --with dev --no-interaction -vvv
 
   build:
     commands:
