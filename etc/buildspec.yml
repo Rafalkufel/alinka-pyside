@@ -12,6 +12,7 @@ phases:
 
   build:
     commands:
+      - poetry shell
       - python --version
       - pytest .
       - black . --check
