@@ -76,7 +76,7 @@ common_data = {
 }
 
 
-decission_data = {
+decision_data = {
     "id": 1,
     "created_at": datetime(2023, 4, 19, 19, 21, 9),
     "modified_at": datetime(2023, 4, 19, 19, 21, 9),

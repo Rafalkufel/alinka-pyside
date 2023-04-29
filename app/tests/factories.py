@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 from constants import ActivityForm, Issue, Reason
-from db.models import Decission
+from db.models import Decision
 from db.queries import db_session
 from factory import lazy_attribute
 from factory.alchemy import SQLAlchemyModelFactory
@@ -22,9 +22,9 @@ DATE_FORMAT = "%m/%d/%Y"
 faker = Faker(locale="pl_PL")
 
 
-class DecissionFactory(SQLAlchemyModelFactory):
+class DecisionFactory(SQLAlchemyModelFactory):
     class Meta:
-        model = Decission
+        model = Decision
         sqlalchemy_session = db_session
 
     child_first_name = faker.first_name()
@@ -90,7 +90,7 @@ class DecissionFactory(SQLAlchemyModelFactory):
                     Reason.SLABOSLYSZACE,
                     Reason.SLABOWIDZACE,
                 ],
-                lenght=number_of_reasons,
+                length=number_of_reasons,
             )
         elif self.issue == Issue.REWALIDACYJNE:
             return [Reason.GLEBOKIE]

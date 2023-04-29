@@ -7,7 +7,7 @@ from schemas import DocumentData
 
 TEMPLATES_BASE_PATH = os.path.join(os.path.dirname(__file__), "templates")
 loader = FileSystemLoader(TEMPLATES_BASE_PATH)
-enviroment = Environment(loader=loader)
+environment = Environment(loader=loader)
 
 
 class DocumentGenerator:
@@ -19,7 +19,7 @@ class DocumentGenerator:
         self.document_name = document_name
         self.document_type = decision_type.value
         self.document_data = document_data
-        self.template = enviroment.get_template(os.path.join(self.document_type, "word", "document.xml"))
+        self.template = environment.get_template(os.path.join(self.document_type, "word", "document.xml"))
         self.destination_path = os.path.join(destination_path, document_name)
 
     @property

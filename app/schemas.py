@@ -4,7 +4,7 @@ from constants import ActivityForm, Issue, Reason
 from pydantic import BaseModel, Field, root_validator
 
 
-class DecissionDbSchema(BaseModel):
+class DecisionDbSchema(BaseModel):
     id: int
     created_at: datetime
     modified_at: datetime
@@ -109,7 +109,7 @@ class ChildData(PersonalData):
         return values
 
     @root_validator
-    def calculate_date_of_birth(cls, values):
+    def calculate_date_of_birth(cls, values) -> dict:
         if values["birth_date"]:
             return values
         pesel = values["pesel"]

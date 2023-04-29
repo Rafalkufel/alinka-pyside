@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton
-from schemas import DecissionDbSchema
-from tests.fixtures import decission_data as decission_fixture
+from schemas import DecisionDbSchema
+from tests.fixtures import decision_data as decission_fixture
 from widget.actions import generate_and_save_decision
 
 
@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self.result.setGeometry(200, 200, 150, 40)
 
     def click_me(self):
-        decission_data = DecissionDbSchema(**decission_fixture)
+        decission_data = DecisionDbSchema(**decission_fixture)
         decission_data.child_first_name = self.input_line.text()
         decission_data.id = None
         generate_and_save_decision(decission_data, generate=True)

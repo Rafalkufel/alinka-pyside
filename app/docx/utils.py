@@ -1,6 +1,6 @@
 from schemas import (
     ChildData,
-    DecissionDbSchema,
+    DecisionDbSchema,
     DocumentData,
     MeetingData,
     MeetingMemberData,
@@ -10,7 +10,7 @@ from schemas import (
 )
 
 
-def get_applicants_data(raw_documents_data: DecissionDbSchema) -> list[PersonalData]:
+def get_applicants_data(raw_documents_data: DecisionDbSchema) -> list[PersonalData]:
     applicants = [
         PersonalData(
             first_name=raw_documents_data.first_parent_first_name,
@@ -34,7 +34,7 @@ def get_applicants_data(raw_documents_data: DecissionDbSchema) -> list[PersonalD
     return applicants
 
 
-def get_meeting_data(raw_documents_data: DecissionDbSchema) -> MeetingData:
+def get_meeting_data(raw_documents_data: DecisionDbSchema) -> MeetingData:
     return MeetingData(
         members=[MeetingMemberData(**member_data) for member_data in raw_documents_data.meeting_members],
         date=raw_documents_data.meeting_date,
@@ -42,7 +42,7 @@ def get_meeting_data(raw_documents_data: DecissionDbSchema) -> MeetingData:
     )
 
 
-def convert_raw_documents_data(raw_documents_data: DecissionDbSchema) -> DocumentData:
+def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> DocumentData:
     child_data = ChildData(
         address=raw_documents_data.child_address,
         city=raw_documents_data.child_city,

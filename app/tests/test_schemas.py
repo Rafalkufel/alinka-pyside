@@ -54,6 +54,13 @@ class TestChildDateOfBirth:
         document_data = DocumentData(**common_data_fixture)
         assert document_data.child.birth_date == expected_birth_date
 
+    def test_child_date_of_birth_calculate_if_theres_no_birth_of_date(self, common_data_fixture):
+        expected_birth_date = date(2012, 12, 2)
+        common_data_fixture["child"]["pesel"] = "12320244441"
+        del common_data_fixture["child"]["birth_date"]
+        document_data = DocumentData(**common_data_fixture)
+        assert document_data.child.birth_date == expected_birth_date
+
 
 class TestParentDescription:
     @pytest.mark.parametrize("address_first_parent_checkbox", [True])

@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "alinka-pyside"
 version = "0.2.0"
-description = "Aplication for Supporting Center for Children"
+description = "Application for Supporting Center for Children"
 authors = ["CodeForPoznań <hello@codeforpoznan.pl>"]
 
 [tool.poetry.dependencies]
-python = "3.10.4"
+python = "3.10.9"
 Jinja2 = "^3.1.2"
 pydantic = "^1.10.2"
 SQLAlchemy = "^2.0.4"

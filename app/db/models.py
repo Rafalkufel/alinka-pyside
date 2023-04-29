@@ -8,7 +8,7 @@ class Base(DeclarativeBase):
     pass
 
 
-class Decission(Base):
+class Decision(Base):
     __tablename__ = "decision"
 
     id = Column(Integer(), primary_key=True)

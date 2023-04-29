@@ -1,32 +1,32 @@
 from db.connection import db_session
-from db.models import Decission
-from schemas import DecissionDbSchema
+from db.models import Decision
+from schemas import DecisionDbSchema
 
 
-def get_decissions_list_from_db() -> list[DecissionDbSchema]:
+def get_decisions_list_from_db() -> list[DecisionDbSchema]:
     with db_session() as db:
-        decissions = db.query(Decission).all()
-        return [DecissionDbSchema.from_orm(decission) for decission in decissions]
+        decisions = db.query(Decision).all()
+        return [DecisionDbSchema.from_orm(decision) for decision in decisions]
 
 
-def get_decission_data_from_db(decision_id: int) -> DecissionDbSchema:
+def get_decision_data_from_db(decision_id: int) -> DecisionDbSchema:
     with db_session() as db:
-        decision = db.query(Decission).filter(Decission.id == decision_id).one()
-        return DecissionDbSchema.from_orm(decision)
+        decision = db.query(Decision).filter(Decision.id == decision_id).one()
+        return DecisionDbSchema.from_orm(decision)
 
 
-def create_decission_in_db(decision_data: dict):
+def create_decision_in_db(decision_data: dict) -> DecisionDbSchema:
     with db_session() as db:
-        decision = Decission(**decision_data)
+        decision = Decision(**decision_data)
         db.add(decision)
         db.commit()
-        return DecissionDbSchema.from_orm(decision)
+        return DecisionDbSchema.from_orm(decision)
 
 
-def update_decision_in_db(decision_id: int, decision_data: dict):
+def update_decision_in_db(decision_id: int, decision_data: dict) -> DecisionDbSchema:
     with db_session() as db:
-        decission_id = (
-            db.query(Decission).filter(Decission.id == decision_id).update(decision_data, synchronize_session="auto")
+        decision_id = (
+            db.query(Decision).filter(Decision.id == decision_id).update(decision_data, synchronize_session="auto")
         )
-        decission = db.query(Decission).filter(Decission.id == decission_id).one()
-        return DecissionDbSchema.from_orm(decission)
+        decision = db.query(Decision).filter(Decision.id == decision_id).one()
+        return DecisionDbSchema.from_orm(decision)
