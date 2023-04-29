@@ -1,12 +1,9 @@
 import argparse
-import os
 
-from docx.constants import ActivityForm, DocumentsTypes, Issue, Reason
+from config import settings
+from constants import ActivityForm, DocumentsTypes, Issue, Reason
 from docx.generate_document import Documents
 from tests.fixtures import common_data
-
-BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DESTINATION_PATH = os.path.join(BASE_PATH, "dokumenty")
 
 GREEN = "\033[32m"
 
@@ -61,6 +58,6 @@ match args.document_type:
 Documents(
     documents=[args.document_type, DocumentsTypes.ZARZADZANIE, DocumentsTypes.ZAWIADOMIENIE, DocumentsTypes.PROTOKOL],
     document_data=document_data,
-    destination_path=DESTINATION_PATH,
+    destination_path=settings.DOCUMENTS_PATH,
 ).create()
 print(f"{GREEN}Dokumenty zostały utworzone.")

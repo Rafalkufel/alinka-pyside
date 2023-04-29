@@ -1,5 +1,5 @@
 import pytest
-from docx.constants import Reason, Issue
+from constants import Issue, Reason
 
 
 class TestReasonEnum:
@@ -65,12 +65,11 @@ class TestReasonEnum:
             ("niedostosowanie", "niedostosowanie społeczne"),
             ("zagrozenie_niedostosowaniem", "zagrożenie niedostosowaniem społecznym"),
             ("uniemozliwiajacy", "stan zdrowia"),
-            ("znacznie_utrudniajacy", "stan zdrowia")
-        ]
+            ("znacznie_utrudniajacy", "stan zdrowia"),
+        ],
     )
     def test_reason_description_nominative_short(self, reason, description):
         assert Reason(reason).reason_description_nominative_short == description
-
 
     @pytest.mark.parametrize(
         "reason, description",
@@ -89,8 +88,8 @@ class TestReasonEnum:
             ("niedostosowanie", "niedostosowania społecznego"),
             ("zagrozenie_niedostosowaniem", "zagrożenia niedostosowaniem społecznym"),
             ("uniemozliwiajacy", "stanu zdrowia"),
-            ("znacznie_utrudniajacy", "stanu zdrowia")
-        ]
+            ("znacznie_utrudniajacy", "stanu zdrowia"),
+        ],
     )
     def test_reason_description_genetive_short(self, reason, description):
         assert Reason(reason).reason_description_genetive_short == description
@@ -112,12 +111,11 @@ class TestReasonEnum:
             ("niedostosowanie", "niedostosowanie społeczne"),
             ("zagrozenie_niedostosowaniem", "zagrożenie niedostosowaniem społecznym"),
             ("uniemozliwiajacy", "stan zdrowia"),
-            ("znacznie_utrudniajacy", "stan zdrowia")
-        ]
+            ("znacznie_utrudniajacy", "stan zdrowia"),
+        ],
     )
     def test_reason_description_accusative_short(self, reason, description):
         assert Reason(reason).reason_description_accusative_short == description
-
 
     @pytest.mark.parametrize(
         "reason, description",
@@ -136,8 +134,8 @@ class TestReasonEnum:
             ("niedostosowanie", "niedostosowanie społeczne"),
             ("zagrozenie_niedostosowaniem", "zagrożenie niedostosowaniem społecznym"),
             ("uniemozliwiajacy", "stan zdrowia uniemożliwiający uczęszczanie do szkoły"),
-            ("znacznie_utrudniajacy", "stan zdrowia znacznie utrudniający uczęszczanie do szkoły")
-        ]
+            ("znacznie_utrudniajacy", "stan zdrowia znacznie utrudniający uczęszczanie do szkoły"),
+        ],
     )
     def test_reason_description_nominative_long(self, reason, description):
         assert Reason(reason).reason_description_nominative_long == description
@@ -159,8 +157,8 @@ class TestReasonEnum:
             ("niedostosowanie", "niedostosowania społecznego"),
             ("zagrozenie_niedostosowaniem", "zagrożenia niedostosowaniem społecznym"),
             ("uniemozliwiajacy", "stanu zdrowia uniemozliwiajacego uczęszczanie do szkoły"),
-            ("znacznie_utrudniajacy", "stanu zdrowia znacznie utrudniajacego uczęszczanie do szkoły")
-        ]
+            ("znacznie_utrudniajacy", "stanu zdrowia znacznie utrudniajacego uczęszczanie do szkoły"),
+        ],
     )
     def test_reason_description_genetive_long(self, reason, description):
         assert Reason(reason).reason_description_genetive_long == description
@@ -182,8 +180,8 @@ class TestReasonEnum:
             ("niedostosowanie", "niedostosowanie społeczne"),
             ("zagrozenie_niedostosowaniem", "zagrożenie niedostosowaniem społecznym"),
             ("uniemozliwiajacy", "stan zdrowia uniemozliwiajacy uczęszczanie do szkoły"),
-            ("znacznie_utrudniajacy", "stan zdrowia znacznie utrudniajacy uczęszczanie do szkoły")
-        ]
+            ("znacznie_utrudniajacy", "stan zdrowia znacznie utrudniajacy uczęszczanie do szkoły"),
+        ],
     )
     def test_reason_description_accusative_long(self, reason, description):
         assert Reason(reason).reason_description_accusative_long == description
@@ -193,12 +191,12 @@ class TestIssue:
     @pytest.mark.parametrize(
         "issue, description",
         [
-            ("specjalne","kształcenie specjalne"),
-            ("indywidualne","indywidualne nauczanie"),
-            ("indywidualne_roczne","indywidualne roczne przygotowanie przedszkolne"),
-            ("opinia","wczesnege wspomaganie rozwoju"),
-            ("rewalidacyjne","zajęcia rewalidacyjno - wychowawcze")
-        ]
+            ("specjalne", "kształcenie specjalne"),
+            ("indywidualne", "indywidualne nauczanie"),
+            ("indywidualne_roczne", "indywidualne roczne przygotowanie przedszkolne"),
+            ("opinia", "wczesnege wspomaganie rozwoju"),
+            ("rewalidacyjne", "zajęcia rewalidacyjno - wychowawcze"),
+        ],
     )
     def test_issue_description_nominative(self, issue, description):
         assert Issue(issue).issue_description_nominative == description
@@ -206,12 +204,12 @@ class TestIssue:
     @pytest.mark.parametrize(
         "issue, description",
         [
-            ("specjalne","kształcenia specjalnego"),
-            ("indywidualne","indywidualnego nauczania"),
-            ("indywidualne_roczne","indywidualnego rocznego przygotowania przedszkolnego"),
-            ("opinia","wczesnego wspomagania rozwoju"),
-            ("rewalidacyjne","zajęć rewalidacyjno - wychowawczych")
-        ]
+            ("specjalne", "kształcenia specjalnego"),
+            ("indywidualne", "indywidualnego nauczania"),
+            ("indywidualne_roczne", "indywidualnego rocznego przygotowania przedszkolnego"),
+            ("opinia", "wczesnego wspomagania rozwoju"),
+            ("rewalidacyjne", "zajęć rewalidacyjno - wychowawczych"),
+        ],
     )
     def test_issue_description_genetive(self, issue, description):
         assert Issue(issue).issue_description_genetive == description
@@ -219,12 +217,12 @@ class TestIssue:
     @pytest.mark.parametrize(
         "issue, description",
         [
-            ("specjalne","orzeczenie"),
-            ("indywidualne","orzeczenie"),
-            ("indywidualne_roczne","orzeczenie"),
-            ("opinia","opinia"),
-            ("rewalidacyjne","orzeczenie")
-        ]
+            ("specjalne", "orzeczenie"),
+            ("indywidualne", "orzeczenie"),
+            ("indywidualne_roczne", "orzeczenie"),
+            ("opinia", "opinia"),
+            ("rewalidacyjne", "orzeczenie"),
+        ],
     )
     def test_issue_type_nominative_short(self, issue, description):
         assert Issue(issue).issue_type_nominative_short == description
@@ -232,26 +230,25 @@ class TestIssue:
     @pytest.mark.parametrize(
         "issue, description",
         [
-            ("specjalne","orzeczenia"),
-            ("indywidualne","orzeczenia"),
-            ("indywidualne_roczne","orzeczenia"),
-            ("opinia","opinii"),
-            ("rewalidacyjne","orzeczenia")
-        ]
+            ("specjalne", "orzeczenia"),
+            ("indywidualne", "orzeczenia"),
+            ("indywidualne_roczne", "orzeczenia"),
+            ("opinia", "opinii"),
+            ("rewalidacyjne", "orzeczenia"),
+        ],
     )
     def test_issue_type_genetive_short(self, issue, description):
         assert Issue(issue).issue_type_genetive_short == description
 
-
     @pytest.mark.parametrize(
         "issue, description",
         [
-            ("specjalne","orzeczenie o potrzebie kształcenia specjalnego"),
-            ("indywidualne","orzeczenie o potrzebie indywidualnego nauczania"),
-            ("indywidualne_roczne","orzeczenie o potrzebie indywidualnego rocznego przygotowania przedszkolnego"),
-            ("opinia","opinia o potrzebie wczesnego wspomagania rozwoju"),
-            ("rewalidacyjne","orzeczenie o potrzebie zajęć rewalidacyjno - wychowawczych")
-        ]
+            ("specjalne", "orzeczenie o potrzebie kształcenia specjalnego"),
+            ("indywidualne", "orzeczenie o potrzebie indywidualnego nauczania"),
+            ("indywidualne_roczne", "orzeczenie o potrzebie indywidualnego rocznego przygotowania przedszkolnego"),
+            ("opinia", "opinia o potrzebie wczesnego wspomagania rozwoju"),
+            ("rewalidacyjne", "orzeczenie o potrzebie zajęć rewalidacyjno - wychowawczych"),
+        ],
     )
     def test_issue_type_nominative_long(self, issue, description):
         assert Issue(issue).issue_type_nominative_long == description
@@ -259,26 +256,25 @@ class TestIssue:
     @pytest.mark.parametrize(
         "issue, description",
         [
-            ("specjalne","orzeczenia o potrzebie kształcenia specjalnego"),
-            ("indywidualne","orzeczenia o potrzebie indywidualnego nauczania"),
-            ("indywidualne_roczne","orzeczenia o potrzebie indywidualnego rocznego przygotowania przedszkolnego"),
-            ("opinia","opinii o potrzebie wczesnego wspomagania rozwoju"),
-            ("rewalidacyjne","orzeczenia o potrzebie zajęć rewalidacyjno - wychowawczych")
-        ]
+            ("specjalne", "orzeczenia o potrzebie kształcenia specjalnego"),
+            ("indywidualne", "orzeczenia o potrzebie indywidualnego nauczania"),
+            ("indywidualne_roczne", "orzeczenia o potrzebie indywidualnego rocznego przygotowania przedszkolnego"),
+            ("opinia", "opinii o potrzebie wczesnego wspomagania rozwoju"),
+            ("rewalidacyjne", "orzeczenia o potrzebie zajęć rewalidacyjno - wychowawczych"),
+        ],
     )
     def test_issue_type_genetive_long(self, issue, description):
         assert Issue(issue).issue_type_genetive_long == description
 
-
     @pytest.mark.parametrize(
         "issue, description",
         [
-            ("specjalne","dziecka lub ucznia"),
-            ("indywidualne","ucznia"),
-            ("indywidualne_roczne","dziecka"),
-            ("opinia","dziecka"),
-            ("rewalidacyjne","dziecka")
-        ]
+            ("specjalne", "dziecka lub ucznia"),
+            ("indywidualne", "ucznia"),
+            ("indywidualne_roczne", "dziecka"),
+            ("opinia", "dziecka"),
+            ("rewalidacyjne", "dziecka"),
+        ],
     )
     def test_issue_recipient_description_genetive(self, issue, description):
         assert Issue(issue).recipient_description_genetive == description

@@ -1,6 +1,74 @@
 from enum import Enum
 
 
+class DocumentsTypes(Enum):
+    SPECJALNE = "specjalne"
+    INDYWIDUALNE = "indywidualne"
+    INDYWIDUALNE_ROCZNE = "indywidualne_roczne"
+    OPINIA = "opinia"
+    REWALIDACYJNE = "rewalidacyjne"
+    PROTOKOL = "protokol"
+    ZARZADZANIE = "zarzadzenie"
+    ZAWIADOMIENIE = "zawiadomienie"
+
+
+class Issue(Enum):
+    SPECJALNE = "specjalne"
+    INDYWIDUALNE = "indywidualne"
+    INDYWIDUALNE_ROCZNE = "indywidualne_roczne"
+    OPINIA = "opinia"
+    REWALIDACYJNE = "rewalidacyjne"
+
+    @property
+    def issue_description_nominative(self):
+        mapper = {
+            self.SPECJALNE: "kształcenie specjalne",
+            self.INDYWIDUALNE: "indywidualne nauczanie",
+            self.INDYWIDUALNE_ROCZNE: "indywidualne roczne przygotowanie przedszkolne",
+            self.OPINIA: "wczesnege wspomaganie rozwoju",
+            self.REWALIDACYJNE: "zajęcia rewalidacyjno - wychowawcze",
+        }
+        return mapper[self]
+
+    @property
+    def issue_description_genetive(self):
+        mapper = {
+            self.SPECJALNE: "kształcenia specjalnego",
+            self.INDYWIDUALNE: "indywidualnego nauczania",
+            self.INDYWIDUALNE_ROCZNE: "indywidualnego rocznego przygotowania przedszkolnego",
+            self.OPINIA: "wczesnego wspomagania rozwoju",
+            self.REWALIDACYJNE: "zajęć rewalidacyjno - wychowawczych",
+        }
+        return mapper[self]
+
+    @property
+    def issue_type_nominative_short(self):
+        return "opinia" if self == self.OPINIA else "orzeczenie"
+
+    @property
+    def issue_type_genetive_short(self):
+        return "opinii" if self == self.OPINIA else "orzeczenia"
+
+    @property
+    def issue_type_nominative_long(self):
+        return f"{self.issue_type_nominative_short} o potrzebie {self.issue_description_genetive}"
+
+    @property
+    def issue_type_genetive_long(self):
+        return f"{self.issue_type_genetive_short} o potrzebie {self.issue_description_genetive}"
+
+    @property
+    def recipient_description_genetive(self):
+        mapper = {
+            self.SPECJALNE: "dziecka lub ucznia",
+            self.INDYWIDUALNE: "ucznia",
+            self.INDYWIDUALNE_ROCZNE: "dziecka",
+            self.REWALIDACYJNE: "dziecka",
+            self.OPINIA: "dziecka",
+        }
+        return mapper[self]
+
+
 class Reason(str, Enum):
     NIESLYSZACE = "nieslyszace"
     SLABOSLYSZACE = "slaboslyszace"
@@ -173,74 +241,6 @@ class Reason(str, Enum):
             self.ZNACZNIE_UTRUDNIAJACY: "stan zdrowia znacznie utrudniajacy uczęszczanie do szkoły",
         }
         return mapper[self]
-
-
-class Issue(Enum):
-    SPECJALNE = "specjalne"
-    INDYWIDUALNE = "indywidualne"
-    INDYWIDUALNE_ROCZNE = "indywidualne_roczne"
-    OPINIA = "opinia"
-    REWALIDACYJNE = "rewalidacyjne"
-
-    @property
-    def issue_description_nominative(self):
-        mapper = {
-            self.SPECJALNE: "kształcenie specjalne",
-            self.INDYWIDUALNE: "indywidualne nauczanie",
-            self.INDYWIDUALNE_ROCZNE: "indywidualne roczne przygotowanie przedszkolne",
-            self.OPINIA: "wczesnege wspomaganie rozwoju",
-            self.REWALIDACYJNE: "zajęcia rewalidacyjno - wychowawcze",
-        }
-        return mapper[self]
-
-    @property
-    def issue_description_genetive(self):
-        mapper = {
-            self.SPECJALNE: "kształcenia specjalnego",
-            self.INDYWIDUALNE: "indywidualnego nauczania",
-            self.INDYWIDUALNE_ROCZNE: "indywidualnego rocznego przygotowania przedszkolnego",
-            self.OPINIA: "wczesnego wspomagania rozwoju",
-            self.REWALIDACYJNE: "zajęć rewalidacyjno - wychowawczych",
-        }
-        return mapper[self]
-
-    @property
-    def issue_type_nominative_short(self):
-        return "opinia" if self == self.OPINIA else "orzeczenie"
-
-    @property
-    def issue_type_genetive_short(self):
-        return "opinii" if self == self.OPINIA else "orzeczenia"
-
-    @property
-    def issue_type_nominative_long(self):
-        return f"{self.issue_type_nominative_short} o potrzebie {self.issue_description_genetive}"
-
-    @property
-    def issue_type_genetive_long(self):
-        return f"{self.issue_type_genetive_short} o potrzebie {self.issue_description_genetive}"
-
-    @property
-    def recipient_description_genetive(self):
-        mapper = {
-            self.SPECJALNE: "dziecka lub ucznia",
-            self.INDYWIDUALNE: "ucznia",
-            self.INDYWIDUALNE_ROCZNE: "dziecka",
-            self.REWALIDACYJNE: "dziecka",
-            self.OPINIA: "dziecka",
-        }
-        return mapper[self]
-
-
-class DocumentsTypes(Enum):
-    SPECJALNE = "specjalne"
-    INDYWIDUALNE = "indywidualne"
-    INDYWIDUALNE_ROCZNE = "indywidualne_roczne"
-    OPINIA = "opinia"
-    REWALIDACYJNE = "rewalidacyjne"
-    PROTOKOL = "protokol"
-    ZARZADZANIE = "zarzadzenie"
-    ZAWIADOMIENIE = "zawiadomienie"
 
 
 class ActivityForm(Enum):

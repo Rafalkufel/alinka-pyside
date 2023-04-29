@@ -1,3 +1,6 @@
 dokumenty/
 .pytest_cache/
 __pycache__/
+
+# pyenv
+.python-version

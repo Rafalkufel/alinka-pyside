@@ -1,23 +1,25 @@
 import os
 from zipfile import ZipFile
 
-from docx.constants import DocumentsTypes
-from docx.schemas import DocumentData
+from constants import DocumentsTypes
 from jinja2 import Environment, FileSystemLoader
+from schemas import DocumentData
 
 TEMPLATES_BASE_PATH = os.path.join(os.path.dirname(__file__), "templates")
 loader = FileSystemLoader(TEMPLATES_BASE_PATH)
-enviroment = Environment(loader=loader)
+environment = Environment(loader=loader)
 
 
 class DocumentGenerator:
+    """Handle single document generation"""
+
     def __init__(
         self, document_name: str, decision_type: DocumentsTypes, document_data: DocumentData, destination_path: str
     ):
         self.document_name = document_name
         self.document_type = decision_type.value
         self.document_data = document_data
-        self.template = enviroment.get_template(os.path.join(self.document_type, "word", "document.xml"))
+        self.template = environment.get_template(os.path.join(self.document_type, "word", "document.xml"))
         self.destination_path = os.path.join(destination_path, document_name)
 
     @property
@@ -55,30 +57,32 @@ class DocumentGenerator:
 
 
 class Documents:
-    def __init__(self, documents: list[DocumentsTypes], document_data: dict, destination_path: str):
-        self.documents = documents
+    """Create multiple required documents, based on requested list of documents types and data for documents."""
+
+    def __init__(self, documents_types: list[DocumentsTypes], document_data: dict, destination_path: str):
+        self.documents_types = documents_types
         self.document_data = DocumentData(**document_data)
         self.destination_path = os.path.join(destination_path, self.dir_name)
         if not os.path.exists(self.destination_path):
             os.makedirs(self.destination_path)
 
-    def create(self):
-        for document in self.documents:
+    def create(self) -> None:
+        for document_type in self.documents_types:
             DocumentGenerator(
-                document_name=self.get_document_name(document),
-                decision_type=document,
+                document_name=self.get_document_name(document_type),
+                decision_type=document_type,
                 document_data=self.document_data,
                 destination_path=self.destination_path,
             ).generate()
 
     @property
-    def __full_name_date(self):
+    def __full_name_date(self) -> str:
         return f"{self.document_data.child.full_name}_{self.document_data.meeting_data.date}"
 
     @property
-    def dir_name(self):
+    def dir_name(self) -> str:
         """name of dir for current child eg "Erwin_Frankl_24_12_2010_spec"""
         return f"{self.__full_name_date}_{self.document_data.issue_short}"
 
-    def get_document_name(self, document):
-        return f"{self.__full_name_date}_{document.value}.docx"
+    def get_document_name(self, document_type: DocumentsTypes) -> str:
+        return f"{self.__full_name_date}_{document_type.value}.docx"
