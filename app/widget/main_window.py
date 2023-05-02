@@ -1,9 +1,11 @@
+import os
+
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton
 from schemas import DecisionDbSchema
 from tests.fixtures import decision_data as decission_fixture
 from widget.actions import generate_and_save_decision
-from PySide6.QtGui import QIcon
-import os
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
