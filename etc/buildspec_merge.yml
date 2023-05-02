@@ -28,9 +28,8 @@ phases:
   build:
     commands:
       - which python
-      - ls /usr/bin
-      - ls /usr/local/bin
       - poetry show --all
+      - find / -type f -name pyinstaller
       - echo $PATH
       - ls
       - pwd
