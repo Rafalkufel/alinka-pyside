@@ -16,6 +16,7 @@ phases:
       - export ENV_PATH=`poetry env info -p`
       - export ALINKA_VERSION=`poetry version --short`
       - export INSTALLER_FILE_NAME="alinka-${ALINKA_VERSION}.deb"
+      - export PATH=$PATH:/root/.pyenv/versions/$(python --version | awk '{print $2}')/bin/
 
   pre_build:
     commands:
