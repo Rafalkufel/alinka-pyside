@@ -2,14 +2,17 @@ from PySide6.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton
 from schemas import DecisionDbSchema
 from tests.fixtures import decision_data as decission_fixture
 from widget.actions import generate_and_save_decision
-
+from PySide6.QtGui import QIcon
+import os
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
+        icon = QIcon()
+        icon.addFile(os.path.join("statics", "alinka.svg"))
         self.setWindowTitle("My App")
         self.setGeometry(100, 100, 600, 400)
+        self.setWindowIcon(icon)
         self.ui_components()
         self.show()
 
