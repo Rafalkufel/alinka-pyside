@@ -30,7 +30,7 @@ phases:
       - which python
       - ls /usr/bin
       - ls /usr/local/bin
-      - ls /codebuild/user/bin
+      - poetry show --all
       - echo $PATH
       - ls
       - pwd
