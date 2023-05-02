@@ -31,8 +31,8 @@ phases:
       - poetry show --all
       - find / -type f -name pyinstaller
       - ls /root/.pyenv/versions/3.10.9/bin/
+      - ls /root/.pyenv/shims
       - echo $PATH
-      - ls
       - pwd
       - pyinstaller alinka.spec
       - ./package.sh
