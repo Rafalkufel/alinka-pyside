@@ -9,7 +9,7 @@ phases:
     runtime-versions:
       python: 3.10
     commands:
-      - apt update; apt install ruby
+      - apt update; apt install -y ruby
       - gem install fpm --user-install
       - pip install poetry==1.4.0
       - poetry install --with dev --no-interaction
