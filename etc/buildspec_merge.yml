@@ -30,6 +30,7 @@ phases:
       - which python
       - poetry show --all
       - find / -type f -name pyinstaller
+      - ls /root/.pyenv/versions/3.10.9/bin/
       - echo $PATH
       - ls
       - pwd
