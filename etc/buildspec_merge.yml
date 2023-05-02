@@ -27,6 +27,10 @@ phases:
 
   build:
     commands:
+      - which python
+      - ls /usr/bin
+      - ls /codebuild/usr/bin
+      - ls /usr/local/bin
       - echo $PATH
       - ls
       - pwd
