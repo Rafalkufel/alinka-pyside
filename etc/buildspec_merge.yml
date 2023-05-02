@@ -27,9 +27,10 @@ phases:
 
   build:
     commands:
+      - echo $PATH
       - ls
       - pwd
-      - python -m pyinstaller alinka.spec
+      - pyinstaller alinka.spec
       - ./package.sh
       - fpm -v ${ALINKA_VERSION} -p "alinka-${ALINKA_VERSION}.deb"
       - ls
