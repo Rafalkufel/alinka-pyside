@@ -9,7 +9,7 @@ phases:
     runtime-versions:
       python: 3.10
     commands:
-      - apt update; apt install -y ruby libxkbcommon-x11-0
+      - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1
       - gem install fpm --user-install
       - pip install poetry==1.4.0
       - poetry install --with dev --no-interaction
@@ -30,6 +30,7 @@ phases:
       - echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxxx"
       - ruby --version
       - ruby --version | awk '{print $2}'
+      - gem --version
       - find / -type f -name fpm
       - echo $PATH
       - pyinstaller alinka.spec
