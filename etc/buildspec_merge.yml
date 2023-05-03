@@ -30,15 +30,11 @@ phases:
     commands:
       - which python
       - poetry show --all
-      - find / -type f -name pyinstaller
-      - ls /root/.pyenv/versions/3.10.9/bin/
-      - ls /root/.pyenv/shims
+      - find / -type f -name fpm
       - echo $PATH
-      - pwd
       - pyinstaller alinka.spec
       - ./package.sh
       - fpm -v ${ALINKA_VERSION} -p "alinka-${ALINKA_VERSION}.deb"
-      - ls
 
 artifacts:
   files:
