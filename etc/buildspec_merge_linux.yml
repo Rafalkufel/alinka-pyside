@@ -9,7 +9,7 @@ phases:
     runtime-versions:
       python: 3.10
     commands:
-      - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0
+      - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0 libwayland-egl1 libgtk-3-0 libatk1.0-0
       - gem install fpm --user-install
       - pip install poetry==1.4.0
       - poetry install --with dev --no-interaction
@@ -28,12 +28,6 @@ phases:
 
   build:
     commands:
-      - echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxxx"
-      - ruby --version
-      - ruby --version | awk '{print $2}'
-      - gem --version
-      - find / -type f -name fpm
-      - echo $PATH
       - pyinstaller alinka.spec
       - ./package.sh
       - fpm -v ${ALINKA_VERSION} -p "alinka-${ALINKA_VERSION}.deb"
