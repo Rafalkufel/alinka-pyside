@@ -9,7 +9,7 @@ phases:
     runtime-versions:
       python: 3.10
     commands:
-      - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1
+      - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0
       - gem install fpm --user-install
       - pip install poetry==1.4.0
       - poetry install --with dev --no-interaction
@@ -17,6 +17,7 @@ phases:
       - export ALINKA_VERSION=`poetry version --short`
       - export INSTALLER_FILE_NAME="alinka-${ALINKA_VERSION}.deb"
       - export PATH=$PATH:/root/.pyenv/versions/$(python --version | awk '{print $2}')/bin/
+      - export PATH=$PATH:/root/.local/share/gem/ruby/$(ruby --version | awk '{print $2}' | cut -d "." -f 1-2).0/bin
 
   pre_build:
     commands:
