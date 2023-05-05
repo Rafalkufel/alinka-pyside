@@ -11,7 +11,7 @@ phases:
     commands:
       - cd /root/.pyenv
       - git checkout -- .
-      - git clean
+      - git clean -fd
       - git pull
       - ldd --version
       - pyenv install --list
