@@ -7,8 +7,10 @@ env:
 phases:
   install:
     runtime-versions:
-      python: 3.10
+      python: 3.9
     commands:
+      - pyenv install 3.10.9
+      - pyenv global 3.10.9
       - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0 libwayland-egl1 libgtk-3-0 libatk1.0-0
       - gem install fpm --user-install
       - pip install poetry==1.4.0
