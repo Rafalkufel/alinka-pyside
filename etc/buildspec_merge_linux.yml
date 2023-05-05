@@ -9,6 +9,8 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
+      - pyenv install --list
+      - pyenv versions
       - pyenv install 3.10.9
       - pyenv global 3.10.9
       - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0 libwayland-egl1 libgtk-3-0 libatk1.0-0
