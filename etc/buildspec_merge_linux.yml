@@ -9,7 +9,7 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
-      - pyenv install --list
+      - ldd --version
       - pyenv versions
       - pyenv install 3.10.9
       - pyenv global 3.10.9
