@@ -10,7 +10,7 @@ phases:
       python: 3.9
     commands:
       - cd /root/.pyenv
-      - git status
+      - git checkout -- .
       - git pull
       - ldd --version
       - pyenv install --list
