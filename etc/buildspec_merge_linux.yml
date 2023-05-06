@@ -9,6 +9,10 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
+      - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0 libwayland-egl1 libgtk-3-0 libatk1.0-0
+      - gem install fpm --user-install
+      - ruby --version
+      - find / -type f -name fpm
       - cd /root/.pyenv
       - git checkout -- .
       - git clean -fd
@@ -16,8 +20,6 @@ phases:
       - pyenv install 3.10.9
       - pyenv global 3.10.9
       - cd -
-      - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0 libwayland-egl1 libgtk-3-0 libatk1.0-0
-      - gem install fpm --user-install
       - pip install poetry==1.4.0
       - poetry install --with dev --no-interaction
       - export ENV_PATH=`poetry env info -p`
