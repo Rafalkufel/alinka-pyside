@@ -13,7 +13,7 @@ class Settings(BaseSettings):
 
     DOCUMENTS_PATH: str = os.path.join(USER_HOME_DIR, DOCUMENT_DIR_NAME)
     PERSISTENT_DATA_PATH: str = os.path.join(USER_HOME_DIR, PERSISTENT_DATA_DIR)
-    DB_PATH = os.path.join(PERSISTENT_DATA_PATH, DB_FILE_NAME)
+    DB_PATH: str = os.path.join(PERSISTENT_DATA_PATH, DB_FILE_NAME)
 
 
 @lru_cache

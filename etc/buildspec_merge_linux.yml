@@ -11,10 +11,7 @@ phases:
     commands:
       - apt update; apt install -y ruby libxkbcommon-x11-0 libegl1 libwayland-cursor0 libwayland-egl1 libgtk-3-0 libatk1.0-0
       - export PATH=$PATH:/root/.gem/ruby/$(ruby --version | awk '{print $2}' | cut -d "." -f 1-2).0/bin
-      - echo $PATH
       - gem install fpm --user-install
-      - ruby --version
-      - find / -type f -name fpm
       - cd /root/.pyenv
       - git checkout -- .
       - git clean -fd
