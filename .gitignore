@@ -1,6 +1,13 @@
 dokumenty/
+documents/
+build/
+dist/
+package/
+help.spec
 .pytest_cache/
 __pycache__/
+*.deb
+*.db
 
 # pyenv
 .python-version

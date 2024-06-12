@@ -1,7 +1,7 @@
 import os
 
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton
+from PySide2.QtGui import QIcon
+from PySide2.QtWidgets import QLabel, QLineEdit, QMainWindow, QPushButton
 from schemas import DecisionDbSchema
 from tests.fixtures import decision_data as decission_fixture
 from widget.actions import generate_and_save_decision

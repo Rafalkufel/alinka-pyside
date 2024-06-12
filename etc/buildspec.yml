@@ -1,20 +1,6 @@
 version: 0.2
 
-env:
-  variables:
-    POETRY_VIRTUALENVS_CREATE: false
-
 phases:
-  install:
-    runtime-versions:
-      python: 3.10
-    commands:
-      - pip install poetry==1.4.0
-      - poetry install --with dev --no-interaction
-
   build:
     commands:
-      - python -m pytest .
-      - python -m black . --check
-      - python -m isort . --check
-      - python -m flake8 .
+      - make test
