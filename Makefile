@@ -8,6 +8,9 @@ help: ## Show this help
 test: ## Run all unit tests
 	docker-compose run app pytest .
 
+build: ## Build docker image
+	docker-compose build --no-cache
+
 run: ## Run application
 	docker-compose run app python app/main.py
 
