@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "alinka-pyside"
-version = "0.3.0"
+version = "0.3.1"
 description = "Application for Supporting Center for Children"
 authors = ["CodeForPoznań <hello@codeforpoznan.pl>"]
 
 [tool.poetry.dependencies]
 Jinja2 = "^3.1.2"
 pydantic = "^1.10.2"
-pyside6 = "^6.5.0"
+pyside2 = "^5.15.2.1"
 python = "3.10.9"
 SQLAlchemy = "^2.0.4"
 

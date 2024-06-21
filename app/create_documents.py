@@ -56,7 +56,12 @@ match args.document_type:
         raise Exception("Invalid document type.")
 
 Documents(
-    documents=[args.document_type, DocumentsTypes.ZARZADZANIE, DocumentsTypes.ZAWIADOMIENIE, DocumentsTypes.PROTOKOL],
+    documents_types=[
+        args.document_type,
+        DocumentsTypes.ZARZADZANIE,
+        DocumentsTypes.ZAWIADOMIENIE,
+        DocumentsTypes.PROTOKOL,
+    ],
     document_data=document_data,
     destination_path=settings.DOCUMENTS_PATH,
 ).create()

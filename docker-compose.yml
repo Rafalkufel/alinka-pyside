@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  app:
+    environment:
+      - DISPLAY=$DISPLAY
+    container_name: alinka-linux
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    command: python3 /opt/app/main.py
+
+    volumes:
+      - ".:/opt/"
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "./documents:/home/qtuser/Alinka-dokumenty"
+
+    user: qtuser
