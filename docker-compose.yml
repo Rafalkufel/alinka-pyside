@@ -15,5 +15,6 @@ services:
       - ".:/opt/"
       - "/tmp/.X11-unix:/tmp/.X11-unix"
       - "./documents:/home/qtuser/Alinka-dokumenty"
+      - "./:/home/qtuser/.alinka"
 
     user: qtuser
