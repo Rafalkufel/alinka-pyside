@@ -11,3 +11,6 @@ __pycache__/
 
 # pyenv
 .python-version
+
+# db files
+*.db
