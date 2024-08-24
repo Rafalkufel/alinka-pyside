@@ -26,9 +26,9 @@ class TestQuery:
     def test_create_decision_id_db(self):
         del decision_data["id"], decision_data["created_at"], decision_data["modified_at"]
         decision = create_decision_in_db(decision_data=decision_data)
-        assert decision.child_first_name == decision_data["child_first_name"]
+        assert decision.child_full_name == decision_data["child_full_name"]
 
     def test_update_decision_in_db(self):
         new_child_name = "new child name"
-        decision = update_decision_in_db(self.decision_1.id, decision_data={"child_first_name": new_child_name})
-        assert decision.child_first_name == new_child_name
+        decision = update_decision_in_db(self.decision_1.id, decision_data={"child_full_name": new_child_name})
+        assert decision.child_full_name == new_child_name

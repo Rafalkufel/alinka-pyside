@@ -9,8 +9,8 @@ class DecisionDbSchema(BaseModel):
     created_at: datetime
     modified_at: datetime
 
-    child_first_name: str
-    child_last_name: str
+    child_full_name: str
+    child_full_name_gen: str
     child_address: str
     child_city: str
     child_postal_code: str | None
@@ -30,13 +30,13 @@ class DecisionDbSchema(BaseModel):
 
     address_child_checkbox: bool = False
     address_first_parent_checkbox: bool = False
-    first_parent_first_name: str
-    first_parent_last_name: str
+    first_parent_full_name: str
+    first_parent_full_name_gen: str
     first_parent_address: str
     first_parent_city: str
     first_parent_postal_code: str | None
-    second_parent_first_name: str | None
-    second_parent_last_name: str | None
+    second_parent_full_name: str | None
+    second_parent_full_name_gen: str | None
     second_parent_address: str | None
     second_parent_city: str | None
     second_parent_postal_code: str | None
@@ -83,15 +83,8 @@ class AddressData(BaseModel):
 
 
 class PersonalData(AddressData):
-    first_name: str
-    last_name: str
-    full_name: str | None
-
-    @root_validator
-    def calculate_full_name(cls, values):
-        values["full_name"] = f"{values['first_name']} {values['last_name']}"
-
-        return values
+    full_name: str
+    full_name_gen: str
 
 
 class ChildData(PersonalData):

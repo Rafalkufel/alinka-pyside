@@ -27,8 +27,8 @@ class DecisionFactory(SQLAlchemyModelFactory):
         model = Decision
         sqlalchemy_session = db_session
 
-    child_first_name = faker.first_name()
-    child_last_name = faker.last_name()
+    child_full_name = faker.name()
+    child_full_name_gen = faker.name()
     child_city = faker.city()
     child_address = faker.street_address()
     child_postal_code = faker.postcode()
@@ -48,13 +48,13 @@ class DecisionFactory(SQLAlchemyModelFactory):
 
     address_child_checkbox = faker.pybool()
     address_first_parent_checkbox = faker.pybool()
-    first_parent_first_name = faker.first_name()
-    first_parent_last_name = faker.last_name()
+    first_parent_full_name = faker.name()
+    first_parent_full_name_gen = faker.name()
     first_parent_address = faker.street_address()
     first_parent_city = faker.city()
     first_parent_postal_code = faker.postcode()
-    second_parent_first_name = faker.first_name()
-    second_parent_last_name = faker.last_name()
+    second_parent_full_name = faker.name()
+    second_parent_full_name_gen = faker.name()
     second_parent_address = faker.street_address()
     second_parent_city = faker.city()
     second_parent_postal_code = faker.postcode()

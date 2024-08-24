@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
 
     def click_me(self):
         decission_data = DecisionDbSchema(**decission_fixture)
-        decission_data.child_first_name = self.input_line.text()
+        decission_data.child_full_name = self.input_line.text()
         decission_data.id = None
         generate_and_save_decision(decission_data, generate=True)
         self.result.setText("SUCCESS")
