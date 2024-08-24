@@ -13,19 +13,19 @@ from schemas import (
 def get_applicants_data(raw_documents_data: DecisionDbSchema) -> list[PersonalData]:
     applicants = [
         PersonalData(
-            first_name=raw_documents_data.first_parent_first_name,
-            last_name=raw_documents_data.first_parent_last_name,
+            full_name=raw_documents_data.first_parent_full_name,
+            full_name_gen=raw_documents_data.first_parent_full_name_gen,
             address=raw_documents_data.first_parent_address,
             city=raw_documents_data.first_parent_city,
             postal_code=raw_documents_data.first_parent_postal_code,
         )
     ]
-    first_name, last_name = raw_documents_data.second_parent_first_name, raw_documents_data.second_parent_last_name
-    if first_name and last_name:
+    full_name, full_name_gen = raw_documents_data.second_parent_full_name, raw_documents_data.second_parent_full_name_gen
+    if full_name and full_name_gen:
         applicants.append(
             PersonalData(
-                first_name=first_name,
-                last_name=last_name,
+                full_name=full_name,
+                full_name_gen=full_name_gen,
                 address=raw_documents_data.second_parent_address,
                 city=raw_documents_data.second_parent_city,
                 postal_code=raw_documents_data.second_parent_postal_code,
@@ -48,8 +48,8 @@ def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> Document
         city=raw_documents_data.child_city,
         postal_code=raw_documents_data.child_postal_code,
         student=raw_documents_data.child_student,
-        first_name=raw_documents_data.child_first_name,
-        last_name=raw_documents_data.child_last_name,
+        full_name=raw_documents_data.child_full_name,
+        full_name_gen=raw_documents_data.child_full_name_gen,
         pesel=raw_documents_data.child_pesel,
         profession=raw_documents_data.profession,
         birth_date=raw_documents_data.child_birth_date,

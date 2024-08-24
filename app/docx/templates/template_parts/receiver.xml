@@ -3,7 +3,7 @@
     <w:pStyle w:val="Recivers-main"/>
   </w:pPr>
   <w:r>
-    <w:t xml:space="preserve">{{ applicant_data.first_name }} {{ applicant_data.last_name }} </w:t>
+    <w:t xml:space="preserve">{{ applicant_data.full_name }}</w:t>
   </w:r>
 </w:p>
 <w:p>

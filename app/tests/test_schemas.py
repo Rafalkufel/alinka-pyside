@@ -68,7 +68,7 @@ class TestParentDescription:
         del common_data_fixture["applicants"][-1]
         applicants = common_data_fixture["applicants"]
         expected_description = (
-            f"{applicants[0]['first_name']} {applicants[0]['last_name']},"
+            f"{applicants[0]['full_name']},"
             f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['city']}"
         )
         common_data_fixture["address_child_checkbox"] = False
@@ -84,7 +84,7 @@ class TestParentDescription:
         applicants = common_data_fixture["applicants"]
         child = common_data_fixture["child"]
         expected_description = (
-            f"{applicants[0]['first_name']} {applicants[0]['last_name']},"
+            f"{applicants[0]['full_name']},"
             f" {child['address']}, {child['postal_code']} {child['city']}"
         )
         common_data_fixture["address_child_checkbox"] = True
@@ -101,8 +101,8 @@ class TestParentDescription:
         applicants = common_data_fixture["applicants"]
         child = common_data_fixture["child"]
         expected_description = (
-            f"{applicants[0]['first_name']} {applicants[0]['last_name']} i"
-            f" {applicants[1]['first_name']} {applicants[1]['last_name']},"
+            f"{applicants[0]['full_name']} i"
+            f" {applicants[1]['full_name']},"
             f" {child['address']}, {child['postal_code']} {child['city']}"
         )
         common_data_fixture["address_child_checkbox"] = True
@@ -115,8 +115,8 @@ class TestParentDescription:
     def test_parent_description_two_parents_diffrent_flat_as_child(self, common_data_fixture):
         applicants = common_data_fixture["applicants"]
         expected_description = (
-            f"{applicants[0]['first_name']} {applicants[0]['last_name']} i"
-            f" {applicants[1]['first_name']} {applicants[1]['last_name']},"
+            f"{applicants[0]['full_name']} i"
+            f" {applicants[1]['full_name']},"
             f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['city']}"
         )
         common_data_fixture["address_child_checkbox"] = False
@@ -129,9 +129,9 @@ class TestParentDescription:
     def test_parent_description_two_parents_each_different_flat(self, common_data_fixture):
         applicants = common_data_fixture["applicants"]
         expected_description = (
-            f"{applicants[0]['first_name']} {applicants[0]['last_name']},"
+            f"{applicants[0]['full_name']},"
             f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['city']},"
-            f" {applicants[1]['first_name']} {applicants[1]['last_name']},"
+            f" {applicants[1]['full_name']},"
             f" {applicants[1]['address']}, {applicants[1]['postal_code']} {applicants[1]['city']}"
         )
         common_data_fixture["address_child_checkbox"] = False
