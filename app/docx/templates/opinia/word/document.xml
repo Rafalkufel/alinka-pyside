@@ -6,7 +6,7 @@
         <w:pStyle w:val="Title-uppercase"/>
       </w:pPr>
       <w:r>
-        <w:t>OPINIA NR {{ no }}</w:t>
+        <w:t>OPINIA NR {{ decision_no }}</w:t>
       </w:r>
     </w:p>
     <w:p>

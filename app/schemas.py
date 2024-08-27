@@ -1,19 +1,21 @@
-from datetime import date, datetime, time
+from datetime import date
 
 from constants import ActivityForm, Issue, Reason
 from pydantic import BaseModel, Field, root_validator
 
 
 class DecisionDbSchema(BaseModel):
-    id: int
-    created_at: datetime
-    modified_at: datetime
+    class Config:
+        orm_mode = True
+
+    id: int | None
 
     child_full_name: str
     child_full_name_gen: str
     child_address: str
-    child_city: str
+    child_town: str
     child_postal_code: str | None
+    child_post: str | None
     child_pesel: str
     child_birth_date: date
     child_birth_place: str
@@ -25,54 +27,70 @@ class DecisionDbSchema(BaseModel):
     school_type: str
     school_name: str
     school_address: str
-    school_city: str
+    school_town: str
     school_postal_code: str
+    school_post: str | None
 
     address_child_checkbox: bool = False
     address_first_parent_checkbox: bool = False
     first_parent_full_name: str
     first_parent_full_name_gen: str
     first_parent_address: str
-    first_parent_city: str
+    first_parent_town: str
     first_parent_postal_code: str | None
+    first_parent_post: str | None
     second_parent_full_name: str | None
     second_parent_full_name_gen: str | None
     second_parent_address: str | None
-    second_parent_city: str | None
+    second_parent_town: str | None
     second_parent_postal_code: str | None
+    second_parent_post: str | None
 
     support_center_name_nominative: str | None
     support_center_name_genetive: str | None
     support_center_institute_name: str | None
     support_center_kurator: str | None
     support_center_address: str | None
-    support_center_city: str | None
+    support_center_town: str | None
     support_center_postal_code: str | None
 
     issue: str
     period: str
-    reasons: list
+    reasons: list[str]
     activity_form: str | None
-    no: str
+    decision_no: str
     application_date: date
     meeting_date: date
-    meeting_time: time
-    meeting_members: list
+    meeting_time: str
+    meeting_members: list[dict[str, str]]
 
+    file_no = str
+
+
+class SchoolDBSchema(BaseModel):
     class Config:
         orm_mode = True
+
+    id: int
+    school_parent_organisation: str | None
+    school_type: str
+    school_name: str
+    school_address: str
+    school_town: str
+    school_postal_code: str
+    school_post: str
 
 
 class AddressData(BaseModel):
     address: str
-    city: str
+    town: str
     postal_code: str
     post: str | None
     full_address: str | None
 
     @root_validator(pre=True)
     def calculate_post(cls, values):
-        values["post"] = f"{values['postal_code']} {values['city']}"
+        values["post"] = f"{values['postal_code']} {values['town']}"
         return values
 
     @root_validator
@@ -128,7 +146,7 @@ class MeetingMemberData(BaseModel):
 class MeetingData(BaseModel):
     members: list[MeetingMemberData]
     date: date
-    time: time
+    time: str
 
 
 class SupportCenterData(AddressData):
@@ -142,16 +160,17 @@ class SupportCenterData(AddressData):
 
 class DocumentData(BaseModel):
     # raw
+    id: int | None
     child: ChildData
+    school: SchoolData
+    applicants: list[PersonalData]
     address_child_checkbox: bool = False
     address_first_parent_checkbox: bool = False
     issue: Issue
     period: str
     reasons: list[Reason] = Field(None, description="Can be one or more reasons")
     activity_form: ActivityForm | None
-    no: str
-    school: SchoolData
-    applicants: list[PersonalData]
+    decision_no: str
     application_date: date
     meeting_data: MeetingData
     support_center: SupportCenterData
@@ -168,6 +187,7 @@ class DocumentData(BaseModel):
     parent_descriptions: str | None
     parents_names: str | None
     school_description: str | None
+    file_no: str | None
 
     @root_validator
     def check_activity_form_required(cls, values):

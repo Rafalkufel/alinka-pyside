@@ -6,7 +6,7 @@
         <w:pStyle w:val="Title-uppercase"/>
       </w:pPr>
       <w:r>
-        <w:t>ORZECZENIE NR {{ no }}</w:t>
+        <w:t>ORZECZENIE NR {{ decision_no }}</w:t>
       </w:r>
     </w:p>
     <w:p>

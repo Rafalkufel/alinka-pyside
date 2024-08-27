@@ -1,6 +1,6 @@
 from db.connection import db_session
-from db.models import Decision
-from schemas import DecisionDbSchema
+from db.models import Decision, School
+from schemas import DecisionDbSchema, SchoolDBSchema
 
 
 def get_decisions_list_from_db() -> list[DecisionDbSchema]:
@@ -30,3 +30,18 @@ def update_decision_in_db(decision_id: int, decision_data: dict) -> DecisionDbSc
         )
         decision = db.query(Decision).filter(Decision.id == decision_id).one()
         return DecisionDbSchema.from_orm(decision)
+
+
+def filter_schools_by_type(school_type: str | None = None) -> list[SchoolDBSchema]:
+    with db_session() as db:
+        query = db.query(School)
+        if school_type:
+            query = query.filter(School.school_type == school_type)
+
+        return [SchoolDBSchema.from_orm(school) for school in query]
+
+
+def get_school_by_name(school_name: str) -> SchoolDBSchema:
+    with db_session() as db:
+        school = db.query(School).filter(School.school_name == school_name).one_or_none()
+        return SchoolDBSchema.from_orm(school)

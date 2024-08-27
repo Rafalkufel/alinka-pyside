@@ -20,6 +20,9 @@ type=specjalne
 generate: ## Generate documents. Use `type=` params to create given type of document.
 	docker-compose run --rm app python app/create_documents.py --type ${type}
 
+populate_schools: ## Populate school db table with fixtures
+	docker-compose run app python app/scripts.py
+
 style: ## Run black, isort, flake8 linters
 	docker-compose run --rm app bash -c "black . && isort . && flake8 ."
 
