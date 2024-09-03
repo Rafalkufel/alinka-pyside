@@ -1,0 +1,8 @@
+services:
+  app:
+    container_name: alinka-linux
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    user: qtuser

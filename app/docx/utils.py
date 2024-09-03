@@ -20,7 +20,10 @@ def get_applicants_data(raw_documents_data: DecisionDbSchema) -> list[PersonalDa
             postal_code=raw_documents_data.first_parent_postal_code,
         )
     ]
-    full_name, full_name_gen = raw_documents_data.second_parent_full_name, raw_documents_data.second_parent_full_name_gen
+    full_name, full_name_gen = (
+        raw_documents_data.second_parent_full_name,
+        raw_documents_data.second_parent_full_name_gen,
+    )
     if full_name and full_name_gen:
         applicants.append(
             PersonalData(
