@@ -84,8 +84,7 @@ class TestParentDescription:
         applicants = common_data_fixture["applicants"]
         child = common_data_fixture["child"]
         expected_description = (
-            f"{applicants[0]['full_name']},"
-            f" {child['address']}, {child['postal_code']} {child['city']}"
+            f"{applicants[0]['full_name']}," f" {child['address']}, {child['postal_code']} {child['city']}"
         )
         common_data_fixture["address_child_checkbox"] = True
         common_data_fixture["address_first_parent_checkbox"] = address_first_parent_checkbox
