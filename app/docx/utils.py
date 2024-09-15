@@ -16,7 +16,7 @@ def get_applicants_data(raw_documents_data: DecisionDbSchema) -> list[PersonalDa
             full_name=raw_documents_data.first_parent_full_name,
             full_name_gen=raw_documents_data.first_parent_full_name_gen,
             address=raw_documents_data.first_parent_address,
-            city=raw_documents_data.first_parent_city,
+            town=raw_documents_data.first_parent_town,
             postal_code=raw_documents_data.first_parent_postal_code,
         )
     ]
@@ -30,7 +30,7 @@ def get_applicants_data(raw_documents_data: DecisionDbSchema) -> list[PersonalDa
                 full_name=full_name,
                 full_name_gen=full_name_gen,
                 address=raw_documents_data.second_parent_address,
-                city=raw_documents_data.second_parent_city,
+                town=raw_documents_data.second_parent_town,
                 postal_code=raw_documents_data.second_parent_postal_code,
             )
         )
@@ -48,7 +48,7 @@ def get_meeting_data(raw_documents_data: DecisionDbSchema) -> MeetingData:
 def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> DocumentData:
     child_data = ChildData(
         address=raw_documents_data.child_address,
-        city=raw_documents_data.child_city,
+        town=raw_documents_data.child_town,
         postal_code=raw_documents_data.child_postal_code,
         student=raw_documents_data.child_student,
         full_name=raw_documents_data.child_full_name,
@@ -60,7 +60,7 @@ def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> Document
     )
     school_data = SchoolData(
         address=raw_documents_data.school_address,
-        city=raw_documents_data.school_city,
+        town=raw_documents_data.school_town,
         postal_code=raw_documents_data.school_postal_code,
         school_name=raw_documents_data.school_name,
         parent_organisation=raw_documents_data.school_parent_organisation,
@@ -76,7 +76,7 @@ def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> Document
         name_genetive=raw_documents_data.support_center_name_genetive,
         kurator=raw_documents_data.support_center_kurator,
         address=raw_documents_data.support_center_address,
-        city=raw_documents_data.support_center_city,
+        town=raw_documents_data.support_center_town,
         postal_code=raw_documents_data.support_center_postal_code,
         institute_name=raw_documents_data.support_center_institute_name,
     )
@@ -87,7 +87,7 @@ def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> Document
         issue=raw_documents_data.issue,
         reasons=raw_documents_data.reasons,
         activity_form=raw_documents_data.activity_form,
-        no=raw_documents_data.no,
+        decision_no=raw_documents_data.decision_no,
         school=school_data,
         applicants=get_applicants_data(raw_documents_data),
         application_date=raw_documents_data.application_date,

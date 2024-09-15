@@ -41,7 +41,7 @@
         <w:pStyle w:val="Title-lowercase"/>
       </w:pPr>
       <w:r>
-        <w:t>Zarządzenie nr {{ no }}/2020</w:t>
+        <w:t>Zarządzenie nr {{ decision_no }}</w:t>
       </w:r>
     </w:p>
     <w:p>

@@ -13,7 +13,7 @@ class TestAddressData:
     )
     def test_address_data_full_address(self, entity_with_address):
         address_data = entity_with_address.copy()
-        expected_address = f"{address_data['address']}, {address_data['postal_code']} {address_data['city']}"
+        expected_address = f"{address_data['address']}, {address_data['postal_code']} {address_data['town']}"
 
         address = AddressData(**address_data)
 
@@ -24,7 +24,7 @@ class TestAddressData:
     )
     def test_address_data_post(self, entity_with_address):
         address_data = entity_with_address.copy()
-        expected_address = f"{address_data['postal_code']} {address_data['city']}"
+        expected_address = f"{address_data['postal_code']} {address_data['town']}"
 
         address = AddressData(**address_data)
 
@@ -69,7 +69,7 @@ class TestParentDescription:
         applicants = common_data_fixture["applicants"]
         expected_description = (
             f"{applicants[0]['full_name']},"
-            f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['city']}"
+            f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['town']}"
         )
         common_data_fixture["address_child_checkbox"] = False
         common_data_fixture["address_first_parent_checkbox"] = address_first_parent_checkbox
@@ -84,7 +84,7 @@ class TestParentDescription:
         applicants = common_data_fixture["applicants"]
         child = common_data_fixture["child"]
         expected_description = (
-            f"{applicants[0]['full_name']}," f" {child['address']}, {child['postal_code']} {child['city']}"
+            f"{applicants[0]['full_name']}," f" {child['address']}, {child['postal_code']} {child['town']}"
         )
         common_data_fixture["address_child_checkbox"] = True
         common_data_fixture["address_first_parent_checkbox"] = address_first_parent_checkbox
@@ -102,7 +102,7 @@ class TestParentDescription:
         expected_description = (
             f"{applicants[0]['full_name']} i"
             f" {applicants[1]['full_name']},"
-            f" {child['address']}, {child['postal_code']} {child['city']}"
+            f" {child['address']}, {child['postal_code']} {child['town']}"
         )
         common_data_fixture["address_child_checkbox"] = True
         common_data_fixture["address_first_parent_checkbox"] = address_first_parent_checkbox
@@ -116,7 +116,7 @@ class TestParentDescription:
         expected_description = (
             f"{applicants[0]['full_name']} i"
             f" {applicants[1]['full_name']},"
-            f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['city']}"
+            f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['town']}"
         )
         common_data_fixture["address_child_checkbox"] = False
         common_data_fixture["address_first_parent_checkbox"] = True
@@ -129,9 +129,9 @@ class TestParentDescription:
         applicants = common_data_fixture["applicants"]
         expected_description = (
             f"{applicants[0]['full_name']},"
-            f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['city']},"
+            f" {applicants[0]['address']}, {applicants[0]['postal_code']} {applicants[0]['town']},"
             f" {applicants[1]['full_name']},"
-            f" {applicants[1]['address']}, {applicants[1]['postal_code']} {applicants[1]['city']}"
+            f" {applicants[1]['address']}, {applicants[1]['postal_code']} {applicants[1]['town']}"
         )
         common_data_fixture["address_child_checkbox"] = False
         common_data_fixture["address_first_parent_checkbox"] = False

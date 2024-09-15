@@ -29,7 +29,7 @@ class DecisionFactory(SQLAlchemyModelFactory):
 
     child_full_name = faker.name()
     child_full_name_gen = faker.name()
-    child_city = faker.city()
+    child_town = faker.city()
     child_address = faker.street_address()
     child_postal_code = faker.postcode()
     child_pesel = faker.pesel()
@@ -43,35 +43,36 @@ class DecisionFactory(SQLAlchemyModelFactory):
     school_type = FuzzySchoolType()
     school_name = FuzzySchoolName()
     school_address = faker.street_address()
-    school_city = faker.city()
+    school_town = faker.city()
     school_postal_code = faker.postcode()
+    school_post = faker.city()
 
     address_child_checkbox = faker.pybool()
     address_first_parent_checkbox = faker.pybool()
     first_parent_full_name = faker.name()
     first_parent_full_name_gen = faker.name()
     first_parent_address = faker.street_address()
-    first_parent_city = faker.city()
+    first_parent_town = faker.city()
     first_parent_postal_code = faker.postcode()
     second_parent_full_name = faker.name()
     second_parent_full_name_gen = faker.name()
     second_parent_address = faker.street_address()
-    second_parent_city = faker.city()
+    second_parent_town = faker.city()
     second_parent_postal_code = faker.postcode()
 
     support_center_name_nominative = FuzzySupportCenterNameNominative()
     support_center_name_genetive = FuzzySupportCenterNameGenetive()
     support_center_kurator = FuzzySupportCenterKurator()
     support_center_address = faker.street_address()
-    support_center_city = faker.city()
+    support_center_town = faker.city()
     support_center_postal_code = faker.postcode()
 
     issue = faker.enum(Issue).value
     activity_form = faker.enum(ActivityForm).value
-    no = f"PPP.{datetime.now().strftime('%Y')}.AC.{faker.pyint(1,500)}"
+    decision_no = f"PPP.{datetime.now().strftime('%Y')}.AC.{faker.pyint(1,500)}"
     application_date = faker.past_date(start_date="-15d")
     meeting_date = date.today()
-    meeting_time = faker.time_object()
+    meeting_time = faker.time_object().isoformat()
     meeting_members = FuzzyMeetingMember()
 
     @lazy_attribute

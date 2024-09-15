@@ -14,7 +14,7 @@
         <w:pStyle w:val="numberOfProtocol"/>
       </w:pPr>
       <w:r>
-        <w:t>PROTOKÓŁ nr {{ no }} 19.20 nr karty:...........</w:t>
+        <w:t>PROTOKÓŁ nr {{ decision_no }}, nr karty:...........</w:t>
       </w:r>
     </w:p>
     <w:p>
