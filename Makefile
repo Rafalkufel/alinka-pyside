@@ -40,3 +40,12 @@ installer: ## Create installer
 
 installer-name: ## Display name of installer of current version of app
 	@echo $(INSTALLER_FILE_NAME)
+
+bash:
+	docker compose run --rm app bash
+
+create-migration:
+	docker compose run --rm app bash -c "cd ./app && alembic revision --autogenerate -m \"$(message)\""
+
+migrate:
+	docker compose run --rm app bash -c "cd ./app && alembic upgrade head"
