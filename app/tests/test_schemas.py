@@ -148,12 +148,14 @@ class TestMultipleDisabilityCheck:
             (
                 "uniemozliwiajacy and utrudniajacy together",
                 [Reason.UNIEMOZLIWIAJACY, Reason.ZNACZNIE_UTRUDNIAJACY],
-                f"Value error, Reasons: {Reason.UNIEMOZLIWIAJACY}, {Reason.ZNACZNIE_UTRUDNIAJACY} can't be issued together.",
+                f"Value error, Reasons: {Reason.UNIEMOZLIWIAJACY}, {Reason.ZNACZNIE_UTRUDNIAJACY} "
+                "can't be issued together.",
             ),
             (
                 "two intelectual reasons together",
                 [Reason.SLABOSLYSZACE, Reason.UMIARKOWANE, Reason.LEKKIE],
-                f"Value error, Two intelecutal reasons: {Reason.UMIARKOWANE}, {Reason.LEKKIE} can't be issued together.",
+                f"Value error, Two intelecutal reasons: {Reason.UMIARKOWANE}, {Reason.LEKKIE} "
+                "can't be issued together.",
             ),
             (
                 "profound disability coupled with other reasons",

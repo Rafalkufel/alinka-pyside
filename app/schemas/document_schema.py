@@ -129,7 +129,10 @@ class DocumentData(BaseModel):
                 raise ValueError(f"Two intelecutal reasons: {', '.join(intelecual_reasons)} can't be issued together.")
         if Reason.GLEBOKIE in self.reasons and len(self.reasons) > 1:
             raise ValueError("Profound intelectual disability can't be coupled.")
-        if any([reason for reason in self.reasons if reason in Reason.social_maladjustment_reasons()]) and len(self.reasons) > 1:
+        if (
+            any([reason for reason in self.reasons if reason in Reason.social_maladjustment_reasons()])
+            and len(self.reasons) > 1
+        ):
             raise ValueError("Social maladjustment reasons can't be coupled with any other reason.")
         return self
 
@@ -179,14 +182,25 @@ class DocumentData(BaseModel):
             else:
                 parents_description = f"{parents_names}, {self.applicants[0].full_address}"
         else:
-            parents_description = ", ".join([f"{parent.full_name}, {parent.full_address}" for parent in self.applicants])
+            parents_description = ", ".join(
+                [f"{parent.full_name}, {parent.full_address}" for parent in self.applicants]
+            )
         self.parent_descriptions = parents_description
         return self
 
     @model_validator(mode="after")
     def calculate_school_description(self) -> "DocumentData":
         self.school.school_description = ", ".join(
-            [value for value in [self.school.school_name, self.school.full_address, self.child.klass, self.child.profession] if value]
+            [
+                value
+                for value in [
+                    self.school.school_name,
+                    self.school.full_address,
+                    self.child.klass,
+                    self.child.profession,
+                ]
+                if value
+            ]
         )
         return self
 
