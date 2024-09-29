@@ -5,4 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
 
+    volumes:
+      - ".:/opt/"
+
     user: qtuser

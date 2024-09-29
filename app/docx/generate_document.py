@@ -42,7 +42,7 @@ class DocumentGenerator:
         return os.path.join(TEMPLATES_BASE_PATH, self.document_type, "word", "footnotes.xml")
 
     def get_rendered_document(self):
-        data = self.document_data.dict()
+        data = self.document_data.model_dump()
         return self.template.render(data)
 
     def generate(self):

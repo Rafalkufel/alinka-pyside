@@ -13,6 +13,6 @@ def generate_documents(record_id: str) -> None:
 
     Documents(
         documents_types=[document_data.issue, *list_of_documents_to_generate],
-        document_data=document_data.dict(),
+        document_data=document_data.model_dump(),
         destination_path=destination_path,
     ).create()
