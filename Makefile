@@ -8,7 +8,11 @@ help: ## Show this help
 
 
 test: ## Run all unit tests
-	docker-compose -f docker-compose.text.yml run --rm app pytest .
+	docker-compose -f docker-compose.test.yml run --rm app pytest .
+
+name=
+test-case: ## Run single test unit
+	docker-compose -f docker-compose.test.yml run --rm app pytest -k ${name}
 
 build: ## Build docker image
 	docker-compose build --no-cache

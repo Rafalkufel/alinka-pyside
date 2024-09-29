@@ -5,11 +5,12 @@ description = "Application for Supporting Center for Children"
 authors = ["CodeForPoznań <hello@codeforpoznan.pl>"]
 
 [tool.poetry.dependencies]
-Jinja2 = "^3.1.2"
-pydantic = "^1.10.2"
-pyside2 = "^5.15.2.1"
+Jinja2 = "^3.1.4"
+pydantic = "2.9.2"
+pyside2 = "5.15.2.1"
 python = "3.10.9"
-SQLAlchemy = "^2.0.4"
+SQLAlchemy = "2.0.4"
+pydantic-settings = "^2.5.2"
 
 [tool.poetry.group.dev]
 optional = true

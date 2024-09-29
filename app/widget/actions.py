@@ -62,14 +62,14 @@ def generate_and_save_decision(form_data: DocumentData, generate: bool = False) 
         application_date=form_data.application_date,
         meeting_date=meeting_data.date,
         meeting_time=meeting_data.time,
-        meeting_members=[m.dict() for m in meeting_data.members],
+        meeting_members=[m.model_dump() for m in meeting_data.members],
         file_no=form_data.file_no,
     )
 
     if decision_data.id:
-        decision = update_decision_in_db(decision_data.dict())
+        decision = update_decision_in_db(decision_data.model_dump())
     else:
-        decision = create_decision_in_db(decision_data.dict())
+        decision = create_decision_in_db(decision_data.model_dump())
 
     if generate:
         generate_documents(decision.id)
