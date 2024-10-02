@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 from constants import ActivityForm, Issue, Reason
-from db.models import Decision
+from db.models import Decision, SupportCenter
 from db.queries import db_session
 from factory import lazy_attribute
 from factory.alchemy import SQLAlchemyModelFactory
@@ -66,6 +66,7 @@ class DecisionFactory(SQLAlchemyModelFactory):
     support_center_address = faker.street_address()
     support_center_town = faker.city()
     support_center_postal_code = faker.postcode()
+    support_center_post = faker.city()
 
     issue = faker.enum(Issue).value
     activity_form = faker.enum(ActivityForm).value
@@ -128,3 +129,24 @@ class DecisionFactory(SQLAlchemyModelFactory):
             db_session.commit()
 
         return obj
+
+
+class SupportCenterFactory(SQLAlchemyModelFactory):
+    class Meta:
+        model = SupportCenter
+        sqlalchemy_session = db_session
+
+    province_id = faker.pyint(0, 1000)
+    district_id = faker.pyint(0, 1000)
+    rspo = faker.pyint(0, 10000)
+    name_nominative = FuzzySupportCenterNameNominative()
+    name_genetive = FuzzySupportCenterNameGenetive()
+    kurator = FuzzySupportCenterKurator()
+    address = faker.street_address()
+    town = faker.city()
+    postal_code = faker.postcode()
+    post = faker.city()
+
+    @lazy_attribute
+    def institute_name(self):
+        return f"Zespół Orzekający przy {self.name_genetive}"

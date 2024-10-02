@@ -27,6 +27,10 @@ class LabeledInputComponent(QFrame):
     def text(self) -> str:
         return self.line_edit.text()
 
+    @text.setter
+    def text(self, text):
+        self.line_edit.setText(text)
+
     def clear(self) -> None:
         self.line_edit.clear()
 

@@ -1,5 +1,7 @@
 from enum import Enum
 
+RPSO_SUPPORT_CENTER_TYPE_ID = 48
+
 
 class DocumentsTypes(Enum):
     SPECJALNE = "specjalne"

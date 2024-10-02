@@ -1,3 +1,4 @@
+from db.queries import get_support_center_data
 from PySide2.QtWidgets import QTabWidget, QWidget
 from schemas import DocumentData, SupportCenterData
 from widget.containers.main_body.content.application.application_tabs import (
@@ -9,7 +10,7 @@ from widget.containers.main_body.content.application.application_tabs import (
 
 
 class ApplicationContainer(QTabWidget):
-    def __init__(self, parent: QWidget):
+    def __init__(self, parent: QWidget, visible: bool = False):
         super().__init__(parent)
         self.id = None
         self.child_tab_container = ChildDataTabContainer(self)
@@ -22,20 +23,13 @@ class ApplicationContainer(QTabWidget):
         self.addTab(self.application_tab_container, "Wniosek")
         self.addTab(self.meeting_tab_container, "Zespół")
 
+        if not visible:
+            self.setVisible(visible)
+
     @property
     def document_data(self) -> DocumentData:
-        # to decide where we want to store static data like supoort center address
-        # to refactor later
-        support_center_data = SupportCenterData(
-            address="pl. Słoneczna 620",
-            town="Żywiec",
-            postal_code="82-637",
-            post=None,
-            name_nominative="Miejska Poradnia Psychologiczno - Pedagogiczna w Wejherowo",
-            name_genetive="Powiatowej Poradni Psychologiczno - Pedagogicznej w Ząbki",
-            institute_name="Zespół Orzekający przy Powiatowej Poradni Psychologiczno - Pedagogicznej w Ząbki",
-            kurator="Gdańsku, plac Wiśniowa 65/54, 66-804 Bielsko-Biała",
-        )
+        support_center_data = get_support_center_data()
+        support_center_data = SupportCenterData(**support_center_data.model_dump())
 
         return DocumentData(
             id=1,

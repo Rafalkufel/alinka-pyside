@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     DB_FILE_NAME: str = "alinka.db"
     PERSISTENT_DATA_DIR: str = ".alinka"
     DOCUMENT_DIR_NAME: str = "Alinka-dokumenty"
+    RSPO_DOMAIN: str = "https://rspo.gov.pl/"
 
     DOCUMENTS_PATH: str = os.path.join(USER_HOME_DIR, DOCUMENT_DIR_NAME)
     PERSISTENT_DATA_PATH: str = os.path.join(USER_HOME_DIR, PERSISTENT_DATA_DIR)
