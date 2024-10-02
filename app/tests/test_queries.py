@@ -2,9 +2,12 @@ from db.queries import (
     create_decision_in_db,
     get_decision_data_from_db,
     get_decisions_list_from_db,
+    get_support_center_data,
     update_decision_in_db,
+    upsert_support_center,
 )
-from tests.factories import DecisionFactory
+from schemas.db_schema import SupportCenterDbSchema
+from tests.factories import DecisionFactory, SupportCenterFactory
 from tests.fixtures import decision_data
 
 
@@ -32,3 +35,49 @@ class TestQuery:
         new_child_name = "new child name"
         decision = update_decision_in_db(self.decision_1.id, decision_data={"child_full_name": new_child_name})
         assert decision.child_full_name == new_child_name
+
+    def test_upsert_support_center__not_existing(self):
+        support_center_data = SupportCenterDbSchema(
+            province_id=5,
+            district_id=3,
+            rspo=12,
+            name_nominative="Poradnia Psychologiczno - Pedagogiczna w Kłecku",
+            name_genetive="Poradni Psychologiczno - Pedagogicznej w Kłecku",
+            institute_name="zespół orzekający przy Poradni Psychologiczno - Pedagogicznej w Kłecku",
+            kurator="kurator w Poznaniu",
+            address="ul. Urocza 12",
+            town="Kłecko",
+            postal_code="78-222",
+            post="Kłecko",
+        )
+
+        support_center = upsert_support_center(support_center_data.model_dump())
+        assert support_center.name_nominative == support_center_data.name_nominative
+
+    def test_upsert_support_center__existing(self):
+        SupportCenterFactory()
+
+        support_center_data = SupportCenterDbSchema(
+            province_id=5,
+            district_id=3,
+            rspo=12,
+            name_nominative="Poradnia Psychologiczno - Pedagogiczna w Kłecku",
+            name_genetive="Poradni Psychologiczno - Pedagogicznej w Kłecku",
+            institute_name="zespół orzekający przy Poradni Psychologiczno - Pedagogicznej w Kłecku",
+            kurator="kurator w Poznaniu",
+            address="ul. Urocza 12",
+            town="Kłecko",
+            postal_code="78-222",
+            post="Kłecko",
+        )
+
+        support_center = upsert_support_center(support_center_data.model_dump())
+        assert support_center.name_nominative == support_center_data.name_nominative
+
+    def test_get_support_center__exists(self):
+        SupportCenterFactory()
+
+        assert get_support_center_data()
+
+    def test_get_support_center__not_exists(self):
+        assert not get_support_center_data()

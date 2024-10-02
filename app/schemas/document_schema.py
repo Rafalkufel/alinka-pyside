@@ -72,6 +72,9 @@ class MeetingData(BaseModel):
 
 
 class SupportCenterData(AddressData):
+    district_id: int | None = None
+    province_id: int | None = None
+    rspo: int | None = None
     name_nominative: str = Field(..., description="ie Poradnia Psychologiczno - Pedagogiczna w Poznaniu")
     name_genetive: str = Field(..., description="ie Poradni Psychologiczno - Pedagogicznej w Poznaniu")
     institute_name: str = Field(

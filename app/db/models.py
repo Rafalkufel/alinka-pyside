@@ -84,3 +84,20 @@ class School(Base):
     school_town = Column(String(128), nullable=False)
     school_postal_code = Column(String(12), nullable=False)
     school_post = Column(String(128), nullable=False)
+
+
+class SupportCenter(Base):
+    __tablename__ = "support_center"
+
+    id = Column(Integer(), primary_key=True, autoincrement=True)
+    district_id = Column(Integer(), nullable=True)
+    province_id = Column(Integer(), nullable=True)
+    rspo = Column(Integer(), nullable=True)
+    name_nominative = Column(String(1024), nullable=False)
+    name_genetive = Column(String(1024), nullable=False)
+    institute_name = Column(String(1024), nullable=False)
+    kurator = Column(String(1024), nullable=False)
+    address = Column(String(1024), nullable=False)
+    town = Column(String(128), nullable=False)
+    postal_code = Column(String(12), nullable=False)
+    post = Column(String(128), nullable=False)

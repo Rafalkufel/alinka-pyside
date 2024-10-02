@@ -1,7 +1,7 @@
 from db.queries import get_school_by_name
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QVBoxLayout, QWidget
-from schemas import ChildData, SchoolData, SchoolDBSchema
+from schemas import ChildData, SchoolData, SchoolDbSchema
 from widget.containers.main_body.content.application.application_tabs.child_tab.child_data_group import (
     ChildDataGroupContainer,
 )
@@ -45,7 +45,7 @@ class ChildDataTabContainer(QWidget):
     @property
     def school_data(self) -> SchoolData:
         selected_school_name = self.school_data_group.school.combobox.currentText()
-        school: SchoolDBSchema = get_school_by_name(selected_school_name)
+        school: SchoolDbSchema = get_school_by_name(selected_school_name)
         return SchoolData(
             address=school.school_address,
             town=school.school_town,
