@@ -2,7 +2,7 @@ from logging.config import fileConfig
 
 from alembic import context
 from config import settings
-from db.models import Base, Decision, School  # noqa: F401
+from db.models import Base, Decision, School, SupportCenter  # noqa: F401
 from sqlalchemy import engine_from_config, pool
 
 # this is the Alembic Config object, which provides
