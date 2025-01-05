@@ -44,4 +44,4 @@ class SchoolDataGroupContainer(QGroupBox):
         selected_school_type = self.school_type.combobox.currentText()
         self.school.combobox.clear()
         schools = filter_schools_by_type(selected_school_type)
-        self.school.combobox.addItems([school.school_name for school in schools])
+        self.school.combobox.addItems([school.name for school in schools])

@@ -23,8 +23,22 @@ class District(BaseEntity):
     pass
 
 
+class Commune(BaseEntity):
+    pass
+
+
+class InstitutionType(BaseEntity):
+    is_lead_authority: bool = Field(..., validation_alias="isLeadAuthority")
+    is_transferring_rspo_authority: bool = Field(..., validation_alias="isTransferringRSPOAuthority")
+    is_rspo_institution: bool = Field(..., validation_alias="isRSPOInstitution")
+    is_art_school: bool = Field(..., validation_alias="isArtSchool")
+    is_school: bool = Field(..., validation_alias="isSchool")
+    is_primary_school: bool = Field(..., validation_alias="isPrimarySchool")
+    is_secondary_school: bool = Field(..., validation_alias="isSecondarySchool")
+
+
 class Institution(BaseEntity):
-    rspo: int
+    rspo_id: int = Field(..., validation_alias="rspo")
     type: BaseEntity | None
     postal_code: str = Field(..., validation_alias="hqAddressZipCode")
     post: str = Field(..., validation_alias="hqAddressPostal")
@@ -41,6 +55,7 @@ class Institution(BaseEntity):
 class InstitutionRequestBody(BaseModel):
     district_id: int = Field(None, serialization_alias="districtId")
     province_id: int = Field(None, serialization_alias="stateId")
+    commune_id: int = Field(None, serialization_alias="communeId")
     institution_type_ids: list[int] | None = Field(None, serialization_alias="institutionTypeIdList")
     rspo: int | None = None
 
@@ -48,3 +63,8 @@ class InstitutionRequestBody(BaseModel):
 class InstitutionResponse(BaseModel):
     total: int = Field(..., validation_alias="totalCount")
     items: list[Institution]
+
+
+class InstitutionDetails(Institution):
+    type: BaseEntity = Field(None, validation_alias="institutionType")
+    parent_organisation_name: str = Field(None, validation_alias=AliasPath("parentInstitution", "name"))

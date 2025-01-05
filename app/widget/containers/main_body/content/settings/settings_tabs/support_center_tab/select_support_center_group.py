@@ -49,7 +49,7 @@ class SelectSupportCenterGroup(QGroupBox):
         selected_province_id = self.province_combobox.combobox.currentData()
         selected_district_id = self.district_combobox.combobox.currentData()
         self.support_center_combobox.combobox.clear()
-        self.support_centers = rspo_client.list_institution(
+        self.support_centers = rspo_client.list_institutions(
             body=InstitutionRequestBody(
                 province_id=selected_province_id,
                 district_id=selected_district_id,

@@ -62,9 +62,9 @@ def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> Document
         address=raw_documents_data.school_address,
         town=raw_documents_data.school_town,
         postal_code=raw_documents_data.school_postal_code,
-        school_name=raw_documents_data.school_name,
+        name=raw_documents_data.school_name,
         parent_organisation=raw_documents_data.school_parent_organisation,
-        school_type=raw_documents_data.school_type,
+        type=raw_documents_data.school_type,
     )
     meeting_data = MeetingData(
         members=[MeetingMemberData(**member_data) for member_data in raw_documents_data.meeting_members],

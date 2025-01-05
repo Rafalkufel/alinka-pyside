@@ -15,7 +15,7 @@ test-case: ## Run single test unit
 	docker-compose -f docker-compose.test.yml run --rm app pytest -k ${name}
 
 build: ## Build docker image
-	docker-compose build --no-cache
+	docker compose build --no-cache
 
 run: ## Run application
 	docker-compose up
@@ -44,7 +44,8 @@ installer-name: ## Display name of installer of current version of app
 bash:
 	docker compose run --rm app bash
 
-create-migration:
+message=auto
+create-migration: ## Generate migration. Add `message` to migration, ie. `make create-migration message=my_message`
 	docker compose run --rm app bash -c "cd ./app && alembic revision --autogenerate -m \"$(message)\""
 
 migrate:

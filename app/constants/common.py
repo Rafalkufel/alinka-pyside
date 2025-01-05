@@ -282,6 +282,10 @@ class ActivityForm(Enum):
     ZESPOLOWE = "zespolowe"
 
 
+class RSPOSchoolTypes(str, Enum):
+    PRZEDSZKOLE = "Przedszkole"
+
+
 class SchoolTypes(Enum):
     PRZEDSZKOLE = "przedszkole"
     SZKOLA_PODSTAWOWA = "szkoła podstawowa"
