@@ -8,6 +8,7 @@ child_data = {
     "birth_place": "Pachy Wielkie",
     "town": "Poznań",
     "postal_code": "61-854",
+    "post": "Poznań",
     "address": "Mostowa 38",
     "klass": "3b",
     "profession": "murarz",
@@ -28,6 +29,7 @@ applicants_data = [
         "full_name_gen": "Tomasza Rzeźniczaka",
         "town": "Studnia",
         "postal_code": "55-789",
+        "post": "Studnia",
         "address": "Wielka 4/6",
     },
     {
@@ -35,6 +37,7 @@ applicants_data = [
         "full_name_gen": "Adelajdy Słoneczko",
         "town": "Sadowisko",
         "postal_code": "15-671",
+        "post": "Sadowisko",
         "address": "Odnowy Stare, ul. Zamkowa 15/6a",
     },
 ]
@@ -55,6 +58,7 @@ support_center_data = {
     "institute_name": "Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Poznaniu",
     "town": "Poznań",
     "postal_code": "12-345",
+    "post": "Poznań",
     "address": "ul. Zbąszyńska 11",
     "kurator": "Poznaniu, ul Kościuszki 38, 64-400 Poznań",
 }

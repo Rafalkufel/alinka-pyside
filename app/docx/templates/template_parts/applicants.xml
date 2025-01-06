@@ -25,7 +25,7 @@
     <w:ind w:left="3600" />
   </w:pPr>
   <w:r>
-    <w:t>{{ applicant_data.postal_code }} {{applicant_data.city}}</w:t>
+    <w:t>{{ applicant_data.postal_code }} {{applicant_data.town}}</w:t>
   </w:r>
 </w:p>
 <w:p>
