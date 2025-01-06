@@ -19,17 +19,6 @@ class TestAddressData:
 
         assert address.full_address == expected_address
 
-    @pytest.mark.parametrize(
-        "entity_with_address", [child_data, support_center_data, applicants_data[0], applicants_data[1], school_data]
-    )
-    def test_address_data_post(self, entity_with_address):
-        address_data = entity_with_address.copy()
-        expected_address = f"{address_data['postal_code']} {address_data['town']}"
-
-        address = AddressData(**address_data)
-
-        assert address.post == expected_address
-
 
 class TestChildDateOfBirth:
     @pytest.mark.parametrize(

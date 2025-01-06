@@ -11,6 +11,6 @@
     <w:pStyle w:val="City-and-date"/>
     </w:pPr>
     <w:r>
-    <w:t>{{ support_center.city }}, {{ meeting_data.date.strftime("%Y.%m.%d") }}</w:t>
+    <w:t>{{ support_center.town }}, {{ meeting_data.date.strftime("%Y.%m.%d") }}</w:t>
     </w:r>
 </w:p>

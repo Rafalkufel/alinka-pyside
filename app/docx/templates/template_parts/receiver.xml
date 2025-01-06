@@ -19,7 +19,7 @@
     <w:pStyle w:val="Recivers-main"/>
   </w:pPr>
   <w:r>
-    <w:t xml:space="preserve">{{ applicant_data.address }} {{ applicant_data.postal_code }} {{ applicant_data.city }}</w:t>
+    <w:t xml:space="preserve">{{ applicant_data.full_address }}</w:t>
   </w:r>
 </w:p>
 <w:p>
