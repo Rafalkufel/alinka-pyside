@@ -1,6 +1,7 @@
 from PySide2.QtWidgets import QTabWidget, QWidget
 
-from .settings_tabs import SchoolTabContainer, SupportCenterTabContainer
+from .settings_tabs import SchoolTabContainer, SupportCenterTabContainer, TeamMemberTabContainer
+from 
 
 
 class SettingsContainer(QTabWidget):
@@ -9,8 +10,10 @@ class SettingsContainer(QTabWidget):
         self.content_container = parent
         self.support_center_tab_container = SupportCenterTabContainer(self)
         self.schools_tab_container = SchoolTabContainer(self)
+        self.team_member_tab_container = TeamMemberTabContainer(self)
         self.addTab(self.support_center_tab_container, "Dane poradni")
         self.addTab(self.schools_tab_container, "Szkoły")
+        self.addTab(self.team_member_tab_container, "Zespół orzekający")
 
         if not visible:
             self.setVisible(False)
