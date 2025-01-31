@@ -30,11 +30,11 @@ class PersonalData(AddressData):
 class ChildData(PersonalData):
     pesel: str
     birth_place: str
-    klass: str | None = Field(None, description="ie 3b or IVa")
+    klass: str | None = Field(None, examples=["3b", "IVa"])
     student: bool
     birth_date: date | None = None
     profession: str | None = None
-    student_description_genetive: str | None = Field(None, description="'ucznia' or 'dziecka'")
+    student_description_genetive: str | None = Field(None, examples=["ucznia", "dziecka"])
 
     @model_validator(mode="after")
     def calculate_student_description_genetive(self) -> "ChildData":
@@ -54,15 +54,17 @@ class ChildData(PersonalData):
 
 
 class SchoolData(AddressData):
-    parent_organisation: str | None = Field(None, description="ie 'Zespół Szkół Budowlanych'")
-    school_type: str = Field(..., description=" ie 'przedszkole', 'szkoła podstawowa'")
-    school_name: str
-    school_description: str | None = None
+    rspo_id: int | None = None
+    rspo_type_id: int | None = None
+    parent_organisation_name: str | None = Field(None, examples=["Zespół Szkół Budowlanych"])
+    type: str = Field(..., examples=["przedszkole", "szkoła podstawowa"])
+    name: str
+    description: str | None = None
 
 
 class MeetingMemberData(BaseModel):
-    name: str = Field(..., description="ie Krystyna Czarnecka")
-    function: str = Field(..., description="ie psycholog, logopeda")
+    name: str = Field(..., examples=["Krystyna Czarnecka"])
+    function: str = Field(..., examples=["psycholog", "logopeda"])
 
 
 class MeetingData(BaseModel):
@@ -75,10 +77,10 @@ class SupportCenterData(AddressData):
     district_id: int | None = None
     province_id: int | None = None
     rspo: int | None = None
-    name_nominative: str = Field(..., description="ie Poradnia Psychologiczno - Pedagogiczna w Poznaniu")
-    name_genetive: str = Field(..., description="ie Poradni Psychologiczno - Pedagogicznej w Poznaniu")
+    name_nominative: str = Field(..., examples=["Poradnia Psychologiczno - Pedagogiczna w Poznaniu"])
+    name_genetive: str = Field(..., examples=["Poradni Psychologiczno - Pedagogicznej w Poznaniu"])
     institute_name: str = Field(
-        ..., description="ie Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Poznaniu"
+        ..., examples=["Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Poznaniu"]
     )
     kurator: str
 
@@ -93,21 +95,21 @@ class DocumentData(BaseModel):
     address_first_parent_checkbox: bool = False
     issue: Issue
     period: str
-    reasons: list[Reason] = Field(None, description="ie Can be one or more reasons")
+    reasons: list[Reason] = Field(None, description="Can be one or more reasons")
     activity_form: ActivityForm | None = None
     decision_no: str
     application_date: date
     meeting_data: MeetingData
     support_center: SupportCenterData
     # calculated
-    reason: Reason | None = Field(None, description="ie Reason.AUTYZM")
+    reason: Reason | None = Field(None, examples=[Reason.AUTYZM])
     multiple_disability_nominative: str | None = None
     multiple_disability_genetive: str | None = None
     multiple_disability_accusative: str | None = None
-    issue_short: str | None = Field(None, description="ie 'ind_rocz'")
-    reason_description_nominative_long: str | None = Field(None, description="ie niepełnosprawność sprzężona")
-    reason_description_genetive_long: str | None = Field(None, description="ie niepełnosprawności sprzężonej")
-    reason_description_accusative_long: str | None = Field(None, description="ie niepełnosprawność sprzężoną")
+    issue_short: str | None = Field(None, examples=["ind_rocz"])
+    reason_description_nominative_long: str | None = Field(None, examples=["niepełnosprawność sprzężona"])
+    reason_description_genetive_long: str | None = Field(None, examples=["ie niepełnosprawności sprzężonej"])
+    reason_description_accusative_long: str | None = Field(None, examples=["ie niepełnosprawność sprzężoną"])
     on_request: str | None = None
     parent_descriptions: str | None = None
     parents_names: str | None = None
@@ -193,11 +195,11 @@ class DocumentData(BaseModel):
 
     @model_validator(mode="after")
     def calculate_school_description(self) -> "DocumentData":
-        self.school.school_description = ", ".join(
+        self.school.description = ", ".join(
             [
                 value
                 for value in [
-                    self.school.school_name,
+                    self.school.name,
                     self.school.full_address,
                     self.child.klass,
                     self.child.profession,

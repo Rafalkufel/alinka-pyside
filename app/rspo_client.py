@@ -8,9 +8,12 @@ from requests import request
 
 from app.config import settings
 from app.schemas.rspo_schema import (
+    Commune,
     District,
+    InstitutionDetails,
     InstitutionRequestBody,
     InstitutionResponse,
+    InstitutionType,
     PaginationParams,
     Province,
 )
@@ -52,6 +55,21 @@ def list_districts(*, province_id: int) -> list[District]:
     pass
 
 
+@call(method="GET", path="api/Dictionary/Teryt/State/{province_id}/District/{district_id}/Commune")
+def list_communes(*, province_id: id, district_id: id) -> list[Commune]:
+    pass
+
+
+@call(method="GET", path="api/Dictionary/InstitutionType")
+def list_institution_types() -> list[InstitutionType]:
+    pass
+
+
 @call(method="POST", path="api/Institution")
-def list_institution(*, body: InstitutionRequestBody, params: PaginationParams) -> InstitutionResponse:
+def list_institutions(*, body: InstitutionRequestBody, params: PaginationParams) -> InstitutionResponse:
+    pass
+
+
+@call(method="GET", path="api/Institution/{rspo_id}")
+def get_institution(*, rspo_id: int) -> InstitutionDetails:
     pass

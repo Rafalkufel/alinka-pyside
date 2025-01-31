@@ -36,7 +36,7 @@ def filter_schools_by_type(school_type: str | None = None) -> list[SchoolDbSchem
     with db_session() as db:
         query = db.query(School)
         if school_type:
-            query = query.filter(School.school_type == school_type)
+            query = query.filter(School.type == school_type)
 
         return [SchoolDbSchema.model_validate(school) for school in query]
 
@@ -45,6 +45,12 @@ def get_school_by_name(school_name: str) -> SchoolDbSchema:
     with db_session() as db:
         school = db.query(School).filter(School.school_name == school_name).one_or_none()
         return SchoolDbSchema.model_validate(school)
+
+
+def get_schools() -> list[SchoolDbSchema]:
+    with db_session() as db:
+        schools = db.query(School).all()
+        return [SchoolDbSchema.model_validate(s) for s in schools]
 
 
 def upsert_support_center(support_center_data: dict) -> SupportCenterDbSchema:
@@ -66,3 +72,11 @@ def get_support_center_data() -> SupportCenterDbSchema | None:
         support_center = db.query(SupportCenter).where(SupportCenter.id == 1).one_or_none()
         if support_center:
             return SupportCenterDbSchema.model_validate(support_center)
+
+
+def create_school(school_data: dict) -> SchoolDbSchema:
+    with db_session() as db:
+        school = School(**school_data)
+        db.add(school)
+        db.commit()
+        return SchoolDbSchema.model_validate(school)

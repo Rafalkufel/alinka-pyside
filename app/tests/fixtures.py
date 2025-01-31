@@ -15,8 +15,8 @@ child_data = {
 }
 
 school_data = {
-    "school_type": "Szkoła podstawowa",
-    "school_name": "Szkoła Podstawowa nr 4 w Grodzisku Wlkp.",
+    "type": "Szkoła podstawowa",
+    "name": "Szkoła Podstawowa nr 4 w Grodzisku Wlkp.",
     "postal_code": "62-222",
     "town": "Grodzisk Wlkp.",
     "address": "ul. Jasna 33",

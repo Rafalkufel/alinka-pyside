@@ -3,8 +3,6 @@ from PySide2.QtWidgets import QVBoxLayout, QWidget
 from .select_support_center_group import SelectSupportCenterGroup
 from .support_center_data_group import SupportCenterDataGroup
 
-__all__ = ["SelectSupportCenterGroup", "SupportCenterDataGroup"]
-
 
 class SupportCenterTabContainer(QWidget):
     def __init__(self, parent: QWidget):

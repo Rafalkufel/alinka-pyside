@@ -69,13 +69,15 @@ class DecisionDbSchema(BaseDbSchema):
 
 class SchoolDbSchema(BaseDbSchema):
     id: int
-    school_parent_organisation: str | None = None
-    school_type: str
-    school_name: str
-    school_address: str
-    school_town: str
-    school_postal_code: str
-    school_post: str
+    rspo_id: int | None = None
+    rspo_type: int | None = None
+    parent_organisation_name: str | None = None
+    type: str
+    name: str
+    address: str
+    town: str
+    postal_code: str
+    post: str
 
 
 class SupportCenterDbSchema(BaseDbSchema):

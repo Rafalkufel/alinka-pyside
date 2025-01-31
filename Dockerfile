@@ -22,5 +22,5 @@ WORKDIR /opt
 
 COPY ./app ./pyproject.toml ./poetry.lock /opt/
 
-RUN poetry install --no-interaction --with dev
+RUN poetry install --no-interaction --no-root --with dev
 USER qtuser

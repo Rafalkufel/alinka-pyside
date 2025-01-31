@@ -51,7 +51,7 @@ class ChildDataTabContainer(QWidget):
             town=school.school_town,
             postal_code=school.school_postal_code,
             post=school.school_post,
-            school_name=school.school_name,
-            school_type=school.school_type,
+            name=school.school_name,
+            type=school.school_type,
             parent_organisation=school.school_parent_organisation,
         )

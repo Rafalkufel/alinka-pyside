@@ -74,16 +74,18 @@ class Decision(Base):
 
 
 class School(Base):
-    __tablename__ = "schools"
+    __tablename__ = "school"
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
-    school_parent_organisation = Column(String(512), nullable=True)
-    school_type = Column(String(50), nullable=False)
-    school_name = Column(String(1024), nullable=False)
-    school_address = Column(String(1024), nullable=False)
-    school_town = Column(String(128), nullable=False)
-    school_postal_code = Column(String(12), nullable=False)
-    school_post = Column(String(128), nullable=False)
+    rspo_id = Column(Integer(), nullable=True)
+    rspo_type_id = Column(Integer(), nullable=True)
+    type = Column(String(50), nullable=False)
+    parent_organisation_name = Column(String(512), nullable=True)
+    name = Column(String(1024), nullable=False)
+    address = Column(String(1024), nullable=False)
+    town = Column(String(128), nullable=False)
+    postal_code = Column(String(12), nullable=False)
+    post = Column(String(128), nullable=False)
 
 
 class SupportCenter(Base):

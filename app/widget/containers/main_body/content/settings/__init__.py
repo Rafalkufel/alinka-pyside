@@ -1,13 +1,16 @@
 from PySide2.QtWidgets import QTabWidget, QWidget
 
-from .settings_tabs import SupportCenterTabContainer
+from .settings_tabs import SchoolTabContainer, SupportCenterTabContainer
 
 
 class SettingsContainer(QTabWidget):
     def __init__(self, parent: QWidget, visible: bool = False):
         super().__init__(parent)
+        self.content_container = parent
         self.support_center_tab_container = SupportCenterTabContainer(self)
-        self.addTab(self.support_center_tab_container, "Ustawienia poradni")
+        self.schools_tab_container = SchoolTabContainer(self)
+        self.addTab(self.support_center_tab_container, "Dane poradni")
+        self.addTab(self.schools_tab_container, "Szkoły")
 
         if not visible:
             self.setVisible(False)
