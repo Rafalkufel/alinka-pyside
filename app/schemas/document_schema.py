@@ -210,7 +210,8 @@ class DocumentData(BaseModel):
     def check_activity_form_required(self) -> "DocumentData":
         if self.issue == Issue.REWALIDACYJNE and not self.activity_form:
             raise ValueError(
-                f"If issue is of type '{self.issue.issue_description_nominative}', activity form (eg 'grupowe') have to be selected."
+                f"If issue is of type '{self.issue.issue_description_nominative}', "
+                "activity form (eg 'grupowe') have to be selected."
             )
         return self
 
