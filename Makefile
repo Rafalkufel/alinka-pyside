@@ -18,7 +18,7 @@ build: ## Build docker image
 	docker compose build --no-cache
 
 run: ## Run application
-	docker compose up
+	docker-compose up
 
 type=specjalne
 generate: ## Generate documents. Use `type=` params to create given type of document.

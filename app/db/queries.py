@@ -1,6 +1,12 @@
 from db.connection import db_session
-from db.models import Decision, School, SupportCenter
-from schemas import DecisionDbSchema, SchoolDbSchema, SupportCenterDbSchema
+from db.models import Decision, School, SupportCenter, TeamMember
+from schemas import (
+    DecisionDbSchema,
+    SchoolDbSchema,
+    SupportCenterDbSchema,
+    TeamMemberDbSchema,
+)
+from sqlalchemy.dialects.sqlite import insert
 
 
 def get_decisions_list_from_db() -> list[DecisionDbSchema]:
@@ -80,3 +86,22 @@ def create_school(school_data: dict) -> SchoolDbSchema:
         db.add(school)
         db.commit()
         return SchoolDbSchema.model_validate(school)
+
+
+def get_team_members() -> list[TeamMemberDbSchema]:
+    with db_session() as db:
+        team_members = db.query(TeamMember).all()
+        return [TeamMemberDbSchema.model_validate(tm) for tm in team_members]
+
+
+def upsert_team_members(team_members_data: list[TeamMemberDbSchema]) -> list[TeamMemberDbSchema]:
+    with db_session() as db:
+        for tm in team_members_data:
+            upsert_stmt = (
+                insert(TeamMember)
+                .values(tm.model_dump())
+                .on_conflict_do_update(index_elements=["id"], set_={"name": tm.name, "function": tm.function})
+            )
+            db.execute(upsert_stmt)
+        db.commit()
+    return get_team_members()

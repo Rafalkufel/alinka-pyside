@@ -1,3 +1,4 @@
+from db.queries import get_team_members
 from PySide2.QtCore import QDate, Qt
 from PySide2.QtGui import QStandardItem, QStandardItemModel
 from PySide2.QtWidgets import (
@@ -61,16 +62,8 @@ class MeetingTabContainer(QWidget):
                 continue
             self.meeting_leader.combobox.addItem(member.text(), member.data())
 
-    def get_meeting_members_data(self):
-        # temporary method, to be replaced by db call in the future
-        return [
-            {"id": 1, "name": "mgr Janina Ptak", "function": "psycholog"},
-            {"id": 2, "name": "mgr Elżbieta Ochendowska", "function": "psycholog, surdologopeda"},
-            {"id": 3, "name": "mgr Jan Kowalski", "function": "pedagog"},
-            {"id": 4, "name": "mgr Lidia Zamecka", "function": "tyflopedagog"},
-            {"id": 5, "name": "mgr Paweł Biernacki", "function": "logopeda"},
-            {"id": 6, "name": "lek. Eugenia Woś", "function": "lekarz pediatra"},
-        ]
+    def get_meeting_members_data(self) -> dict:
+        return [tm.model_dump() for tm in get_team_members()]
 
     def get_meeting_member_by_id(self, meeting_member_id) -> MeetingMemberData:
         # To refactor. Maybe direct call to db?

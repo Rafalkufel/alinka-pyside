@@ -7,7 +7,7 @@ from .settings import SettingsFooterContainer
 class FooterContainer(QFrame):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
-        self.parent = parent
+        self.main_body_container = parent
         layout = QHBoxLayout(self)
         layout.setContentsMargins(9, 9, 9, 9)
         self.application_footer_container = ApplicationFooterContainer(self, visible=False)

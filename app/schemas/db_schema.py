@@ -92,3 +92,9 @@ class SupportCenterDbSchema(BaseDbSchema):
     town: str
     postal_code: str
     post: str
+
+
+class TeamMemberDbSchema(BaseDbSchema):
+    id: int
+    name: str
+    function: str
