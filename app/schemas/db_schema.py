@@ -47,7 +47,7 @@ class DecisionDbSchema(BaseDbSchema):
     second_parent_post: str | None = None
 
     support_center_name_nominative: str | None = None
-    support_center_name_genetive: str | None = None
+    support_center_name_genitive: str | None = None
     support_center_institute_name: str | None = None
     support_center_kurator: str | None = None
     support_center_address: str | None = None
@@ -85,7 +85,7 @@ class SupportCenterDbSchema(BaseDbSchema):
     district_id: int | None
     rspo: int | None
     name_nominative: str
-    name_genetive: str
+    name_genitive: str
     institute_name: str
     kurator: str
     address: str

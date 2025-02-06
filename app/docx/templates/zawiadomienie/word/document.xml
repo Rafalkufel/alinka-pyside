@@ -99,7 +99,7 @@
         <w:rPr>
           <w:b />
         </w:rPr>
-        <w:t>{{ issue.issue_type_genetive_long }}</w:t>
+        <w:t>{{ issue.issue_type_genitive_long }}</w:t>
       </w:r>
       <w:r>
         <w:t>,</w:t>

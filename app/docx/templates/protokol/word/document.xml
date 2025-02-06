@@ -22,7 +22,7 @@
         <w:pStyle w:val="sentence"/>
       </w:pPr>
       <w:r>
-        <w:t>Z posiedzenia {{ support_center.name_genetive }}</w:t>
+        <w:t>Z posiedzenia {{ support_center.name_genitive }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -77,7 +77,7 @@
         <w:pStyle w:val="chosenReasonLabel"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ issue.issue_type_genetive_long }} z uwagi na {{ reason_description_accusative_long }}</w:t>
+        <w:t>{{ issue.issue_type_genitive_long }} z uwagi na {{ reason_description_accusative_long }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -390,7 +390,7 @@
         <w:rPr>
           <w:i/>
         </w:rPr>
-        <w:t>o potrzebie {{ issue.issue_description_genetive }} z uwagi na {{ reason_description_accusative_long }}</w:t>
+        <w:t>o potrzebie {{ issue.issue_description_genitive }} z uwagi na {{ reason_description_accusative_long }}</w:t>
       </w:r>
     </w:p>
     <w:p>

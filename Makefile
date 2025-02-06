@@ -15,7 +15,7 @@ test-case: ## Run single test unit
 	docker-compose -f docker-compose.test.yml run --rm app pytest -k ${name}
 
 build: ## Build docker image
-	docker compose build --no-cache
+	docker-compose build --no-cache
 
 run: ## Run application
 	docker-compose up

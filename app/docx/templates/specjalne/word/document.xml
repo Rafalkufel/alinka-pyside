@@ -336,7 +336,7 @@
         <w:rPr>
           <w:u w:val="single"/>
         </w:rPr>
-        <w:t>{{ multiple_disability_nominative }}</w:t>
+        <w:t>{{ multiple_disabilities_nominative }}</w:t>
       </w:r>
             {% endif %}
     </w:p>

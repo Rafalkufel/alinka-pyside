@@ -6,8 +6,8 @@ class TestReasonEnum:
     def test_reason_individual_reasons(self):
         assert Reason.individual_reasons() == [Reason.UNIEMOZLIWIAJACY, Reason.ZNACZNIE_UTRUDNIAJACY]
 
-    def test_reason_intelectual_reasons(self):
-        assert Reason.intelectual_reasons() == [Reason.LEKKIE, Reason.UMIARKOWANE, Reason.ZNACZNE]
+    def test_reason_intellectual_reasons(self):
+        assert Reason.intellectual_reasons() == [Reason.LEKKIE, Reason.UMIARKOWANE, Reason.ZNACZNE]
 
     def test_reason_perception_deficites_reasons(self):
         assert Reason.perception_deficites_reasons() == [
@@ -35,8 +35,8 @@ class TestReasonEnum:
             Reason.AUTYZM,
         ]
 
-    def test_reason_multiple_disability_reasons(self):
-        assert Reason.multiple_disability_reasons() == [
+    def test_reason_multiple_disabilities_reasons(self):
+        assert Reason.multiple_disabilities_reasons() == [
             Reason.LEKKIE,
             Reason.UMIARKOWANE,
             Reason.ZNACZNE,
@@ -91,8 +91,8 @@ class TestReasonEnum:
             ("znacznie_utrudniajacy", "stanu zdrowia"),
         ],
     )
-    def test_reason_description_genetive_short(self, reason, description):
-        assert Reason(reason).reason_description_genetive_short == description
+    def test_reason_description_genitive_short(self, reason, description):
+        assert Reason(reason).reason_description_genitive_short == description
 
     @pytest.mark.parametrize(
         "reason, description",
@@ -160,8 +160,8 @@ class TestReasonEnum:
             ("znacznie_utrudniajacy", "stanu zdrowia znacznie utrudniajacego uczęszczanie do szkoły"),
         ],
     )
-    def test_reason_description_genetive_long(self, reason, description):
-        assert Reason(reason).reason_description_genetive_long == description
+    def test_reason_description_genitive_long(self, reason, description):
+        assert Reason(reason).reason_description_genitive_long == description
 
     @pytest.mark.parametrize(
         "reason, description",
@@ -211,8 +211,8 @@ class TestIssue:
             ("rewalidacyjne", "zajęć rewalidacyjno - wychowawczych"),
         ],
     )
-    def test_issue_description_genetive(self, issue, description):
-        assert Issue(issue).issue_description_genetive == description
+    def test_issue_description_genitive(self, issue, description):
+        assert Issue(issue).issue_description_genitive == description
 
     @pytest.mark.parametrize(
         "issue, description",
@@ -237,8 +237,8 @@ class TestIssue:
             ("rewalidacyjne", "orzeczenia"),
         ],
     )
-    def test_issue_type_genetive_short(self, issue, description):
-        assert Issue(issue).issue_type_genetive_short == description
+    def test_issue_type_genitive_short(self, issue, description):
+        assert Issue(issue).issue_type_genitive_short == description
 
     @pytest.mark.parametrize(
         "issue, description",
@@ -263,8 +263,8 @@ class TestIssue:
             ("rewalidacyjne", "orzeczenia o potrzebie zajęć rewalidacyjno - wychowawczych"),
         ],
     )
-    def test_issue_type_genetive_long(self, issue, description):
-        assert Issue(issue).issue_type_genetive_long == description
+    def test_issue_type_genitive_long(self, issue, description):
+        assert Issue(issue).issue_type_genitive_long == description
 
     @pytest.mark.parametrize(
         "issue, description",
@@ -276,5 +276,5 @@ class TestIssue:
             ("rewalidacyjne", "dziecka"),
         ],
     )
-    def test_issue_recipient_description_genetive(self, issue, description):
-        assert Issue(issue).recipient_description_genetive == description
+    def test_issue_recipient_description_genitive(self, issue, description):
+        assert Issue(issue).recipient_description_genitive == description

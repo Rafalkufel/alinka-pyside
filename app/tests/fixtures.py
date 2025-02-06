@@ -8,6 +8,7 @@ child_data = {
     "birth_place": "Pachy Wielkie",
     "town": "Poznań",
     "postal_code": "61-854",
+    "post": "Poznań",
     "address": "Mostowa 38",
     "klass": "3b",
     "profession": "murarz",
@@ -17,6 +18,7 @@ child_data = {
 school_data = {
     "type": "Szkoła podstawowa",
     "name": "Szkoła Podstawowa nr 4 w Grodzisku Wlkp.",
+    "post": "Grodzisk Wlkp.",
     "postal_code": "62-222",
     "town": "Grodzisk Wlkp.",
     "address": "ul. Jasna 33",
@@ -28,6 +30,7 @@ applicants_data = [
         "full_name_gen": "Tomasza Rzeźniczaka",
         "town": "Studnia",
         "postal_code": "55-789",
+        "post": "Studnia",
         "address": "Wielka 4/6",
     },
     {
@@ -35,6 +38,7 @@ applicants_data = [
         "full_name_gen": "Adelajdy Słoneczko",
         "town": "Sadowisko",
         "postal_code": "15-671",
+        "post": "Sadowisko",
         "address": "Odnowy Stare, ul. Zamkowa 15/6a",
     },
 ]
@@ -51,10 +55,11 @@ meeting_data = {
 
 support_center_data = {
     "name_nominative": "Poradnia Psychologiczno - Pedagogiczna w Poznaniu",
-    "name_genetive": "Poradni Psychologiczno - Pedagogicznej w Poznaniu",
+    "name_genitive": "Poradni Psychologiczno - Pedagogicznej w Poznaniu",
     "institute_name": "Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Poznaniu",
     "town": "Poznań",
     "postal_code": "12-345",
+    "post": "Poznań",
     "address": "ul. Zbąszyńska 11",
     "kurator": "Poznaniu, ul Kościuszki 38, 64-400 Poznań",
 }
@@ -115,7 +120,7 @@ decision_data = {
     "second_parent_postal_code": "30-602",
     "second_parent_post": "Ziemsko",
     "support_center_name_nominative": "Miejska Poradnia Psychologiczno - Pedagogiczna w Wejherowo",
-    "support_center_name_genetive": "Powiatowej Poradni Psychologiczno - Pedagogicznej w Ząbki",
+    "support_center_name_genitive": "Powiatowej Poradni Psychologiczno - Pedagogicznej w Ząbki",
     "support_center_institute_name": "Zespół Orzekający przy Powiatowej Poradni Psychologiczno - Pedagogicznej w Ząbki",
     "support_center_kurator": "Gdańsku, plac Wiśniowa 65/54, 66-804 Bielsko-Biała",
     "support_center_address": "pl. Słoneczna 620",

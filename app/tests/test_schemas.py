@@ -19,17 +19,6 @@ class TestAddressData:
 
         assert address.full_address == expected_address
 
-    @pytest.mark.parametrize(
-        "entity_with_address", [child_data, support_center_data, applicants_data[0], applicants_data[1], school_data]
-    )
-    def test_address_data_post(self, entity_with_address):
-        address_data = entity_with_address.copy()
-        expected_address = f"{address_data['postal_code']} {address_data['town']}"
-
-        address = AddressData(**address_data)
-
-        assert address.post == expected_address
-
 
 class TestChildDateOfBirth:
     @pytest.mark.parametrize(
@@ -152,15 +141,15 @@ class TestMultipleDisabilityCheck:
                 "can't be issued together.",
             ),
             (
-                "two intelectual reasons together",
+                "two intellectual reasons together",
                 [Reason.SLABOSLYSZACE, Reason.UMIARKOWANE, Reason.LEKKIE],
-                f"Value error, Two intelecutal reasons: {Reason.UMIARKOWANE}, {Reason.LEKKIE} "
+                f"Value error, Two intellectual reasons: {Reason.UMIARKOWANE}, {Reason.LEKKIE} "
                 "can't be issued together.",
             ),
             (
                 "profound disability coupled with other reasons",
                 [Reason.GLEBOKIE, Reason.RUCHOWA],
-                "Value error, Profound intelectual disability can't be coupled.",
+                "Value error, Profound intellectual disability can't be coupled.",
             ),
             (
                 "social maladjustment coupled with other reasons.",
@@ -169,7 +158,7 @@ class TestMultipleDisabilityCheck:
             ),
         ],
     )
-    def test_multiple_disability_check(self, _, reasons, exception_message, common_data_fixture):
+    def test_multiple_disabilities_check(self, _, reasons, exception_message, common_data_fixture):
         common_data_fixture["reasons"] = reasons
         with pytest.raises(ValidationError) as exception:
             DocumentData(**common_data_fixture)
@@ -190,7 +179,7 @@ class TestMultipleDisabilityDescription:
             ),
         ],
     )
-    def test_multiple_disability_description(self, reasons, expected_description, common_data_fixture):
+    def test_multiple_disabilities_description(self, reasons, expected_description, common_data_fixture):
         common_data_fixture["reasons"] = reasons
         document_data = DocumentData(**common_data_fixture)
-        assert document_data.multiple_disability_nominative == expected_description
+        assert document_data.multiple_disabilities_nominative == expected_description

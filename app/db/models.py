@@ -52,7 +52,7 @@ class Decision(Base):
     second_parent_post = Column(String(128), nullable=True)
 
     support_center_name_nominative = Column(String(1024), nullable=True)
-    support_center_name_genetive = Column(String(1024), nullable=True)
+    support_center_name_genitive = Column(String(1024), nullable=True)
     support_center_institute_name = Column(String(1024), nullable=True)
     support_center_kurator = Column(String(1024), nullable=True)
     support_center_address = Column(String(1024), nullable=True)
@@ -96,7 +96,7 @@ class SupportCenter(Base):
     province_id = Column(Integer(), nullable=True)
     rspo = Column(Integer(), nullable=True)
     name_nominative = Column(String(1024), nullable=False)
-    name_genetive = Column(String(1024), nullable=False)
+    name_genitive = Column(String(1024), nullable=False)
     institute_name = Column(String(1024), nullable=False)
     kurator = Column(String(1024), nullable=False)
     address = Column(String(1024), nullable=False)

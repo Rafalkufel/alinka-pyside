@@ -26,28 +26,28 @@ class Issue(Enum):
         return ISSUE_DESCRIPTION_NOMINATIVE_MAPPER[self]
 
     @property
-    def issue_description_genetive(self):
-        return ISSUE_DESCRIPTION_GENETIVE_MAPPER[self]
+    def issue_description_genitive(self):
+        return ISSUE_DESCRIPTION_GENITIVE_MAPPER[self]
 
     @property
     def issue_type_nominative_short(self):
         return "opinia" if self == self.OPINIA else "orzeczenie"
 
     @property
-    def issue_type_genetive_short(self):
+    def issue_type_genitive_short(self):
         return "opinii" if self == self.OPINIA else "orzeczenia"
 
     @property
     def issue_type_nominative_long(self):
-        return f"{self.issue_type_nominative_short} o potrzebie {self.issue_description_genetive}"
+        return f"{self.issue_type_nominative_short} o potrzebie {self.issue_description_genitive}"
 
     @property
-    def issue_type_genetive_long(self):
-        return f"{self.issue_type_genetive_short} o potrzebie {self.issue_description_genetive}"
+    def issue_type_genitive_long(self):
+        return f"{self.issue_type_genitive_short} o potrzebie {self.issue_description_genitive}"
 
     @property
-    def recipient_description_genetive(self):
-        return RECIPIENT_DESCRIPTION_GENETIVE_MAPPER[self]
+    def recipient_description_genitive(self):
+        return RECIPIENT_DESCRIPTION_GENITIVE_MAPPER[self]
 
 
 ISSUE_DESCRIPTION_NOMINATIVE_MAPPER = {
@@ -58,7 +58,7 @@ ISSUE_DESCRIPTION_NOMINATIVE_MAPPER = {
     Issue.REWALIDACYJNE: "zajęcia rewalidacyjno - wychowawcze",
 }
 
-ISSUE_DESCRIPTION_GENETIVE_MAPPER = {
+ISSUE_DESCRIPTION_GENITIVE_MAPPER = {
     Issue.SPECJALNE: "kształcenia specjalnego",
     Issue.INDYWIDUALNE: "indywidualnego nauczania",
     Issue.INDYWIDUALNE_ROCZNE: "indywidualnego rocznego przygotowania przedszkolnego",
@@ -66,7 +66,7 @@ ISSUE_DESCRIPTION_GENETIVE_MAPPER = {
     Issue.REWALIDACYJNE: "zajęć rewalidacyjno - wychowawczych",
 }
 
-RECIPIENT_DESCRIPTION_GENETIVE_MAPPER = {
+RECIPIENT_DESCRIPTION_GENITIVE_MAPPER = {
     Issue.SPECJALNE: "dziecka lub ucznia",
     Issue.INDYWIDUALNE: "ucznia",
     Issue.INDYWIDUALNE_ROCZNE: "dziecka",
@@ -98,7 +98,7 @@ class Reason(str, Enum):
         return [cls.UNIEMOZLIWIAJACY, cls.ZNACZNIE_UTRUDNIAJACY]
 
     @classmethod
-    def intelectual_reasons(cls):
+    def intellectual_reasons(cls):
         return [cls.LEKKIE, cls.UMIARKOWANE, cls.ZNACZNE]
 
     @classmethod
@@ -123,7 +123,7 @@ class Reason(str, Enum):
     @classmethod
     def special_reasons(cls):
         return [
-            *cls.intelectual_reasons(),
+            *cls.intellectual_reasons(),
             *cls.perception_deficites_reasons(),
             *cls.social_maladjustment_reasons(),
             cls.RUCHOWA,
@@ -139,8 +139,8 @@ class Reason(str, Enum):
         return [cls.STWIERDZONA_NIEPELNOSPRAWNOSC]
 
     @classmethod
-    def multiple_disability_reasons(cls):
-        return [*cls.intelectual_reasons(), *cls.perception_deficites_reasons(), cls.RUCHOWA, cls.AUTYZM]
+    def multiple_disabilities_reasons(cls):
+        return [*cls.intellectual_reasons(), *cls.perception_deficites_reasons(), cls.RUCHOWA, cls.AUTYZM]
 
     @property
     def reason_description_nominative_short(self):
@@ -165,7 +165,7 @@ class Reason(str, Enum):
         return mapper[self]
 
     @property
-    def reason_description_genetive_short(self):
+    def reason_description_genitive_short(self):
         mapper = {
             self.LEKKIE: "niepełnosprawności",
             self.UMIARKOWANE: "niepełnosprawności",
@@ -231,7 +231,7 @@ class Reason(str, Enum):
         return mapper[self]
 
     @property
-    def reason_description_genetive_long(self):
+    def reason_description_genitive_long(self):
         mapper = {
             self.LEKKIE: "niepełnosprawności intelektualnej w stopniu lekkim",
             self.UMIARKOWANE: "niepełnosprawności intelektualnej w stopniu umiarkowanym",

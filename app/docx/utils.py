@@ -73,7 +73,7 @@ def convert_raw_documents_data(raw_documents_data: DecisionDbSchema) -> Document
     )
     support_center_data = SupportCenterData(
         name_nominative=raw_documents_data.support_center_name_nominative,
-        name_genetive=raw_documents_data.support_center_name_genetive,
+        name_genitive=raw_documents_data.support_center_name_genitive,
         kurator=raw_documents_data.support_center_kurator,
         address=raw_documents_data.support_center_address,
         town=raw_documents_data.support_center_town,
