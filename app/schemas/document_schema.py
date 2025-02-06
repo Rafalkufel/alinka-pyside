@@ -215,18 +215,19 @@ class DocumentData(BaseModel):
         return self
 
     @model_validator(mode="after")
-    def check_multiple_disabilities(self) -> "DocumentData":
-        """Check excluded together disabilities was selected"""
-        if Reason.UNIEMOZLIWIAJACY in self.reasons and Reason.ZNACZNIE_UTRUDNIAJACY in self.reasons:
+    def check_multiple_disability(self) -> "DocumentData":
+        """Validate if multiple disability reasons are correctly set."""
+        if {Reason.UNIEMOZLIWIAJACY, Reason.ZNACZNIE_UTRUDNIAJACY}.issubset(self.reasons):
             raise ValueError(f"Reasons: {', '.join(self.reasons)} can't be issued together.")
-        if intelecual_reasons := [reason for reason in self.reasons if reason in Reason.intellectual_reasons()]:
-            if len(intelecual_reasons) > 1:
-                raise ValueError(f"Two intelecutal reasons: {', '.join(intelecual_reasons)} can't be issued together.")
+
+        intellectual_reasons = [reason for reason in self.reasons if reason in Reason.intellectual_reasons()]
+        if len(intellectual_reasons) > 1:
+            raise ValueError(f"Two intellectual reasons: {', '.join(intellectual_reasons)} can't be issued together.")
+
         if Reason.GLEBOKIE in self.reasons and len(self.reasons) > 1:
             raise ValueError("Profound intellectual disability can't be coupled.")
-        if (
-            any([reason for reason in self.reasons if reason in Reason.social_maladjustment_reasons()])
-            and len(self.reasons) > 1
-        ):
+
+        if any(reason in Reason.social_maladjustment_reasons() for reason in self.reasons) and len(self.reasons) > 1:
             raise ValueError("Social maladjustment reasons can't be coupled with any other reason.")
+
         return self

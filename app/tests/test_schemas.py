@@ -143,7 +143,7 @@ class TestMultipleDisabilityCheck:
             (
                 "two intellectual reasons together",
                 [Reason.SLABOSLYSZACE, Reason.UMIARKOWANE, Reason.LEKKIE],
-                f"Value error, Two intelecutal reasons: {Reason.UMIARKOWANE}, {Reason.LEKKIE} "
+                f"Value error, Two intellectual reasons: {Reason.UMIARKOWANE}, {Reason.LEKKIE} "
                 "can't be issued together.",
             ),
             (
