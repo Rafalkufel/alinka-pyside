@@ -71,7 +71,7 @@ class ApplicationTabContainer(QWidget):
             self._activity_form.combobox.addItem(ActivityForm.INDYWIDUALNE.value, ActivityForm.ZESPOLOWE)
             self._activity_form.combobox.addItem(ActivityForm.ZESPOLOWE.value, ActivityForm.ZESPOLOWE)
             return
-        if primary_reason not in Reason.multiple_disability_reasons():
+        if primary_reason not in Reason.multiple_disabilities_reasons():
             # we want to show another reason select box is first is suitable
             # for multiple disability
             return
@@ -79,11 +79,11 @@ class ApplicationTabContainer(QWidget):
         secondary_reasons = {
             reason: reason_description
             for reason, reason_description in REASON_DESCRIPTION_ACCUSATIVE_LONG_MAPPER.items()
-            if reason in Reason.multiple_disability_reasons() and reason != primary_reason
+            if reason in Reason.multiple_disabilities_reasons() and reason != primary_reason
         }
-        if primary_reason in Reason.intelectual_reasons():
-            # we need to exclude other intelectual reason if one was already selected.
-            reason_to_exclude = Reason.intelectual_reasons()
+        if primary_reason in Reason.intellectual_reasons():
+            # we need to exclude other intellectual reason if one was already selected.
+            reason_to_exclude = Reason.intellectual_reasons()
         elif primary_reason in Reason.sight_deficites_reasons():
             reason_to_exclude = Reason.sight_deficites_reasons()
         elif primary_reason in Reason.hearing_deficites_reasons():
@@ -123,7 +123,7 @@ class ApplicationTabContainer(QWidget):
         reasons = {
             reason: reason_description
             for reason, reason_description in REASON_DESCRIPTION_ACCUSATIVE_LONG_MAPPER.items()
-            if reason in Reason.multiple_disability_reasons()
+            if reason in Reason.multiple_disabilities_reasons()
         }
         reasons.pop(reason)
 

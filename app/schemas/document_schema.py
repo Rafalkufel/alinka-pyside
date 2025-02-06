@@ -36,7 +36,7 @@ class ChildData(PersonalData):
     profession: str | None = None
 
     @computed_field
-    def student_description_genetive(self) -> str:
+    def student_description_genitive(self) -> str:
         return "ucznia" if self.student else "dziecka"
 
     @model_validator(mode="after")
@@ -76,7 +76,7 @@ class SupportCenterData(AddressData):
     province_id: int | None = None
     rspo: int | None = None
     name_nominative: str = Field(..., examples=["Poradnia Psychologiczno - Pedagogiczna w Poznaniu"])
-    name_genetive: str = Field(..., examples=["Poradni Psychologiczno - Pedagogicznej w Poznaniu"])
+    name_genitive: str = Field(..., examples=["Poradni Psychologiczno - Pedagogicznej w Poznaniu"])
     institute_name: str = Field(
         ..., examples=["Zespół Orzekający przy Poradni Psychologiczno-Pedagogicznej w Poznaniu"]
     )
@@ -114,27 +114,27 @@ class DocumentData(BaseModel):
         return Reason.SPRZEZONA if len(self.reasons) > 1 else self.reasons[0]
 
     @computed_field
-    def multiple_disability_nominative(self) -> str | None:
+    def multiple_disabilities_nominative(self) -> str | None:
         """
-        Join two disability description ie.
+        Join two disabilities description ie.
         "niepełnosprawność intelektualna w stopniu lekkim, słabosłyszenie"
         """
         if self.reason == Reason.SPRZEZONA:
             return ", ".join([getattr(reason, "reason_description_nominative_long") for reason in self.reasons])
 
     @computed_field
-    def multiple_disability_genetive(self) -> str | None:
+    def multiple_disabilities_genitive(self) -> str | None:
         """
-        Join two disability description ie.
+        Join two disabilities description ie.
         "niepełnosprawności intelektualnej w stopniu lekkim, słabosłyszenia"
         """
         if self.reason == Reason.SPRZEZONA:
-            return ", ".join([getattr(reason, "reason_description_genetive_long") for reason in self.reasons])
+            return ", ".join([getattr(reason, "reason_description_genitive_long") for reason in self.reasons])
 
     @computed_field
-    def multiple_disability_accusative(self) -> str | None:
+    def multiple_disabilities_accusative(self) -> str | None:
         """
-        Join two disability description ie.
+        Join two disabilities description ie.
         "niepełnosprawność intelektualną w stopniu lekkim, słabosłyszenie"
         """
         if self.reason == Reason.SPRZEZONA:
@@ -148,19 +148,19 @@ class DocumentData(BaseModel):
         """
         reason_description_nominative_long = self.reason.reason_description_nominative_long
         if self.reason == Reason.SPRZEZONA:
-            reason_description_nominative_long += f": {self.multiple_disability_nominative}"
+            reason_description_nominative_long += f": {self.multiple_disabilities_nominative}"
         return reason_description_nominative_long
 
     @computed_field
-    def reason_description_genetive_long(self) -> str:
+    def reason_description_genitive_long(self) -> str:
         """
         ie.: "niepełnosprawność ruchowej"
         or: "niepełnosprawność sprzężonej: niepełnosprawności ruchowej i słabosłyszenia
         """
-        reason_description_genetive_long = self.reason.reason_description_genetive_long
+        reason_description_genitive_long = self.reason.reason_description_genitive_long
         if self.reason == Reason.SPRZEZONA:
-            reason_description_genetive_long += f": {self.multiple_disability_genetive}"
-        return reason_description_genetive_long
+            reason_description_genitive_long += f": {self.multiple_disabilities_genitive}"
+        return reason_description_genitive_long
 
     @computed_field
     def reason_description_accusative_long(self) -> str:
@@ -170,7 +170,7 @@ class DocumentData(BaseModel):
         """
         reason_description_accusative_long = self.reason.reason_description_accusative_long
         if self.reason == Reason.SPRZEZONA:
-            reason_description_accusative_long += f": {self.multiple_disability_accusative}"
+            reason_description_accusative_long += f": {self.multiple_disabilities_accusative}"
         return reason_description_accusative_long
 
     @computed_field
@@ -210,20 +210,20 @@ class DocumentData(BaseModel):
     def check_activity_form_required(self) -> "DocumentData":
         if self.issue == Issue.REWALIDACYJNE and not self.activity_form:
             raise ValueError(
-                "If issue is of type 'rewalidacyjno-wychowawcze' activity form (eg 'grupowe') have to be selected."
+                f"If issue is of type '{self.issue.issue_description_nominative}', activity form (eg 'grupowe') have to be selected."
             )
         return self
 
     @model_validator(mode="after")
-    def check_multiple_disability(self) -> "DocumentData":
+    def check_multiple_disabilities(self) -> "DocumentData":
         """Check excluded together disabilities was selected"""
         if Reason.UNIEMOZLIWIAJACY in self.reasons and Reason.ZNACZNIE_UTRUDNIAJACY in self.reasons:
             raise ValueError(f"Reasons: {', '.join(self.reasons)} can't be issued together.")
-        if intelecual_reasons := [reason for reason in self.reasons if reason in Reason.intelectual_reasons()]:
+        if intelecual_reasons := [reason for reason in self.reasons if reason in Reason.intellectual_reasons()]:
             if len(intelecual_reasons) > 1:
                 raise ValueError(f"Two intelecutal reasons: {', '.join(intelecual_reasons)} can't be issued together.")
         if Reason.GLEBOKIE in self.reasons and len(self.reasons) > 1:
-            raise ValueError("Profound intelectual disability can't be coupled.")
+            raise ValueError("Profound intellectual disability can't be coupled.")
         if (
             any([reason for reason in self.reasons if reason in Reason.social_maladjustment_reasons()])
             and len(self.reasons) > 1

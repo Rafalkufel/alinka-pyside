@@ -18,8 +18,8 @@ class SupportCenterDataGroup(QGroupBox):
         self.name_nominative = LabeledInputComponent("Nazwa poradnii (mianownik)", self, min_lenght=100)
         layout.addWidget(self.name_nominative, 0, 0, 1, 2)
 
-        self.name_genetive = LabeledInputComponent("Nazwa poradni (dopełniacz)", self, min_lenght=100)
-        layout.addWidget(self.name_genetive, 1, 0, 1, 2)
+        self.name_genitive = LabeledInputComponent("Nazwa poradni (dopełniacz)", self, min_lenght=100)
+        layout.addWidget(self.name_genitive, 1, 0, 1, 2)
 
         self.institute_name = LabeledInputComponent("Zespół orzekający", self, min_lenght=100)
         layout.addWidget(self.institute_name, 2, 0, 1, 2)
@@ -43,7 +43,7 @@ class SupportCenterDataGroup(QGroupBox):
         self.district_id = kwargs.get("district_id")
         self.rspo = kwargs.get("rspo")
         self.name_nominative.text = kwargs.get("name_nominative")
-        self.name_genetive.text = kwargs.get("name_genetive")
+        self.name_genitive.text = kwargs.get("name_genitive")
         self.institute_name.text = kwargs.get("institute_name")
         self.kurator.text = kwargs.get("kurator")
         self.address.text = kwargs.get("address")
@@ -53,7 +53,7 @@ class SupportCenterDataGroup(QGroupBox):
 
     def clear(self):
         self.name_nominative.clear()
-        self.name_genetive.clear()
+        self.name_genitive.clear()
         self.institute_name.clear()
         self.kurator.clear()
         self.address.clear()
@@ -72,7 +72,7 @@ class SupportCenterDataGroup(QGroupBox):
             postal_code=self.postal_code.text,
             post=self.post.text,
             name_nominative=self.name_nominative.text,
-            name_genetive=self.name_genetive.text,
+            name_genitive=self.name_genitive.text,
             institute_name=self.institute_name.text,
             kurator=self.kurator.text,
         )

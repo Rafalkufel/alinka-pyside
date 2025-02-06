@@ -67,7 +67,7 @@ class FuzzySupportCenterNameNominative(BaseFuzzyAttribute):
         return f"{factory_random.randgen.choice(prefix)} {support_center_name} w {faker.city()}"
 
 
-class FuzzySupportCenterNameGenetive(BaseFuzzyAttribute):
+class FuzzySupportCenterNameGenitive(BaseFuzzyAttribute):
     def fuzz(self):
         prefix = ["Powiatowej", "Miejskiej", "Specjalistycznej"]
         support_center_name = "Poradni Psychologiczno - Pedagogicznej"
@@ -76,7 +76,7 @@ class FuzzySupportCenterNameGenetive(BaseFuzzyAttribute):
 
 class FuzzySupportCenterKurator(BaseFuzzyAttribute):
     def fuzz(self):
-        city_genetive = [
+        city_genitive = [
             "Poznaniu",
             "Warszawie",
             "Szczecinie",
@@ -86,7 +86,7 @@ class FuzzySupportCenterKurator(BaseFuzzyAttribute):
             "Białej Podlaskiej",
         ]
         return (
-            f"{factory_random.randgen.choice(city_genetive)}, {faker.street_address()},"
+            f"{factory_random.randgen.choice(city_genitive)}, {faker.street_address()},"
             f" {faker.postcode()} {faker.city()}"
         )
 

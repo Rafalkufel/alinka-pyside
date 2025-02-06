@@ -14,7 +14,7 @@ from tests.utils import (
     FuzzySchoolParentOrganisation,
     FuzzySchoolType,
     FuzzySupportCenterKurator,
-    FuzzySupportCenterNameGenetive,
+    FuzzySupportCenterNameGenitive,
     FuzzySupportCenterNameNominative,
 )
 
@@ -61,7 +61,7 @@ class DecisionFactory(SQLAlchemyModelFactory):
     second_parent_postal_code = faker.postcode()
 
     support_center_name_nominative = FuzzySupportCenterNameNominative()
-    support_center_name_genetive = FuzzySupportCenterNameGenetive()
+    support_center_name_genitive = FuzzySupportCenterNameGenitive()
     support_center_kurator = FuzzySupportCenterKurator()
     support_center_address = faker.street_address()
     support_center_town = faker.city()
@@ -119,7 +119,7 @@ class DecisionFactory(SQLAlchemyModelFactory):
 
     @lazy_attribute
     def support_center_institute_name(self):
-        return f"Zespół Orzekający przy {self.support_center_name_genetive}"
+        return f"Zespół Orzekający przy {self.support_center_name_genitive}"
 
     @classmethod
     def _save(cls, model_class, session, args, kwargs):
@@ -140,7 +140,7 @@ class SupportCenterFactory(SQLAlchemyModelFactory):
     district_id = faker.pyint(0, 1000)
     rspo = faker.pyint(0, 10000)
     name_nominative = FuzzySupportCenterNameNominative()
-    name_genetive = FuzzySupportCenterNameGenetive()
+    name_genitive = FuzzySupportCenterNameGenitive()
     kurator = FuzzySupportCenterKurator()
     address = faker.street_address()
     town = faker.city()
@@ -149,4 +149,4 @@ class SupportCenterFactory(SQLAlchemyModelFactory):
 
     @lazy_attribute
     def institute_name(self):
-        return f"Zespół Orzekający przy {self.name_genetive}"
+        return f"Zespół Orzekający przy {self.name_genitive}"

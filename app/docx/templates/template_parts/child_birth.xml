@@ -11,6 +11,6 @@
     <w:pStyle w:val="Subtitle1"/>
   </w:pPr>
   <w:r>
-    <w:t>(data i miejsce urodzenia {{ issue.recipient_description_genetive }})</w:t>
+    <w:t>(data i miejsce urodzenia {{ issue.recipient_description_genitive }})</w:t>
   </w:r>
 </w:p>
