@@ -47,11 +47,11 @@ class ChildDataTabContainer(QWidget):
         selected_school_name = self.school_data_group.school.combobox.currentText()
         school: SchoolDbSchema = get_school_by_name(selected_school_name)
         return SchoolData(
-            address=school.school_address,
-            town=school.school_town,
-            postal_code=school.school_postal_code,
-            post=school.school_post,
-            name=school.school_name,
-            type=school.school_type,
-            parent_organisation=school.school_parent_organisation,
+            address=school.address,
+            town=school.town,
+            postal_code=school.postal_code,
+            post=school.post,
+            name=school.name,
+            type=school.type,
+            parent_organisation=school.parent_organisation_name,
         )

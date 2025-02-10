@@ -203,7 +203,7 @@ class DocumentData(BaseModel):
         )
 
     @computed_field
-    def calculate_issue_short(self) -> str:
+    def issue_short(self) -> str:
         return "ind_rocz" if self.issue == Issue.INDYWIDUALNE_ROCZNE else self.issue.value[:4]
 
     @model_validator(mode="after")
