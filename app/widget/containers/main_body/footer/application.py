@@ -26,7 +26,7 @@ class ApplicationFooterContainer(QFrame):
 
     def validate_document_data(self) -> None:
         if not get_support_center_data():
-            raise ValidationError
+            raise ValidationError()
 
     def print_documents(self) -> None:
         try:

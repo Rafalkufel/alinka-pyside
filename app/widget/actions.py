@@ -10,7 +10,6 @@ def generate_and_save_decision(form_data: DocumentData, generate: bool = False) 
     applicant_2 = form_data.applicants[1] if len(form_data.applicants) > 1 else None
     support_center = form_data.support_center
     meeting_data = form_data.meeting_data
-
     decision_data = DecisionDbSchema(
         id=None,
         child_full_name=child.full_name,
@@ -25,7 +24,7 @@ def generate_and_save_decision(form_data: DocumentData, generate: bool = False) 
         child_student=child.student,
         klass=child.klass,
         profession=child.profession,
-        school_parent_organisation=school.parent_organisation,
+        school_parent_organisation=school.parent_organisation_name,
         school_type=school.type,
         school_name=school.name,
         school_address=school.address,
@@ -65,7 +64,6 @@ def generate_and_save_decision(form_data: DocumentData, generate: bool = False) 
         meeting_members=[m.model_dump() for m in meeting_data.members],
         file_no=form_data.file_no,
     )
-
     if decision_data.id:
         decision = update_decision_in_db(decision_data.model_dump())
     else:

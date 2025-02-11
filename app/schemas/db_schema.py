@@ -53,6 +53,7 @@ class DecisionDbSchema(BaseDbSchema):
     support_center_address: str | None = None
     support_center_town: str | None = None
     support_center_postal_code: str | None = None
+    support_center_post: str | None = None
 
     issue: str
     period: str

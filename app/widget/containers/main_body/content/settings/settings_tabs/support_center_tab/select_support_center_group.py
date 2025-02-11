@@ -57,15 +57,15 @@ class SelectSupportCenterGroup(QGroupBox):
             )
         )
         for support_center in self.support_centers.items:
-            self.support_center_combobox.combobox.addItem(support_center.name, support_center.rspo)
+            self.support_center_combobox.combobox.addItem(support_center.name, support_center.rspo_id)
 
     def populate_support_center_data(self):
         selected_support_center_rspo = self.support_center_combobox.combobox.currentData()
-        support_center = [sc for sc in self.support_centers.items if sc.rspo == selected_support_center_rspo][0]
+        support_center = [sc for sc in self.support_centers.items if sc.rspo_id == selected_support_center_rspo][0]
         self.parent.support_center_data_group.populate_fields(
             province_id=self.province_combobox.combobox.currentData(),
             district_id=self.district_combobox.combobox.currentData(),
-            rspo=support_center.rspo,
+            rspo=support_center.rspo_id,
             name_nominative=support_center.name,
             address=support_center.address,
             town=support_center.town,

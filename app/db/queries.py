@@ -43,7 +43,7 @@ def filter_schools_by_type(school_type: str | None = None) -> list[SchoolDbSchem
 
 def get_school_by_name(school_name: str) -> SchoolDbSchema:
     with db_session() as db:
-        school = db.query(School).filter(School.school_name == school_name).one_or_none()
+        school = db.query(School).filter(School.name == school_name).one_or_none()
         return SchoolDbSchema.model_validate(school)
 
 
