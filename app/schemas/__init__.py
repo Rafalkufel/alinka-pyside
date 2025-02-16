@@ -1,4 +1,9 @@
-from schemas.db_schema import DecisionDbSchema, SchoolDbSchema, SupportCenterDbSchema
+from schemas.db_schema import (
+    DecisionDbSchema,
+    SchoolDbSchema,
+    SupportCenterDbSchema,
+    TeamMemberDbSchema,
+)
 from schemas.document_schema import (
     AddressData,
     ChildData,
@@ -25,4 +30,5 @@ __all__ = [
     "SchoolDbSchema",
     "SupportCenterData",
     "SupportCenterDbSchema",
+    "TeamMemberDbSchema",
 ]

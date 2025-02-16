@@ -103,3 +103,11 @@ class SupportCenter(Base):
     town = Column(String(128), nullable=False)
     postal_code = Column(String(12), nullable=False)
     post = Column(String(128), nullable=False)
+
+
+class TeamMember(Base):
+    __tablename__ = "team_member"
+
+    id = Column(Integer(), primary_key=True, autoincrement=True)
+    name = Column(String(512), nullable=False)
+    function = Column(String(512), nullable=False)
