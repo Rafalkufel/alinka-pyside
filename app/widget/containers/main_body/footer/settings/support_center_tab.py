@@ -10,7 +10,7 @@ class SettingsSupportCenterDataContainer(QFrame):
         self.setVisible(visible)
         layout = QHBoxLayout(self)
         layout.setContentsMargins(9, 9, 9, 9)
-        self.save_btn = QPushButton("Zapisz dane Poradni", self)
+        self.save_btn = QPushButton("Zapisz dane poradni", self)
         self.save_btn.clicked.connect(self.save_support_center_data)
         layout.addWidget(self.save_btn)
 
