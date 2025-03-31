@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QVBoxLayout, QWidget
+from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from .school_data_group import SchoolDataGroup
 from .select_school_group import SelectSchoolGroup

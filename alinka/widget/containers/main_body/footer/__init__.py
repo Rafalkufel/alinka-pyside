@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QFrame, QHBoxLayout, QWidget
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QWidget
 
 from .application import ApplicationFooterContainer
 from .settings import SettingsFooterContainer

@@ -1,5 +1,5 @@
-from PySide2.QtCore import QDate, Qt
-from PySide2.QtWidgets import QVBoxLayout, QWidget
+from PySide6.QtCore import QDate, Qt
+from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from alinka.constants.common import (
     ISSUE_DESCRIPTION_NOMINATIVE_MAPPER,

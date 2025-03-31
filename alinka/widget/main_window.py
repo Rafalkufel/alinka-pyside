@@ -1,5 +1,5 @@
-from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QHBoxLayout, QWidget
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QHBoxLayout, QWidget
 
 from alinka.statics import get_statics_resource_path
 from alinka.widget.containers.central_widget import CentralWidget

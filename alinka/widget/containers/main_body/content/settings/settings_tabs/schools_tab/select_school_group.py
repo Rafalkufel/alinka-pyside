@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QFrame, QGroupBox, QHBoxLayout, QVBoxLayout, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QFrame, QGroupBox, QHBoxLayout, QVBoxLayout, QWidget
 
 from alinka import rspo_client
 from alinka.constants.common import RSPOSchoolTypes, SchoolTypes

@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QTabWidget, QWidget
+from PySide6.QtWidgets import QTabWidget, QWidget
 
 from alinka.db.queries import get_support_center_data
 from alinka.schemas import DocumentData, SupportCenterData

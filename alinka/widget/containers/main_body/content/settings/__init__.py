@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QTabWidget, QWidget
+from PySide6.QtWidgets import QTabWidget, QWidget
 
 from .settings_tabs import (
     SchoolTabContainer,

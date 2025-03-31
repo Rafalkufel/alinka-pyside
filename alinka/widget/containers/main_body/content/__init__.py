@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QFrame, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget
 
 from .application import ApplicationContainer
 from .settings import SettingsContainer

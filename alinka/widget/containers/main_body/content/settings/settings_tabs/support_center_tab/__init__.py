@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QVBoxLayout, QWidget
+from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from .select_support_center_group import SelectSupportCenterGroup
 from .support_center_data_group import SupportCenterDataGroup

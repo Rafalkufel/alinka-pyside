@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QGridLayout, QGroupBox, QWidget
+from PySide6.QtWidgets import QGridLayout, QGroupBox, QWidget
 
 from alinka.schemas import PersonalData
 from alinka.widget.components import LabeledCheckboxComponent, LabeledInputComponent

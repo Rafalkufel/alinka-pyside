@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QFrame, QGroupBox, QHBoxLayout, QVBoxLayout
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QFrame, QGroupBox, QHBoxLayout, QVBoxLayout
 
 from alinka.constants.common import SchoolTypes
 from alinka.db.queries import filter_schools_by_type
