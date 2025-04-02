@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QPushButton, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QPushButton, QVBoxLayout, QWidget
 
 from alinka.schemas import PersonalData
 

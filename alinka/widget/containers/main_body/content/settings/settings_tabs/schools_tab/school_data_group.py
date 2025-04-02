@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QGridLayout, QGroupBox, QPushButton, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QGridLayout, QGroupBox, QPushButton, QWidget
 
 from alinka.db.queries import create_school
 from alinka.schemas import SchoolData

@@ -1,6 +1,6 @@
-from PySide2.QtCore import QDate, Qt
-from PySide2.QtGui import QStandardItem, QStandardItemModel
-from PySide2.QtWidgets import (
+from PySide6.QtCore import QDate, Qt
+from PySide6.QtGui import QStandardItem, QStandardItemModel
+from PySide6.QtWidgets import (
     QFrame,
     QGroupBox,
     QHBoxLayout,

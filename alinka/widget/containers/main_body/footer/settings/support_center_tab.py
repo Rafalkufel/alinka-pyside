@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QFrame, QHBoxLayout, QPushButton, QWidget
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QPushButton, QWidget
 
 from alinka.db.queries import upsert_support_center
 from alinka.schemas import SupportCenterData, SupportCenterDbSchema

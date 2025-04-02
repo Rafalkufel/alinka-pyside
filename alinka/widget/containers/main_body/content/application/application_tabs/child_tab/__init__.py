@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QVBoxLayout, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from alinka.db.queries import get_school_by_name
 from alinka.schemas import ChildData, SchoolData, SchoolDbSchema

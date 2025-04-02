@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QHBoxLayout, QMainWindow, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QMainWindow, QWidget
 
 from alinka.widget.containers.main_body import MainBody
 from alinka.widget.containers.sidebar import SidebarMenu

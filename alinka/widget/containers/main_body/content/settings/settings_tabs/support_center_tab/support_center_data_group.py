@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QGridLayout, QGroupBox, QWidget
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QGridLayout, QGroupBox, QWidget
 
 from alinka.schemas.document_schema import SupportCenterData
 from alinka.widget.components import LabeledInputComponent

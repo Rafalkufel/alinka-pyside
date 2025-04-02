@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QFrame, QHBoxLayout, QLabel, QWidget
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QWidget
 
 
 class HeaderContainer(QFrame):
