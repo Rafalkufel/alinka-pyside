@@ -1,6 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QGridLayout, QGroupBox, QWidget
 
+from alinka.db.queries import get_support_center_data
 from alinka.schemas.document_schema import SupportCenterData
 from alinka.widget.components import LabeledInputComponent
 
@@ -37,6 +38,8 @@ class SupportCenterDataGroup(QGroupBox):
         layout.addWidget(self.postal_code, 5, 0)
         layout.addWidget(self.post, 5, 1)
 
+        self.populate_fields_on_init()
+
     def populate_fields(self, **kwargs):
         self.clear()
         self.province_id = kwargs.get("province_id")
@@ -50,6 +53,11 @@ class SupportCenterDataGroup(QGroupBox):
         self.town.text = kwargs.get("town")
         self.postal_code.text = kwargs.get("postal_code")
         self.post.text = kwargs.get("post")
+
+    def populate_fields_on_init(self):
+        support_center_data = get_support_center_data()
+        if support_center_data:
+            self.populate_fields(**support_center_data.model_dump())
 
     def clear(self):
         self.name_nominative.clear()
