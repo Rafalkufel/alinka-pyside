@@ -51,7 +51,11 @@ class Issue(Enum):
 
     @property
     def aac_information_description(self):
-        return ISSUE_ACC_INFORMATION_DESCRIPTION_MAPPER[self]
+        """
+        AAC - Augmentative and alternative communication
+        Alternatywne i wspomagające metody komunikacji
+        """
+        return ISSUE_AAC_INFORMATION_DESCRIPTION_MAPPER[self]
 
 
 ISSUE_DESCRIPTION_NOMINATIVE_MAPPER = {
@@ -70,7 +74,7 @@ ISSUE_DESCRIPTION_GENITIVE_MAPPER = {
     Issue.REWALIDACYJNE: "zajęć rewalidacyjno - wychowawczych",
 }
 
-ISSUE_ACC_INFORMATION_DESCRIPTION_MAPPER = {
+ISSUE_AAC_INFORMATION_DESCRIPTION_MAPPER = {
     Issue.SPECJALNE: (
         "w zależności od potrzeb podaje się dodatkowe istotne informacje o dziecku lub uczniu, w szczególności o "
         "wspomagającej lub alternatywnej metodzie komunikacji (AAC), którą posługuje się dziecko lub uczeń"
