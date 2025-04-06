@@ -49,6 +49,10 @@ class Issue(Enum):
     def recipient_description_genitive(self):
         return RECIPIENT_DESCRIPTION_GENITIVE_MAPPER[self]
 
+    @property
+    def aac_information_description(self):
+        return ISSUE_ACC_INFORMATION_DESCRIPTION_MAPPER[self]
+
 
 ISSUE_DESCRIPTION_NOMINATIVE_MAPPER = {
     Issue.SPECJALNE: "kształcenie specjalne",
@@ -64,6 +68,31 @@ ISSUE_DESCRIPTION_GENITIVE_MAPPER = {
     Issue.INDYWIDUALNE_ROCZNE: "indywidualnego rocznego przygotowania przedszkolnego",
     Issue.OPINIA: "wczesnego wspomagania rozwoju",
     Issue.REWALIDACYJNE: "zajęć rewalidacyjno - wychowawczych",
+}
+
+ISSUE_ACC_INFORMATION_DESCRIPTION_MAPPER = {
+    Issue.SPECJALNE: (
+        "w zależności od potrzeb podaje się dodatkowe istotne informacje o dziecku lub uczniu, w szczególności o "
+        "wspomagającej lub alternatywnej metodzie komunikacji (AAC), którą posługuje się dziecko lub uczeń"
+    ),
+    Issue.INDYWIDUALNE: (
+        "w zależności od potrzeb podaje się dodatkowe istotne informacje o uczniu, w szczególności o wspomagającej "
+        "lub alternatywnej metodzie komunikacji (AAC), którą posługuje się uczeń, a w przypadku ucznia szkoły "
+        "prowadzącej kształcenie zawodowe – także możliwość dalszego kształcenia w zawodzie, w tym warunki "
+        "realizacji praktycznej nauki zawodu"
+    ),
+    Issue.INDYWIDUALNE_ROCZNE: (
+        "w zależności od potrzeb podaje się dodatkowe istotne informacje o dziecku, w szczególności o wspomagającej "
+        "lub alternatywnej metodzie komunikacji (AAC), którą posługuje się dziecko"
+    ),
+    Issue.OPINIA: (
+        "w zależności od potrzeb podaje się dodatkowe istotne informacje o dziecku, w szczególności o wspomagającej "
+        "lub alternatywnej metodzie komunikacji (AAC), którą posługuje się dziecko"
+    ),
+    Issue.REWALIDACYJNE: (
+        "w zależności od potrzeb podaje się dodatkowe istotne informacje o dziecku, w szczególności o wspomagającej "
+        "lub alternatywnej metodzie komunikacji (AAC), którą posługuje się dziecko"
+    ),
 }
 
 RECIPIENT_DESCRIPTION_GENITIVE_MAPPER = {

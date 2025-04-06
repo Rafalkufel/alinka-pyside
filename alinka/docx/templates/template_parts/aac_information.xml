@@ -11,7 +11,7 @@
     <w:pStyle w:val="Additional-info-desc"/>
   </w:pPr>
   <w:r>
-    <w:t>{{ issue.aac_information_description }}</w:t>
+    <w:t>({{ issue.aac_information_description }})</w:t>
   </w:r>
 </w:p>
 <w:p>
