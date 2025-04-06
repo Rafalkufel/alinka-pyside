@@ -95,7 +95,10 @@ class SupportCenterDbSchema(BaseDbSchema):
     post: str
 
 
-class TeamMemberDbSchema(BaseDbSchema):
-    id: int
+class TeamMemberDbCreateSchema(BaseDbSchema):
     name: str
     function: str
+
+
+class TeamMemberDbSchema(TeamMemberDbCreateSchema):
+    id: int

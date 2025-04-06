@@ -34,10 +34,12 @@ class SettingsTeamMembersContainer(QFrame):
         table = team_members_table_group.table
         table_model = team_members_table_group.table_model
 
-        selected_indexes = table.selectionModel().selectedRows()
-        for selected_index in selected_indexes:
-            table_model.removeRow(selected_index.row())
-        table_model.select()
+        selected_rows = sorted(
+            (r.row() for r in table.selectionModel().selectedRows()),
+            reverse=True,
+        )
+        for selected_row in selected_rows:
+            table_model.removeRow(selected_row)
 
     @property
     def team_members(self):
