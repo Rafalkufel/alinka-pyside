@@ -30,6 +30,6 @@
     <w:t>Wnioskodawca:</w:t>
   </w:r>
 </w:p>
-{% for applicant_data in applicants %}
+{% for applicant_data in applicants_data %}
   {% include "template_parts/receiver.xml" %}
 {% endfor %}

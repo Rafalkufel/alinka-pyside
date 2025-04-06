@@ -1,3 +1,4 @@
+from copy import copy
 from datetime import date
 
 from pydantic import BaseModel, Field, computed_field, model_validator
@@ -89,7 +90,7 @@ class DocumentData(BaseModel):
     id: int | None = None
     child: ChildData
     school: SchoolData
-    applicants: list[PersonalData]
+    applicants: list[PersonalData] = Field(..., min_length=1, max_length=2)
     address_child_checkbox: bool = False
     address_first_parent_checkbox: bool = False
     issue: Issue
@@ -109,6 +110,32 @@ class DocumentData(BaseModel):
     @computed_field
     def parents_names(self) -> str:
         return ", ".join([parent.full_name for parent in self.applicants])
+
+    @computed_field
+    def applicants_data(self) -> list[PersonalData]:
+        """
+        This fields contains applicants data taking into account
+        address_child_checkbox and address_first_parent_checkbox
+        """
+        applicant1 = copy(self.applicants[0])
+        applicants = [applicant1]
+
+        if self.address_child_checkbox:
+            applicant1.address = self.child.address
+            applicant1.town = self.child.town
+            applicant1.postal_code = self.child.postal_code
+            applicant1.post = self.child.post
+
+        if len(self.applicants) > 1:
+            applicant2 = copy(self.applicants[1])
+            applicants.append(applicant2)
+            if self.address_first_parent_checkbox:
+                applicant2.address = applicant1.address
+                applicant2.town = applicant1.town
+                applicant2.postal_code = applicant1.postal_code
+                applicant2.post = applicant1.post
+
+        return applicants
 
     @computed_field
     def reason(self) -> Reason:

@@ -23,7 +23,7 @@
       <w:pStyle w:val="LegalBasis"/>
     </w:pPr>
     <w:r>
-      <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2017 r. poz. 59 i 949),</w:t>
+      <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2023 r. poz. 900, 1672 i 1718),</w:t>
     </w:r>
   </w:p>
   {% include "template_parts/on_request.xml" %}
@@ -46,7 +46,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ school.school_description }}</w:t>
+        <w:t>{{ school_description }}</w:t>
       </w:r>
     </w:p>
     <w:p>
