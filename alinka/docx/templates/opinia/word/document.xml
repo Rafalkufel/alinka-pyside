@@ -22,7 +22,7 @@
         <w:pStyle w:val="LegalBasis"/>
       </w:pPr>
       <w:r>
-        <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2017 r. poz. 59 i 949)</w:t>
+        <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2023 r. poz. 900, 1672 i 1718),</w:t>
       </w:r>
     </w:p>
     {% include "template_parts/on_request.xml" %}
@@ -149,7 +149,7 @@
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>OKOLICZNOSC</w:t>
+        <w:t>Opis okoliczności</w:t>
       </w:r>
     </w:p>
     <w:p>
