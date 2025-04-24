@@ -447,7 +447,7 @@
     </w:p>
     <w:p>
       <w:pPr>
-        <w:pStyle w:val="repeal"/>
+        <w:pStyle w:val="Revocation"/>
       </w:pPr>
       <w:r>
         <w:t>Orzeczenie uchyla</w:t>
