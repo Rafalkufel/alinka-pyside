@@ -310,7 +310,7 @@ REASON_DESCRIPTION_ACCUSATIVE_LONG_MAPPER = {
 }
 
 
-class ActivityForm(Enum):
+class ActivityForm(str, Enum):
     INDYWIDUALNE = "indywidualne"
     ZESPOLOWE = "zespolowe"
 

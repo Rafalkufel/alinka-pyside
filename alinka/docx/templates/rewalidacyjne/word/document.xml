@@ -22,7 +22,7 @@
         <w:pStyle w:val="LegalBasis"/>
       </w:pPr>
       <w:r>
-        <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2017 r. poz. 59 i 949)</w:t>
+        <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2023 r. poz. 900, 1672 i 1718)</w:t>
       </w:r>
     </w:p>
     {% include "template_parts/on_request.xml" %}
@@ -83,7 +83,7 @@
         <w:pStyle w:val="SubtitledRun"/>
       </w:pPr>
       <w:r>
-        <w:t>{{ school.school_description }}</w:t>
+        <w:t>{{ school_description }}</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -228,7 +228,7 @@
     </w:p>
     <w:p>
       <w:pPr>
-        <w:pStyle w:val="repeal"/>
+        <w:pStyle w:val="Revocation"/>
       </w:pPr>
       <w:r>
         <w:t>Orzeczenie uchyla</w:t>
@@ -245,7 +245,7 @@
     </w:p>
     <w:p>
       <w:pPr>
-        <w:pStyle w:val="repeal"/>
+        <w:pStyle w:val="Revocation"/>
       </w:pPr>
       <w:r>
         <w:t>1) orzeczenie nr ...... o potrzebie zajęć rewalidacyjno-wychowawczych zespołowych/indywidualnych</w:t>
@@ -262,7 +262,7 @@
     </w:p>
     <w:p>
       <w:pPr>
-        <w:pStyle w:val="repeal"/>
+        <w:pStyle w:val="Revocation"/>
       </w:pPr>
       <w:r>
         <w:t xml:space="preserve"> 2) orzeczenie nr ...... o potrzebie kształcenia specjalnego z dnia ........wydane przez ...................</w:t>

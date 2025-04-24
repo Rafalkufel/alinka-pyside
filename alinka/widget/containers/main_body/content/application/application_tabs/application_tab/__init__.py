@@ -69,7 +69,7 @@ class ApplicationTabContainer(QWidget):
         if primary_reason == Reason.GLEBOKIE:
             self._activity_form.setFixedHeight(45)
             self._activity_form.combobox.setEnabled(True)
-            self._activity_form.combobox.addItem(ActivityForm.INDYWIDUALNE.value, ActivityForm.ZESPOLOWE)
+            self._activity_form.combobox.addItem(ActivityForm.INDYWIDUALNE.value, ActivityForm.INDYWIDUALNE)
             self._activity_form.combobox.addItem(ActivityForm.ZESPOLOWE.value, ActivityForm.ZESPOLOWE)
             return
         if primary_reason not in Reason.multiple_disabilities_reasons():
