@@ -30,13 +30,6 @@ class MeetingTabContainer(QWidget):
         self.model = QStandardItemModel()
         self.model.itemChanged.connect(self.item_changed)
         self.listView = QListView(self.meeting_member_group)
-
-        for meeting_member_data in self.get_meeting_members_data():
-            item = QStandardItem(meeting_member_data["name"])
-            item.setData(meeting_member_data["id"])
-            item.setCheckable(True)
-            self.model.appendRow(item)
-
         self.listView.setModel(self.model)
         meeting_member_group_layout.addWidget(self.listView)
 
@@ -54,6 +47,20 @@ class MeetingTabContainer(QWidget):
         layout.addWidget(self.meeting_member_group)
         layout.addWidget(self.meeting_leader)
         layout.addWidget(meeting_datetime_frame)
+
+    def populate_meeting_members(self):
+        for meeting_member_data in self.get_meeting_members_data():
+            item = QStandardItem(meeting_member_data["name"])
+            item.setData(meeting_member_data["id"])
+            item.setCheckable(True)
+            self.model.appendRow(item)
+
+    def showEvent(self, event):
+        # this refreshes team members whenever tab is shown:
+        self.model.clear()
+        self.populate_meeting_members()
+
+        return super().showEvent(event)
 
     def item_changed(self):
         self.meeting_leader.combobox.clear()

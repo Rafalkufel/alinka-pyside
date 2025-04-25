@@ -1,3 +1,4 @@
+from sqlalchemy import delete
 from sqlalchemy.dialects.sqlite import insert
 
 from alinka.db.connection import db_session
@@ -6,6 +7,7 @@ from alinka.schemas import (
     DecisionDbSchema,
     SchoolDbSchema,
     SupportCenterDbSchema,
+    TeamMemberDbCreateSchema,
     TeamMemberDbSchema,
 )
 
@@ -95,7 +97,7 @@ def get_team_members() -> list[TeamMemberDbSchema]:
         return [TeamMemberDbSchema.model_validate(tm) for tm in team_members]
 
 
-def upsert_team_members(team_members_data: list[TeamMemberDbSchema]) -> list[TeamMemberDbSchema]:
+def upsert_team_members(team_members_data: list[TeamMemberDbCreateSchema]) -> None:
     with db_session() as db:
         for tm in team_members_data:
             upsert_stmt = (
@@ -105,4 +107,10 @@ def upsert_team_members(team_members_data: list[TeamMemberDbSchema]) -> list[Tea
             )
             db.execute(upsert_stmt)
         db.commit()
-    return get_team_members()
+
+
+def delete_team_member(team_member_id: int) -> None:
+    with db_session() as db:
+        stmt = delete(TeamMember).where(TeamMember.id == team_member_id)
+        db.execute(stmt)
+        db.commit()
