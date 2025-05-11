@@ -13,8 +13,12 @@ class TeamMemberTabContainer(QWidget):
 
     @property
     def is_valid(self) -> bool:
+        # this method should be implemented in next iteration
+        # ticket https://github.com/CodeForPoznan/alinka-pyside/issues/90
         return True
 
     @property
     def error_message(self) -> str | None:
+        # this method should be implemented in next iteration
+        # ticket https://github.com/CodeForPoznan/alinka-pyside/issues/90
         return None
