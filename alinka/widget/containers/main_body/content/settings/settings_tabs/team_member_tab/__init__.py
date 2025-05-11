@@ -10,3 +10,11 @@ class TeamMemberTabContainer(QWidget):
         layout = QVBoxLayout(self)
         self.team_members_table_group = TeamMemberTableGroup(self)
         layout.addWidget(self.team_members_table_group)
+
+    @property
+    def is_valid(self) -> bool:
+        return True
+
+    @property
+    def error_message(self) -> str | None:
+        return None

@@ -14,3 +14,11 @@ class SchoolTabContainer(QWidget):
 
         self.school_data_group = SchoolDataGroup(self)
         layout.addWidget(self.school_data_group)
+
+    @property
+    def is_valid(self) -> bool:
+        return True
+
+    @property
+    def error_message(self) -> str | None:
+        return None
