@@ -32,7 +32,15 @@ class ContentContainer(QFrame):
 
     def showEvent(self, event):
         self.validate_basic_settings()
+        self.validate_application()
         return super().showEvent(event)
+
+    def validate_application(self):
+        if self.application_container.isVisible() and not self.application_container.is_valid:
+            error_message = self.application_container.error_message
+            self.main_body_container.header_container.set_error_message(error_message)
+        else:
+            self.main_body_container.header_container.clear_error_message()
 
     def show_settings_container(self):
         footer_container = self.main_body_container.footer_container

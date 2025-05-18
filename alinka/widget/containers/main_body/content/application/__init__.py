@@ -29,6 +29,31 @@ class ApplicationContainer(QTabWidget):
             self.setVisible(visible)
 
     @property
+    def is_valid(self) -> bool:
+        return all(
+            tab.is_valid
+            for tab in [
+                self.child_tab_container,
+                self.applicants_tab_container,
+                self.application_tab_container,
+                self.meeting_tab_container,
+            ]
+        )
+
+    @property
+    def error_message(self) -> str | None:
+        for tab in [
+            self.child_tab_container,
+            self.applicants_tab_container,
+            self.application_tab_container,
+            self.meeting_tab_container,
+        ]:
+            if not tab.is_valid:
+                return tab.error_message
+
+        return None
+
+    @property
     def document_data(self) -> DocumentData:
         support_center_data = get_support_center_data()
         support_center_data = SupportCenterData(**support_center_data.model_dump())
