@@ -16,4 +16,4 @@ class MainWindow(QWidget):
         layout = QHBoxLayout(self)
         layout.addWidget(central_widget)
         self.setWindowIcon(icon)
-        self.show()
+        self.showMaximized()
