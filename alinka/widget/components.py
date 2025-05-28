@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QVBoxLayout,
+    QWidget,
 )
 
 from alinka.widget.validators import RequiredValidator
@@ -34,7 +35,12 @@ class BaseComponent(QFrame):
 
 class LabeledInputComponent(BaseComponent):
     def __init__(
-        self, text, parent, min_lenght: int | None = None, required: bool = False, validator: QValidator | None = None
+        self,
+        text: str,
+        parent: QWidget,
+        min_length: int | None = None,
+        required: bool = False,
+        validator: QValidator | None = None,
     ):
         self.used_validator = None
         self.label = text
@@ -45,8 +51,8 @@ class LabeledInputComponent(BaseComponent):
         layout.setSpacing(2)
         label = QLabel(text=text, parent=self)
         self.line_edit = QLineEdit(self)
-        if min_lenght:
-            self.line_edit.setMinimumWidth(min_lenght)
+        if min_length:
+            self.line_edit.setMinimumWidth(min_length)
 
         if validator:
             self.used_validator = validator
