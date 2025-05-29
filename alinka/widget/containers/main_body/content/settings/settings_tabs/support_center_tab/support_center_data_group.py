@@ -19,7 +19,7 @@ class SupportCenterDataGroup(QGroupBox):
         self.name_nominative = LabeledInputComponent("Nazwa poradnii (mianownik)", self, min_length=100)
         layout.addWidget(self.name_nominative, 0, 0, 1, 2)
 
-        self.name_genitive = LabeledInputComponent("Nazwa poradni (dopełniacz)", self, min_length=100)
+        self.name_genitive = LabeledInputComponent("Nazwa poradnii (dopełniacz)", self, min_length=100)
         layout.addWidget(self.name_genitive, 1, 0, 1, 2)
 
         self.institute_name = LabeledInputComponent("Zespół orzekający", self, min_length=100)
