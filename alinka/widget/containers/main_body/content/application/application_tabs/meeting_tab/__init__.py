@@ -97,3 +97,12 @@ class MeetingTabContainer(QWidget):
         return MeetingData(
             members=meeting_members, date=self.meeting_date.date_input.date().toPython(), time=self.meeting_time.text
         )
+
+    @property
+    def is_valid(self) -> bool:
+        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/93
+        return True
+
+    def error_message(self) -> str | None:
+        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/93
+        return None

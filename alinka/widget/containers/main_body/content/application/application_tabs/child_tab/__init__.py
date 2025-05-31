@@ -23,6 +23,19 @@ class ChildDataTabContainer(QWidget):
         layout.addWidget(self.school_data_group)
 
     @property
+    def is_valid(self) -> bool:
+        return all(
+            container.is_valid for container in [self.general_data_group, self.child_data_group, self.school_data_group]
+        )
+
+    @property
+    def error_message(self) -> str | None:
+        for container in [self.general_data_group, self.child_data_group, self.school_data_group]:
+            if not container.is_valid:
+                return container.error_message
+        return None
+
+    @property
     def child_data(self) -> ChildData:
         return ChildData(
             pesel=self.child_data_group.pesel.text,

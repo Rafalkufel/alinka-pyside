@@ -13,3 +13,15 @@ class GeneralDataGroupContainer(QGroupBox):
         self.file_no = LabeledInputComponent("Numer teczki", self)
         layout.addWidget(self.decision_no)
         layout.addWidget(self.file_no)
+
+    @property
+    def is_valid(self) -> bool:
+        return self.decision_no.is_valid and self.file_no.is_valid
+
+    @property
+    def error_message(self) -> str | None:
+        for component in [self.decision_no, self.file_no]:
+            if not component.is_valid:
+                return component.error_message
+
+        return None

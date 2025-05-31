@@ -48,3 +48,12 @@ class ApplicantsTabContainer(QWidget):
     @property
     def address_first_parent_checkbox(self) -> bool:
         return self.applicant_2_data_group.address_checkbox.checkbox.isChecked()
+
+    @property
+    def is_valid(self) -> bool:
+        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
+        return True
+
+    def error_message(self) -> str | None:
+        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
+        return None

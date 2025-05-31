@@ -47,3 +47,12 @@ class ApplicantDataGroup(QGroupBox):
                 postal_code=self.postal_code.text,
                 post=self.post.text,
             )
+
+    @property
+    def is_valid(self) -> bool:
+        # should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
+        return True
+
+    def error_message(self) -> str | None:
+        # should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
+        return None
