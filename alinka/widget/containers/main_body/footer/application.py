@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QPushButton, QWidget, QFileDialog
+from PySide6.QtWidgets import QFileDialog, QFrame, QHBoxLayout, QPushButton, QWidget
 
 from alinka.db.queries import get_support_center_data
 from alinka.exceptions import ValidationError
@@ -29,13 +29,15 @@ class ApplicationFooterContainer(QFrame):
         if not get_support_center_data():
             raise ValidationError()
 
-    def print_documents(self) -> None:        
+    def print_documents(self) -> None:
         self.validate_document_data()
         destination_path = QFileDialog.getExistingDirectoryUrl()
-        if not destination_path.isValid():   
+        if not destination_path.isValid():
             return
 
-        generate_and_save_decision(form_data=self.document_data, generate=True, destination_path=destination_path.path())
+        generate_and_save_decision(
+            form_data=self.document_data, generate=True, destination_path=destination_path.path()
+        )
 
     def save_document_data(self) -> None:
         self.validate_document_data()
