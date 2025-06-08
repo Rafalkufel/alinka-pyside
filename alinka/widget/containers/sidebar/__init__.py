@@ -9,8 +9,8 @@ class SidebarMenuContainer(QFrame):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(9, 9, 9, 9)
         layout.setAlignment(Qt.AlignTop)
-        search_child_btn = QPushButton("Wyszukaj dziecko", self)
-        search_child_btn.clicked.connect(self.show_query_child)
+        search_child_btn = QPushButton("Wyszukaj", self)
+        search_child_btn.clicked.connect(self.show_browser)
         layout.addWidget(search_child_btn)
         self.create_documents_btn = QPushButton("Utwórz dokument", self)
         self.create_documents_btn.clicked.connect(self.show_application)
@@ -19,8 +19,9 @@ class SidebarMenuContainer(QFrame):
         settings_btn.clicked.connect(self.show_settings)
         layout.addWidget(settings_btn)
 
-    def show_query_child(self):
-        pass
+    def show_browser(self):
+        self.sidebar_menu.central_widget.main_body.content_container.show_browser_container()
+        self.sidebar_menu.central_widget.main_body.footer_container.show_browser_footer_container()
 
     def showEvent(self, event):
         main_body = self.sidebar_menu.central_widget.main_body

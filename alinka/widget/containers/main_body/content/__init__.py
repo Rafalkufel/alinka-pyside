@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget
 
 from .application import ApplicationContainer
+from .browser import BrowserContainer
 from .settings import SettingsContainer
 
 
@@ -11,10 +12,11 @@ class ContentContainer(QFrame):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(9, 9, 9, 9)
         self.application_container = ApplicationContainer(self, visible=False)
+        self.settings_container = SettingsContainer(self, visible=False)
+        self.browser_container = BrowserContainer(self, visible=True)
         layout.addWidget(self.application_container)
-
-        self.settings_container = SettingsContainer(self, visible=True)
         layout.addWidget(self.settings_container)
+        layout.addWidget(self.browser_container)
 
     def validate_basic_settings(self) -> bool:
         header_container = self.main_body_container.header_container
@@ -47,6 +49,7 @@ class ContentContainer(QFrame):
         self.application_container.setVisible(False)
         self.settings_container.setVisible(True)
         footer_container.show_settings_footer_container()
+        self.browser_container.setVisible(False)
 
     def show_application_container(self):
         # before showing the application container, we need to validate the settings container
@@ -54,3 +57,9 @@ class ContentContainer(QFrame):
             return
         self.settings_container.setVisible(False)
         self.application_container.setVisible(True)
+        self.browser_container.setVisible(False)
+
+    def show_browser_container(self):
+        self.settings_container.setVisible(False)
+        self.application_container.setVisible(False)
+        self.browser_container.setVisible(True)
