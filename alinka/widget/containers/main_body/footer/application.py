@@ -16,8 +16,7 @@ class ApplicationFooterContainer(QFrame):
         layout.addWidget(self.print_btn)
         layout.addWidget(self.save_btn)
 
-        if not visible:
-            self.setVisible(visible)
+        self.setVisible(visible)
 
     @property
     def document_data(self):

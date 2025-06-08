@@ -25,8 +25,7 @@ class ApplicationContainer(QTabWidget):
         self.addTab(self.application_tab_container, "Wniosek")
         self.addTab(self.meeting_tab_container, "Zespół")
 
-        if not visible:
-            self.setVisible(visible)
+        self.setVisible(visible)
 
     @property
     def is_valid(self) -> bool:
