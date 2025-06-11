@@ -1,6 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QGridLayout, QGroupBox
 
+from alinka.schemas import DocumentData
 from alinka.widget.components import LabeledInputComponent, ValidationMixin
 from alinka.widget.validators import PeselValidator
 
@@ -83,3 +84,24 @@ class ChildDataGroupContainer(QGroupBox, ValidationMixin):
             if not component.is_valid:
                 return component.error_message
         return None
+
+    def clear(self) -> None:
+        self.child_name_nom.clear()
+        self.child_name_gen.clear()
+        self.birth_place.clear()
+        self.pesel.clear()
+        self.address.clear()
+        self.town.clear()
+        self.postal_code.clear()
+        self.post.clear()
+
+    def populate_data(self, document_data: DocumentData) -> None:
+        child = document_data.child
+        self.child_name_nom.text = child.full_name
+        self.child_name_gen.text = child.full_name_gen
+        self.birth_place.text = child.birth_place
+        self.pesel.text = child.pesel
+        self.address.text = child.address
+        self.town.text = child.town
+        self.postal_code.text = child.postal_code
+        self.post.text = child.post
