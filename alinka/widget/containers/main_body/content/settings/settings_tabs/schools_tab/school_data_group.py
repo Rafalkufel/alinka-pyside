@@ -40,6 +40,10 @@ class SchoolDataGroup(QGroupBox):
 
     def add_school(self):
         create_school(self.school_data.model_dump(exclude=("full_address", "description")))
+        main_body_container = self.parent.parent.parent.parent
+        header_container = main_body_container.header_container
+        if self.parent.is_valid:
+            header_container.clear_error_message()
 
     @property
     def school_data(self) -> SchoolData:
