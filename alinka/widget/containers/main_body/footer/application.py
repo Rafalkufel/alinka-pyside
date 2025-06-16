@@ -13,8 +13,12 @@ class ApplicationFooterContainer(QFrame):
         self.print_btn.clicked.connect(self.print_documents)
         self.save_btn = QPushButton("Zapisz", self)
         self.save_btn.clicked.connect(self.save_document_data)
-        layout.addWidget(self.print_btn)
-        layout.addWidget(self.save_btn)
+        self.clear_application_btn = QPushButton("Wyczyść formularz", self)
+        self.clear_application_btn.setStyleSheet("background-color: red; color: white;")
+        self.clear_application_btn.clicked.connect(self.content_container.application_container.clear_ApplicationContainer)
+        layout.addWidget(self.clear_application_btn, stretch=1)
+        layout.addWidget(self.print_btn, stretch=2)
+        layout.addWidget(self.save_btn, stretch=2)
 
         self.setVisible(visible)
 

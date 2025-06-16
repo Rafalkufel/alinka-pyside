@@ -75,3 +75,11 @@ class ApplicationContainer(QTabWidget):
             meeting_data=self.meeting_tab_container.meeting_data,
             support_center=support_center_data,
         )
+
+
+    def clear_ApplicationContainer(self) -> None:
+        self.id = None
+        self.child_tab_container.clear_ChildDataTabContainer()
+        self.applicants_tab_container.clear_ApplicantsTabContainer()
+        self.application_tab_container.clear_ApplicationTabContainer()
+        self.meeting_tab_container.clear_MeetingTabContainer()

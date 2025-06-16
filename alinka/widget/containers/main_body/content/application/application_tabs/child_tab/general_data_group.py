@@ -25,3 +25,7 @@ class GeneralDataGroupContainer(QGroupBox):
                 return component.error_message
 
         return None
+    
+    def clear_GeneralDataGroupContainer(self) -> None:
+        self.decision_no.clear()
+        self.file_no.clear()

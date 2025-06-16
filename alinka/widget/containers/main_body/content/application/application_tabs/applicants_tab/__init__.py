@@ -57,3 +57,7 @@ class ApplicantsTabContainer(QWidget):
     def error_message(self) -> str | None:
         # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
         return None
+    
+    def clear_ApplicantsTabContainer(self) -> None:
+        self.applicant_1_data_group.clear_ApplicantDataGroup()
+        self.applicant_2_data_group.clear_ApplicantDataGroup()

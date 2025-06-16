@@ -20,8 +20,7 @@ class ApplicationTabContainer(QWidget):
         self.application_date.date_input.setDate(QDate.currentDate())
         self.application_subject = LabeledComboBoxComponent("Wniosek o", self)
         self.application_subject.combobox.setPlaceholderText("Wybierz z listy...")
-        for issue, description in ISSUE_DESCRIPTION_NOMINATIVE_MAPPER.items():
-            self.application_subject.combobox.addItem(description, issue)
+        self.populate_application_subject()
         self.application_subject.combobox.currentTextChanged.connect(self.change_application_subject)
 
         self.application_reason = LabeledComboBoxComponent("Z uwagi na", self)
@@ -58,6 +57,15 @@ class ApplicationTabContainer(QWidget):
         self.application_reason_2.setFixedHeight(0)
 
         self.application_period.combobox.clear()
+        self.populate_application_reason(application_subject)
+
+    def populate_application_subject(self) -> None:
+        for issue, description in ISSUE_DESCRIPTION_NOMINATIVE_MAPPER.items():
+            self.application_subject.combobox.addItem(description, issue)
+
+    def populate_application_reason(self, application_subject: LabeledComboBoxComponent | None = None) -> None:
+        if not application_subject:
+            application_subject = self.application_subject.combobox.currentData()
 
         for reason, reason_description in self.get_list_of_primary_reasons(application_subject).items():
             self.application_reason.combobox.addItem(reason_description, reason)
@@ -156,3 +164,30 @@ class ApplicationTabContainer(QWidget):
     def error_message(self) -> str | None:
         # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/92
         return None
+
+    def clear_application_reason_2(self) -> None:
+        self.application_reason_2.combobox.clear()
+        self.application_reason_2.combobox.setEnabled(False)
+        self.application_reason_2.setFixedHeight(0)
+
+    def clear_activity_form(self) -> None:
+        self._activity_form.combobox.clear()
+        self._activity_form.setFixedHeight(0)
+        self._activity_form.combobox.setEnabled(False)
+
+    def clear_ApplicationTabContainer(self) -> None:
+        self.application_date.date_input.setDate(QDate.currentDate())
+
+        self.application_subject.combobox.clear()
+        self.populate_application_subject()
+
+        self.application_reason.combobox.clear()
+        self.populate_application_reason()
+
+        self.clear_application_reason_2()
+    
+        self.clear_activity_form()
+
+        self.application_period.combobox.clear()
+        self.application_period.combobox.clearEditText()
+        self.application_period.combobox.setEditable(True)

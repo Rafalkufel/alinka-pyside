@@ -64,3 +64,8 @@ class ChildDataTabContainer(QWidget):
             type=school.type,
             parent_organisation=school.parent_organisation_name,
         )
+    
+    def clear_ChildDataTabContainer(self) -> None:
+        self.general_data_group.clear_GeneralDataGroupContainer()
+        self.child_data_group.clear_ChildDataGroupContainer()
+        self.school_data_group.clear_SchoolDataGroupContainer()

@@ -56,3 +56,12 @@ class ApplicantDataGroup(QGroupBox):
     def error_message(self) -> str | None:
         # should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
         return None
+
+    def clear_ApplicantDataGroup(self) -> None:
+        self.full_name.clear()
+        self.full_name_gen.clear()
+        self.address_checkbox.checkbox.setChecked(False)
+        self.address.clear()
+        self.town.clear()
+        self.postal_code.clear()
+        self.post.clear()

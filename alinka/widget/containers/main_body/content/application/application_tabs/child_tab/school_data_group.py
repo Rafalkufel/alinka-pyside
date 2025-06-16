@@ -60,3 +60,11 @@ class SchoolDataGroupContainer(QGroupBox):
             if not component.is_valid:
                 return component.error_message
         return None
+
+    def clear_SchoolDataGroupContainer(self):
+        self.school_type.combobox.clear()
+        self.school.combobox.clear()
+        self.school_type.combobox.addItems(SchoolTypes.values())
+        self.student_checkbox.checkbox.setChecked(False)
+        self.school_klass.clear()
+        self.school_profession.clear()

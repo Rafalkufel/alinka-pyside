@@ -46,20 +46,22 @@ class ChildDataGroupContainer(QGroupBox):
         return all(
             component.is_valid
             for component in [
-                self.child_name_nom,
-                self.child_name_gen,
-                self.birth_place,
-                self.pesel,
-                self.address,
-                self.town,
-                self.postal_code,
-                self.post,
+                self.components_list
             ]
         )
 
     @property
     def error_message(self) -> str | None:
         for component in [
+            self.components_list
+        ]:
+            if not component.is_valid:
+                return component.error_message
+        return None
+    
+    @property
+    def components_list(self) -> list[LabeledInputComponent]:
+        return [
             self.child_name_nom,
             self.child_name_gen,
             self.birth_place,
@@ -68,7 +70,8 @@ class ChildDataGroupContainer(QGroupBox):
             self.town,
             self.postal_code,
             self.post,
-        ]:
-            if not component.is_valid:
-                return component.error_message
-        return None
+        ]
+    
+    def clear_ChildDataGroupContainer(self) -> None:
+        for component in self.components_list:
+            component.clear()

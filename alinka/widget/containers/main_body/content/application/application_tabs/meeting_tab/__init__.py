@@ -106,3 +106,10 @@ class MeetingTabContainer(QWidget):
     def error_message(self) -> str | None:
         # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/93
         return None
+    
+    def clear_MeetingTabContainer(self) -> None:
+        self.model.clear()
+        self.populate_meeting_members()
+        self.meeting_leader.combobox.clear()
+        self.meeting_date.date_input.setDate(QDate.currentDate())
+        self.meeting_time.clear()
