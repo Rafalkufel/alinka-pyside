@@ -26,7 +26,7 @@ class ApplicantsTabContainer(QWidget):
 
     def toggle_applicant_2_group(self):
         if self.applicant_2_data_group.height():
-            self.applicant_2_data_group.clear()
+            self.applicant_2_data_group.clear_ApplicantDataGroup()
             self.applicant_2_data_group.checkable = False
             self.applicant_2_data_group.setFixedHeight(0)
         else:
@@ -57,7 +57,7 @@ class ApplicantsTabContainer(QWidget):
     def error_message(self) -> str | None:
         # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
         return None
-    
+
     def clear_ApplicantsTabContainer(self) -> None:
         self.applicant_1_data_group.clear_ApplicantDataGroup()
         self.applicant_2_data_group.clear_ApplicantDataGroup()

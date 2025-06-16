@@ -185,7 +185,7 @@ class ApplicationTabContainer(QWidget):
         self.populate_application_reason()
 
         self.clear_application_reason_2()
-    
+
         self.clear_activity_form()
 
         self.application_period.combobox.clear()

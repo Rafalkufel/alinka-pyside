@@ -76,7 +76,6 @@ class ApplicationContainer(QTabWidget):
             support_center=support_center_data,
         )
 
-
     def clear_ApplicationContainer(self) -> None:
         self.id = None
         self.child_tab_container.clear_ChildDataTabContainer()

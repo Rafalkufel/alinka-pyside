@@ -27,15 +27,6 @@ class ApplicantDataGroup(QGroupBox):
         layout.addWidget(self.postal_code, 3, 0)
         layout.addWidget(self.post, 3, 1)
 
-    def clear(self) -> None:
-        self.full_name.clear()
-        self.full_name_gen.clear()
-        self.address_checkbox.checkbox.setChecked(False)
-        self.address.clear()
-        self.town.clear()
-        self.postal_code.clear()
-        self.post.clear()
-
     @property
     def applicant_data(self) -> PersonalData | None:
         if self.full_name.text:
