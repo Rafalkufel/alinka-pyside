@@ -7,21 +7,23 @@ from alinka.widget.components import (
     LabeledCheckboxComponent,
     LabeledComboBoxComponent,
     LabeledInputComponent,
+    ValidationMixin,
 )
 
 
-class SchoolDataGroupContainer(QGroupBox):
+class SchoolDataGroupContainer(QGroupBox, ValidationMixin):
     def __init__(self, parent):
         super().__init__(title="Szkoła", parent=parent)
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
 
-        self.school_type = LabeledComboBoxComponent("Rodzaj Szkoły", self, 300)
+        self.school_type = LabeledComboBoxComponent("Rodzaj Szkoły", self, 300, required=True)
         self.school_type.combobox.setPlaceholderText("Wybierz z listy...")
         self.school_type.combobox.addItems(SchoolTypes.values())
-        self.school_type.combobox.currentTextChanged.connect(self.populate_school_cb)
+        self.school_type.combobox.currentTextChanged.connect(self.populate_school_combobox)
 
-        self.school = LabeledComboBoxComponent("Szkoła", self, 300)
+        self.school = LabeledComboBoxComponent("Szkoła", self, 300, required=True)
+        self.school.combobox.setPlaceholderText("Wybierz szkołę...")
 
         school_klass_profession_frame = QFrame(self)
         school_klass_profession_frame_layout = QHBoxLayout(school_klass_profession_frame)
@@ -40,15 +42,35 @@ class SchoolDataGroupContainer(QGroupBox):
         layout.addWidget(self.school)
         layout.addWidget(school_klass_profession_frame)
 
-    def populate_school_cb(self):
+        self.required_fields = [self.school_type, self.school]
+        self.connect_field_clear_handlers(self.required_fields)
+
+    def populate_school_combobox(self):
         """On change selected school type we should clean item of school dropdown"""
         selected_school_type = self.school_type.combobox.currentText()
         self.school.combobox.clear()
         schools = filter_schools_by_type(selected_school_type)
         self.school.combobox.addItems([school.name for school in schools])
 
+    def refresh_school_dropdown(self):
+        """Refresh the school dropdown with latest schools from database"""
+        current_school_type = self.school_type.combobox.currentText()
+        if current_school_type:
+            self.populate_school_combobox()
+
+    def validate_required_fields(self) -> bool:
+        """Validate required fields and highlight missing ones"""
+        return super().validate_required_fields(self.required_fields)
+
+    def clear_highlights(self):
+        """Clear highlighting from all fields"""
+        super().clear_highlights(self.required_fields)
+
     @property
     def is_valid(self) -> bool:
+        if not self.school_type.combobox.currentText() or not self.school.combobox.currentText():
+            return False
+
         return all(
             component.is_valid
             for component in [self.school_type, self.school, self.school_klass, self.school_profession]
@@ -56,6 +78,12 @@ class SchoolDataGroupContainer(QGroupBox):
 
     @property
     def error_message(self) -> str | None:
+        if not self.school_type.combobox.currentText():
+            return "Wybierz rodzaj szkoły."
+
+        if not self.school.combobox.currentText():
+            return "Wybierz szkołę z listy."
+
         for component in [self.school_type, self.school, self.school_klass, self.school_profession]:
             if not component.is_valid:
                 return component.error_message

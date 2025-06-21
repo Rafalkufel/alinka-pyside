@@ -38,5 +38,12 @@ class ApplicationFooterContainer(QFrame):
         generate_and_save_decision(form_data=self.document_data, generate=True)
 
     def save_document_data(self) -> None:
+        content_container = self.footer_container.main_body_container.content_container
+        application_container = content_container.application_container
+        # Call validate_required_fields on the child tab
+        if not application_container.child_tab_container.validate_required_fields():
+            error_message = application_container.child_tab_container.error_message
+            content_container.main_body_container.header_container.set_error_message(error_message)
+            return
         self.validate_document_data()
         generate_and_save_decision(form_data=self.document_data, generate=False)
