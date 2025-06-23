@@ -7,6 +7,7 @@ class ApplicationFooterContainer(QFrame):
     def __init__(self, parent: QWidget, visible: bool = False):
         super().__init__(parent)
         self.footer_container = parent
+        self.content_container = self.footer_container.main_body_container.content_container
         layout = QHBoxLayout(self)
         layout.setContentsMargins(9, 9, 9, 9)
         self.print_btn = QPushButton("Drukuj dokumenty", self)
