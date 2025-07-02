@@ -8,7 +8,7 @@ to switch X11 (see procedure in https://apploye.com/help/switch-from-wayland-to-
 
 ## Release 
 To make a release please follow instruction
-1. Go to github actions and run "Crate release" workflow (twice) on the right-hand side.  
+1. Go to "Actions" tab and run "Crate release" workflow (additional instructions [here](https://docs.github.com/en/actions/how-tos/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow#running-a-workflow)).
 2. When workflow is done (all checks are green), go back to the main repo and find release on the right.
 3. In the pre-release window you need to download .exe file nad submit it for malware scan.
 4. Go to: https://www.microsoft.com/en-us/wdsi/filesubmission
