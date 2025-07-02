@@ -1,15 +1,13 @@
 from PySide6.QtWidgets import QFileDialog, QFrame, QHBoxLayout, QPushButton, QWidget
 
 from alinka.config import settings
-from alinka.db.queries import get_support_center_data
-from alinka.exceptions import ValidationError
 from alinka.widget.actions import generate_and_save_decision
 
 
 class ApplicationFooterContainer(QFrame):
     def __init__(self, parent: QWidget, visible: bool = False):
         super().__init__(parent)
-        self.parent = parent
+        self.footer_container = parent
         layout = QHBoxLayout(self)
         layout.setContentsMargins(9, 9, 9, 9)
         self.print_btn = QPushButton("Drukuj dokumenty", self)
@@ -19,16 +17,22 @@ class ApplicationFooterContainer(QFrame):
         layout.addWidget(self.print_btn)
         layout.addWidget(self.save_btn)
 
-        if not visible:
-            self.setVisible(visible)
+        self.setVisible(visible)
 
     @property
     def document_data(self):
-        return self.parent.parent().content_container.application_container.document_data
+        return self.footer_container.main_body_container.content_container.application_container.document_data
 
     def validate_document_data(self) -> None:
-        if not get_support_center_data():
-            raise ValidationError()
+        content_container = self.footer_container.main_body_container.content_container
+        if not content_container.validate_basic_settings():
+            error_message = content_container.settings_container.error_message
+            content_container.main_body_container.header_container.set_error_message(error_message)
+            return
+        if not content_container.validate_application():
+            error_message = content_container.application_container.error_message
+            content_container.main_body_container.header_container.set_error_message(error_message)
+            return
 
     def print_documents(self) -> None:
         self.validate_document_data()

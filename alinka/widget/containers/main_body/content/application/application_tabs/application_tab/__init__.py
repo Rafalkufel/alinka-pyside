@@ -147,3 +147,12 @@ class ApplicationTabContainer(QWidget):
     @property
     def activity_form(self) -> ActivityForm | None:
         return self._activity_form.combobox.currentData()
+
+    @property
+    def is_valid(self) -> bool:
+        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/92
+        return True
+
+    def error_message(self) -> str | None:
+        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/92
+        return None

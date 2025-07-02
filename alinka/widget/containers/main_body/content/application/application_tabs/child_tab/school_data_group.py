@@ -46,3 +46,17 @@ class SchoolDataGroupContainer(QGroupBox):
         self.school.combobox.clear()
         schools = filter_schools_by_type(selected_school_type)
         self.school.combobox.addItems([school.name for school in schools])
+
+    @property
+    def is_valid(self) -> bool:
+        return all(
+            component.is_valid
+            for component in [self.school_type, self.school, self.school_klass, self.school_profession]
+        )
+
+    @property
+    def error_message(self) -> str | None:
+        for component in [self.school_type, self.school, self.school_klass, self.school_profession]:
+            if not component.is_valid:
+                return component.error_message
+        return None

@@ -1,4 +1,4 @@
-from sqlalchemy import delete
+from sqlalchemy import delete, or_
 from sqlalchemy.dialects.sqlite import insert
 
 from alinka.db.connection import db_session
@@ -18,7 +18,20 @@ def get_decisions_list_from_db() -> list[DecisionDbSchema]:
         return [DecisionDbSchema.model_validate(decision) for decision in decisions]
 
 
-def get_decision_data_from_db(decision_id: int) -> DecisionDbSchema:
+def filter_decisions_by_pesel_child_name(filter_by: str | None) -> list[DecisionDbSchema]:
+    if not filter_by:
+        return get_decisions_list_from_db()
+
+    with db_session() as db:
+        decisions = (
+            db.query(Decision)
+            .filter(or_(Decision.child_full_name.contains(filter_by), Decision.child_pesel.contains(filter_by)))
+            .all()
+        )
+        return [DecisionDbSchema.model_validate(decision) for decision in decisions]
+
+
+def get_decision_data_by_id(decision_id: int) -> DecisionDbSchema:
     with db_session() as db:
         decision = db.query(Decision).filter(Decision.id == decision_id).one()
         return DecisionDbSchema.model_validate(decision)
