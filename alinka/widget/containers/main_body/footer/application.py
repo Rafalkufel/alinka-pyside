@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QFileDialog, QFrame, QHBoxLayout, QPushButton, QWidget
 
+from alinka.config import settings
 from alinka.db.queries import get_support_center_data
 from alinka.exceptions import ValidationError
 from alinka.widget.actions import generate_and_save_decision
@@ -31,13 +32,14 @@ class ApplicationFooterContainer(QFrame):
 
     def print_documents(self) -> None:
         self.validate_document_data()
-        destination_path = QFileDialog.getExistingDirectoryUrl()
-        if not destination_path.isValid():
+
+        dialogTitle = "Wybierz katalog zapisu dokumentu"
+
+        destination_path = QFileDialog.getExistingDirectory(self, dialogTitle, settings.DOCUMENTS_PATH)
+        if not destination_path:
             return
 
-        generate_and_save_decision(
-            form_data=self.document_data, generate=True, destination_path=destination_path.path()
-        )
+        generate_and_save_decision(form_data=self.document_data, generate=True, destination_path=destination_path)
 
     def save_document_data(self) -> None:
         self.validate_document_data()
