@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from .school_data_group import SchoolDataGroup
+from .school_list_group import SchoolListGroup
 from .select_school_group import SelectSchoolGroup
 
 
@@ -14,6 +15,9 @@ class SchoolTabContainer(QWidget):
 
         self.school_data_group = SchoolDataGroup(self)
         layout.addWidget(self.school_data_group)
+
+        self.school_list = SchoolListGroup(self)
+        layout.addWidget(self.school_list)
 
     @property
     def is_valid(self) -> bool:

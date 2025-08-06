@@ -1,7 +1,6 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QGridLayout, QGroupBox, QPushButton, QWidget
+from PySide6.QtWidgets import QGridLayout, QGroupBox, QWidget
 
-from alinka.db.queries import create_school
 from alinka.schemas import SchoolData
 from alinka.widget.components import LabeledInputComponent
 
@@ -33,44 +32,6 @@ class SchoolDataGroup(QGroupBox):
         self.post = LabeledInputComponent("Poczta", self)
         layout.addWidget(self.postal_code, 4, 0)
         layout.addWidget(self.post, 4, 1)
-
-        add_remove_applicant_btn = QPushButton("Dodaj szkołę do listy")
-        add_remove_applicant_btn.clicked.connect(self.add_school)
-        layout.addWidget(add_remove_applicant_btn, 5, 0, 1, 2)
-
-    def add_school(self):
-        select_school_group = self.parent.select_schools_region_group
-        if not select_school_group.validate_required_fields():
-            return
-
-        select_school_group.clear_highlights()
-
-        create_school(self.school_data.model_dump(exclude=("full_address", "description")))
-
-        try:
-            current_widget = self.parent
-            while current_widget and not hasattr(current_widget, "header_container"):
-                current_widget = current_widget.parent()
-
-            if current_widget and hasattr(current_widget, "header_container"):
-                current_widget.header_container.clear_error_message()
-        except Exception as e:
-            print(f"Error clearing error message: {e}")
-        try:
-            current_widget = self.parent
-            while current_widget and not hasattr(current_widget, "content_container"):
-                current_widget = current_widget.parent()
-
-            if current_widget and hasattr(current_widget, "content_container"):
-                content_container = current_widget.content_container
-                if hasattr(content_container, "application_container"):
-                    application_container = content_container.application_container
-                    if hasattr(application_container, "child_tab_container"):
-                        child_tab = application_container.child_tab_container
-                        if hasattr(child_tab, "school_data_group"):
-                            child_tab.school_data_group.refresh_school_dropdown()
-        except Exception as e:
-            print(f"Error triggering validation: {e}")
 
     @property
     def school_data(self) -> SchoolData:
