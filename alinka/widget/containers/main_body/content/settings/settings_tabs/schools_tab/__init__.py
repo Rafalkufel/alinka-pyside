@@ -17,12 +17,11 @@ class SchoolTabContainer(QWidget):
 
     @property
     def is_valid(self) -> bool:
-        # this method should be implemented in next iteration
-        # ticket https://github.com/CodeForPoznan/alinka-pyside/issues/89
-        return True
+        selected_school = self.select_schools_region_group.schools_combobox.combobox.currentText()
+        return bool(selected_school)
 
     @property
     def error_message(self) -> str | None:
-        # this method should be implemented in next iteration
-        # ticket https://github.com/CodeForPoznan/alinka-pyside/issues/89
+        if not self.is_valid:
+            return "Brak dodanej szkoły w ustawieniach. Dodaj szkołę, aby utworzyć nowy wniosek."
         return None
