@@ -79,7 +79,9 @@ class MeetingTabContainer(QWidget):
         meeting_member = list(
             filter(lambda meeting_member: meeting_member["id"] == meeting_member_id, meeting_members_data)
         )[0]
-        return MeetingMemberData(name=meeting_member["name"], function=meeting_member["function"])
+        return MeetingMemberData(
+            id=meeting_member["id"], name=meeting_member["name"], function=meeting_member["function"]
+        )
 
     @property
     def meeting_data(self) -> MeetingData:
