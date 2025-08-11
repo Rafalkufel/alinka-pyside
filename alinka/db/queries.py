@@ -75,6 +75,12 @@ def get_schools() -> list[SchoolDbSchema]:
         return [SchoolDbSchema.model_validate(s) for s in schools]
 
 
+def check_if_any_school_exists() -> bool:
+    with db_session() as db:
+        any_school = db.query(School).first()
+        return bool(any_school)
+
+
 def upsert_support_center(support_center_data: dict) -> SupportCenterDbSchema:
     with db_session() as db:
         if db.query(SupportCenter).where(SupportCenter.id == 1).one_or_none():
