@@ -95,7 +95,7 @@ class BrowseDecisionContainer(QWidget):
     def entered_filter_by(self, text):
         # Filtering here clears whole model including selection
         # It's reasonable select row using 'self.selected_decision_id'
-        # should be covered by another ticket
+        # should be covered by https://github.com/CodeForPoznan/alinka-pyside/issues/148
 
         if self.table_model.filter_by != text:
             self.table_model.filter_by = text
