@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QFrame, QGroupBox, QHBoxLayout, QVBoxLayout
 
 from alinka.constants.common import SchoolTypes
 from alinka.db.queries import filter_schools_by_type
+from alinka.schemas import DocumentData
 from alinka.widget.components import (
     LabeledCheckboxComponent,
     LabeledComboBoxComponent,
@@ -88,3 +89,19 @@ class SchoolDataGroupContainer(QGroupBox, ValidationMixin):
             if not component.is_valid:
                 return component.error_message
         return None
+
+    def clear(self) -> None:
+        self.school_type.combobox.setCurrentIndex(-1)
+        self.school.combobox.setCurrentIndex(-1)
+        self.student_checkbox.checkbox.setChecked(False)
+        self.school_klass.clear()
+        self.school_profession.clear()
+
+    def populate_data(self, document_data: DocumentData) -> None:
+        school_data = document_data.school
+        child_data = document_data.child
+        self.school_type.combobox.setCurrentText(school_data.type)
+        self.school.combobox.setCurrentText(school_data.name)
+        self.student_checkbox.checkbox.setChecked(child_data.student)
+        self.school_klass.text = child_data.klass
+        self.school_profession.text = child_data.profession

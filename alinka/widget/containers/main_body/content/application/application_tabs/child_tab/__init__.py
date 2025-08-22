@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from alinka.db.queries import get_school_by_name
-from alinka.schemas import ChildData, SchoolData, SchoolDbSchema
+from alinka.schemas import ChildData, DocumentData, SchoolData, SchoolDbSchema
 from alinka.widget.components import ValidationMixin
 
 from .child_data_group import ChildDataGroupContainer
@@ -89,3 +89,13 @@ class ChildDataTabContainer(QWidget, ValidationMixin):
             type=school.type,
             parent_organisation=school.parent_organisation_name,
         )
+
+    def clear(self) -> None:
+        self.general_data_group.clear()
+        self.child_data_group.clear()
+        self.school_data_group.clear()
+
+    def populate_data(self, document_data: DocumentData) -> None:
+        self.general_data_group.populate_data(document_data)
+        self.child_data_group.populate_data(document_data)
+        self.school_data_group.populate_data(document_data)
