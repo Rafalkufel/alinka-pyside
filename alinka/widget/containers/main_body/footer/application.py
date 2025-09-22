@@ -50,3 +50,6 @@ class ApplicationFooterContainer(QFrame):
         generate_and_save_decision(form_data=self.document_data, generate=True, destination_path=destination_path)
         content_container = self.footer_container.main_body_container.content_container
         content_container.main_body_container.header_container.set_success_message("Dokumenty zostały wygenerowane")
+        content_container.show_browser_container()
+        application_container.clear()
+        application_container.setCurrentWidget(application_container.child_tab_container)

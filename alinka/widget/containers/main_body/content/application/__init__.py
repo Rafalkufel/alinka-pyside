@@ -25,6 +25,7 @@ class ApplicationContainer(QTabWidget):
         self.addTab(self.application_tab_container, "Wniosek")
         self.addTab(self.meeting_tab_container, "Zespół")
 
+        self.setCurrentWidget(self.child_tab_container)
         self.setVisible(visible)
 
     @property
