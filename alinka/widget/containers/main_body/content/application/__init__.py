@@ -25,6 +25,7 @@ class ApplicationContainer(QTabWidget):
         self.addTab(self.application_tab_container, "Wniosek")
         self.addTab(self.meeting_tab_container, "Zespół")
 
+        self.setCurrentWidget(self.child_tab_container)
         self.setVisible(visible)
 
     @property
@@ -75,6 +76,17 @@ class ApplicationContainer(QTabWidget):
             meeting_data=self.meeting_tab_container.meeting_data,
             support_center=support_center_data,
         )
+
+    def populate_application_form(self, document_data: DocumentData) -> None:
+        self.child_tab_container.populate_data(document_data)
+        self.applicants_tab_container.populate_data(document_data)
+
+    def clear(self):
+        self.child_tab_container.clear()
+        self.applicants_tab_container.clear()
+        self.application_tab_container.clear()
+        self.meeting_tab_container.clear()
+        self.id = None
 
     def clear_ApplicationContainer(self) -> None:
         self.id = None
