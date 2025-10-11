@@ -1,12 +1,13 @@
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from alinka.db.queries import get_support_center_data
+from alinka.widget.components import ValidationMixin
 
 from .select_support_center_group import SelectSupportCenterGroup
 from .support_center_data_group import SupportCenterDataGroup
 
 
-class SupportCenterTabContainer(QWidget):
+class SupportCenterTabContainer(ValidationMixin, QWidget):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
         self.settings_container = parent

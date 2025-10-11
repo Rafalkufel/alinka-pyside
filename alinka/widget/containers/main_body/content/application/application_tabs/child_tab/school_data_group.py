@@ -12,13 +12,29 @@ from alinka.widget.components import (
 )
 
 
-class SchoolDataGroupContainer(QGroupBox, ValidationMixin):
+class SchoolKlassProfessionFrame(ValidationMixin, QFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.student_checkbox = LabeledCheckboxComponent("Uczeń", self)
+        self.school_klass = LabeledInputComponent("Klasa", self)
+        self.school_profession = LabeledInputComponent("Zawód", self)
+
+        layout.addWidget(self.student_checkbox)
+        layout.addWidget(self.school_klass)
+        layout.addWidget(self.school_profession)
+
+
+class SchoolDataGroupContainer(ValidationMixin, QGroupBox):
     def __init__(self, parent):
         super().__init__(title="Szkoła", parent=parent)
+        self.child_data_container = parent
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
 
-        self.school_type = LabeledComboBoxComponent("Rodzaj Szkoły", self, 300, required=True)
+        self.school_type = LabeledComboBoxComponent("Rodzaj Szkoły", self, 300, required=True, static=True)
         self.school_type.combobox.setPlaceholderText("Wybierz z listy...")
         self.school_type.combobox.addItems(SchoolTypes.values())
         self.school_type.combobox.currentTextChanged.connect(self.populate_school_combobox)
@@ -26,25 +42,22 @@ class SchoolDataGroupContainer(QGroupBox, ValidationMixin):
         self.school = LabeledComboBoxComponent("Szkoła", self, 300, required=True)
         self.school.combobox.setPlaceholderText("Wybierz szkołę...")
 
-        school_klass_profession_frame = QFrame(self)
-        school_klass_profession_frame_layout = QHBoxLayout(school_klass_profession_frame)
-        school_klass_profession_frame_layout.setContentsMargins(0, 0, 0, 0)
-
-        self.student_checkbox = LabeledCheckboxComponent("Uczeń", school_klass_profession_frame)
-
-        self.school_klass = LabeledInputComponent("Klasa", school_klass_profession_frame)
-        self.school_profession = LabeledInputComponent("Zawód", school_klass_profession_frame)
-
-        school_klass_profession_frame_layout.addWidget(self.student_checkbox)
-        school_klass_profession_frame_layout.addWidget(self.school_klass)
-        school_klass_profession_frame_layout.addWidget(self.school_profession)
+        self.school_klass_profession_frame = SchoolKlassProfessionFrame(self)
+        self.student_checkbox = self.school_klass_profession_frame.student_checkbox
+        self.school_klass = self.school_klass_profession_frame.school_klass
+        self.school_profession = self.school_klass_profession_frame.school_profession
 
         layout.addWidget(self.school_type)
         layout.addWidget(self.school)
-        layout.addWidget(school_klass_profession_frame)
+        layout.addWidget(self.school_klass_profession_frame)
 
-        self.required_fields = [self.school_type, self.school]
-        self.connect_field_clear_handlers(self.required_fields)
+        self.components = [
+            self.school_type,
+            self.school,
+            self.student_checkbox,
+            self.school_klass,
+            self.school_profession,
+        ]
 
     def populate_school_combobox(self):
         """On change selected school type we should clean item of school dropdown"""
@@ -59,43 +72,10 @@ class SchoolDataGroupContainer(QGroupBox, ValidationMixin):
         if current_school_type:
             self.populate_school_combobox()
 
-    def validate_required_fields(self) -> bool:
-        """Validate required fields and highlight missing ones"""
-        return super().validate_required_fields(self.required_fields)
-
-    def clear_highlights(self):
-        """Clear highlighting from all fields"""
-        super().clear_highlights(self.required_fields)
-
-    @property
-    def is_valid(self) -> bool:
-        if not self.school_type.combobox.currentText() or not self.school.combobox.currentText():
-            return False
-
-        return all(
-            component.is_valid
-            for component in [self.school_type, self.school, self.school_klass, self.school_profession]
-        )
-
-    @property
-    def error_message(self) -> str | None:
-        if not self.school_type.combobox.currentText():
-            return "Wybierz rodzaj szkoły."
-
-        if not self.school.combobox.currentText():
-            return "Wybierz szkołę z listy."
-
-        for component in [self.school_type, self.school, self.school_klass, self.school_profession]:
-            if not component.is_valid:
-                return component.error_message
-        return None
-
     def clear(self) -> None:
-        self.school_type.combobox.setCurrentIndex(-1)
-        self.school.combobox.setCurrentIndex(-1)
-        self.student_checkbox.checkbox.setChecked(False)
-        self.school_klass.clear()
-        self.school_profession.clear()
+        for c in self.components:
+            c.clear()
+        self.populate_school_combobox()
 
     def populate_data(self, document_data: DocumentData) -> None:
         school_data = document_data.school
@@ -105,3 +85,21 @@ class SchoolDataGroupContainer(QGroupBox, ValidationMixin):
         self.student_checkbox.checkbox.setChecked(child_data.student)
         self.school_klass.text = child_data.klass
         self.school_profession.text = child_data.profession
+
+    @property
+    def is_valid(self) -> bool:
+        return all(c.is_valid for c in self.components)
+
+    @property
+    def error_message(self) -> str | None:
+        for c in self.components:
+            if not c.is_valid:
+                return c.error_message
+
+        return None
+
+    def validate(self) -> bool:
+        return all([c.validate() for c in self.components])
+
+    def clear_validation_state(self) -> None:
+        self.child_data_container.clear_validation_state()

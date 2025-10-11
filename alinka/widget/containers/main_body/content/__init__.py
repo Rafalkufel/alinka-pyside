@@ -1,11 +1,13 @@
 from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget
 
+from alinka.widget.components import ValidationMixin
+
 from .application import ApplicationContainer
 from .browser import BrowserContainer
 from .settings import SettingsContainer
 
 
-class ContentContainer(QFrame):
+class ContentContainer(ValidationMixin, QFrame):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
         self.main_body_container = parent
@@ -28,7 +30,7 @@ class ContentContainer(QFrame):
             self.show_settings_container()
             return False
         else:
-            header_container.clear_error_message()
+            header_container.clear_message()
             sidebar_menu_container.toggle_create_application_btn(True)
             return True
 
@@ -42,7 +44,7 @@ class ContentContainer(QFrame):
             error_message = self.application_container.error_message
             self.main_body_container.header_container.set_error_message(error_message)
         else:
-            self.main_body_container.header_container.clear_error_message()
+            self.main_body_container.header_container.clear_message()
 
     def show_settings_container(self):
         footer_container = self.main_body_container.footer_container

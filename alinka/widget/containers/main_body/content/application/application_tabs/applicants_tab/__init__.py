@@ -1,13 +1,15 @@
 from PySide6.QtWidgets import QPushButton, QVBoxLayout, QWidget
 
 from alinka.schemas import DocumentData, PersonalData
+from alinka.widget.components import ValidationMixin
 
 from .applicant_data_group import ApplicantDataGroup
 
 
-class ApplicantsTabContainer(QWidget):
+class ApplicantsTabContainer(ValidationMixin, QWidget):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
+        self.application_container = parent
         layout = QVBoxLayout(self)
         self.applicant_1_data_group = ApplicantDataGroup(
             title="Wnioskodawca 1", parent=self, checkbox_description="Adres taki sam jak dziecka", initial_height=200
@@ -48,15 +50,6 @@ class ApplicantsTabContainer(QWidget):
     @property
     def address_first_parent_checkbox(self) -> bool:
         return self.applicant_2_data_group.address_checkbox.checkbox.isChecked()
-
-    @property
-    def is_valid(self) -> bool:
-        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
-        return True
-
-    def error_message(self) -> str | None:
-        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
-        return None
 
     def clear(self) -> None:
         self.applicant_1_data_group.clear()

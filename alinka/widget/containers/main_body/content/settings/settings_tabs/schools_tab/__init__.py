@@ -1,14 +1,16 @@
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from alinka.db.queries import check_if_any_school_exists
+from alinka.widget.components import ValidationMixin
 
 from .school_data_group import SchoolDataGroup
 from .school_list_group import SchoolListGroup
 from .select_school_group import SelectSchoolGroup
 
 
-class SchoolTabContainer(QWidget):
+class SchoolTabContainer(ValidationMixin, QWidget):
     def __init__(self, parent: QWidget):
+        self.setting_container = parent
         super().__init__(parent)
         layout = QVBoxLayout(self)
 
@@ -30,3 +32,6 @@ class SchoolTabContainer(QWidget):
         if not self.is_valid:
             return "Brak dodanej szkoły w ustawieniach. Dodaj szkołę, aby utworzyć nowy wniosek."
         return None
+
+    def validate(self) -> bool:
+        return self.school_data_group.validate()

@@ -1,5 +1,7 @@
 from PySide6.QtWidgets import QTabWidget, QWidget
 
+from alinka.widget.components import ValidationMixin
+
 from .settings_tabs import (
     SchoolTabContainer,
     SupportCenterTabContainer,
@@ -7,7 +9,7 @@ from .settings_tabs import (
 )
 
 
-class SettingsContainer(QTabWidget):
+class SettingsContainer(ValidationMixin, QTabWidget):
     def __init__(self, parent: QWidget, visible: bool = False):
         super().__init__(parent)
         self.content_container = parent

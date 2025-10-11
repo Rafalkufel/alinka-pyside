@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
 from alinka.db.models import TeamMember
 from alinka.db.queries import delete_team_member, get_team_members, upsert_team_members
 from alinka.schemas import TeamMemberDbCreateSchema, TeamMemberDbSchema
+from alinka.widget.components import ValidationMixin
 
 
 class TeamMemberTableModel(QAbstractTableModel):
@@ -110,7 +111,7 @@ class TeamMemberTableModel(QAbstractTableModel):
         return self.insert_row is not None
 
 
-class TeamMemberTableGroup(QGroupBox):
+class TeamMemberTableGroup(ValidationMixin, QGroupBox):
     def __init__(self, parent: QWidget):
         super().__init__(title="Członkowie zespołu orzekającego", parent=parent)
         self.team_member_tab_container = parent
