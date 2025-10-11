@@ -54,11 +54,10 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
 
     @property
     def error_message(self) -> str | None:
-        for tab in self.containers:
-            if not tab.is_valid:
-                return tab.error_message
-
-        return None
+        if not all(tab.is_valid for tab in self.containers):
+            return "Popraw błędy w formularzu."
+        else:
+            return None
 
     def clear_validation_state(self) -> None:
         self.tabBar().setTabTextColor(self.currentIndex(), QColor("black"))
@@ -70,7 +69,7 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
         if not previous_tab.validate():
             self.tabBar().setTabTextColor(self.previous_tab_index, QColor("red"))
             header_container = self.content_container.main_body_container.header_container
-            header_container.set_error_message(previous_tab.error_message)
+            header_container.set_error_message("Popraw błędy w formularzu.")
         else:
             self.tabBar().setTabTextColor(self.previous_tab_index, QColor("green"))
             self.clear_validation_state()

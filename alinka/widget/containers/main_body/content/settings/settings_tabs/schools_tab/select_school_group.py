@@ -21,7 +21,7 @@ class SelectSchoolGroup(ValidationMixin, QGroupBox):
         self.province_district_group.selection_changed.connect(self.province_district_changed)
 
         self.commune_combobox = LabeledComboBoxComponent("Gmina", self, required=True)
-        self.commune_combobox.combobox.setPlaceholderText("Wybierz z listy....")
+        self.commune_combobox.combobox.setPlaceholderText("Wybierz z listy...")
         self.commune_combobox.combobox.currentTextChanged.connect(self.clear_school_types)
         layout.addWidget(self.province_district_group)
         layout.addWidget(self.commune_combobox)

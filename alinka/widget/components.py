@@ -248,7 +248,7 @@ class SelectProvinceDistrictGroup(ValidationMixin, QFrame):
         location_frame_layout = QHBoxLayout(self)
         location_frame_layout.setContentsMargins(0, 0, 0, 0)
         self.province_combobox = LabeledComboBoxComponent("Województwo", self, required=True)
-        self.province_combobox.combobox.setPlaceholderText("Wybierz z listy....")
+        self.province_combobox.combobox.setPlaceholderText("Wybierz z listy...")
         self.province_combobox.combobox.currentTextChanged.connect(self.on_province_changed)
 
         provinces = rspo_client.list_provinces()
@@ -256,7 +256,7 @@ class SelectProvinceDistrictGroup(ValidationMixin, QFrame):
             self.province_combobox.combobox.addItem(province.name, province.id)
 
         self.district_combobox = LabeledComboBoxComponent("Powiat", self, required=True)
-        self.district_combobox.combobox.setPlaceholderText("Wybierz z listy....")
+        self.district_combobox.combobox.setPlaceholderText("Wybierz z listy...")
         self.district_combobox.combobox.currentTextChanged.connect(self.on_district_changed)
         location_frame_layout.addWidget(self.province_combobox)
         location_frame_layout.addWidget(self.district_combobox)

@@ -22,7 +22,7 @@ class SelectSupportCenterGroup(ValidationMixin, QGroupBox):
         self.province_district_group.selection_changed.connect(self.populate_support_centers_combobox)
 
         self.support_center_combobox = LabeledComboBoxComponent("Poradnia", self)
-        self.support_center_combobox.combobox.setPlaceholderText("Wybierz z listy....")
+        self.support_center_combobox.combobox.setPlaceholderText("Wybierz z listy...")
         self.support_center_combobox.combobox.currentTextChanged.connect(self.populate_support_center_data)
         layout.addWidget(self.province_district_group)
         layout.addWidget(self.support_center_combobox)
