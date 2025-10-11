@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from alinka.utils import pesel_to_date_of_birth, validate_pesel
+from alinka.utils import extract_date_of_birth_from_pesel, is_valid_pesel
 
 
 class TestValidatePesel:
@@ -15,7 +15,7 @@ class TestValidatePesel:
         ],
     )
     def test_validate_pesel__valid_pesel(self, pesel):
-        assert validate_pesel(pesel)
+        assert is_valid_pesel(pesel)
 
     @pytest.mark.parametrize(
         "pesel",
@@ -31,7 +31,7 @@ class TestValidatePesel:
         ],
     )
     def test_validate_pesel__invalid_pesel(self, pesel):
-        assert not validate_pesel(pesel)
+        assert not is_valid_pesel(pesel)
 
 
 class TestPeselToDateOfBirth:
@@ -46,6 +46,6 @@ class TestPeselToDateOfBirth:
             ("05212294647", date(2005, 1, 22)),
         ],
     )
-    def test_pesel_to_date_of_birth__success(self, pesel, expected_date):
-        assert validate_pesel(pesel)
-        assert pesel_to_date_of_birth(pesel) == expected_date
+    def test_extract_date_of_birth_from_pesel__success(self, pesel, expected_date):
+        assert is_valid_pesel(pesel)
+        assert extract_date_of_birth_from_pesel(pesel) == expected_date

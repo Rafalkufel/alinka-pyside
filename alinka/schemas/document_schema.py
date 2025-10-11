@@ -4,7 +4,7 @@ from datetime import date
 from pydantic import BaseModel, Field, computed_field, model_validator
 
 from alinka.constants import ActivityForm, Issue, Reason
-from alinka.utils import pesel_to_date_of_birth
+from alinka.utils import extract_date_of_birth_from_pesel
 
 
 class AddressData(BaseModel):
@@ -47,7 +47,7 @@ class ChildData(PersonalData):
         if self.birth_date:
             return self
         pesel = self.pesel
-        self.birth_date = pesel_to_date_of_birth(pesel)
+        self.birth_date = extract_date_of_birth_from_pesel(pesel)
         return self
 
 

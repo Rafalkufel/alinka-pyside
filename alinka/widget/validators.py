@@ -1,6 +1,6 @@
 from PySide6.QtGui import QValidator
 
-from alinka.utils import validate_pesel
+from alinka.utils import is_valid_pesel
 
 
 class RequiredValidator(QValidator):
@@ -24,7 +24,7 @@ class PeselValidator(QValidator):
             return QValidator.Invalid, input_str, pos
         if len(input_str) < 11:
             return QValidator.Intermediate, input_str, pos
-        if validate_pesel(input_str):
+        if is_valid_pesel(input_str):
             return QValidator.Acceptable, input_str, pos
         else:
             return QValidator.Intermediate, input_str, pos
