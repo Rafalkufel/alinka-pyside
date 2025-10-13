@@ -1,6 +1,7 @@
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import QTabWidget, QWidget
 
+from alinka.constants.common import INVALID_FORM_MESSAGE
 from alinka.db.queries import get_support_center_data
 from alinka.schemas import DocumentData, SupportCenterData
 from alinka.widget.components import ValidationMixin
@@ -55,7 +56,7 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
     @property
     def error_message(self) -> str | None:
         if not all(tab.is_valid for tab in self.containers):
-            return "Popraw błędy w formularzu."
+            return INVALID_FORM_MESSAGE
         else:
             return None
 
@@ -69,7 +70,7 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
         if not previous_tab.validate():
             self.tabBar().setTabTextColor(self.previous_tab_index, QColor("red"))
             header_container = self.content_container.main_body_container.header_container
-            header_container.set_error_message("Popraw błędy w formularzu.")
+            header_container.set_error_message(INVALID_FORM_MESSAGE)
         else:
             self.tabBar().setTabTextColor(self.previous_tab_index, QColor("green"))
             self.clear_validation_state()

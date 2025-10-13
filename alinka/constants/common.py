@@ -1,6 +1,7 @@
 from enum import Enum, StrEnum
 
 RPSO_SUPPORT_CENTER_TYPE_ID = 48
+INVALID_FORM_MESSAGE = "Popraw błędy w formularzu."
 
 
 class DocumentsTypes(Enum):
