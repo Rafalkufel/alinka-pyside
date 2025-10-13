@@ -53,3 +53,4 @@ class ApplicationFooterContainer(QFrame):
         content_container.show_browser_container()
         application_container.clear()
         application_container.setCurrentWidget(application_container.child_tab_container)
+        self.footer_container.show_browser_footer_container()
