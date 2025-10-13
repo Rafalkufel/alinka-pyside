@@ -1,3 +1,4 @@
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QPushButton, QVBoxLayout, QWidget
 
 from alinka.schemas import DocumentData, PersonalData
@@ -11,13 +12,15 @@ class ApplicantsTabContainer(ValidationMixin, QWidget):
         super().__init__(parent)
         self.application_container = parent
         layout = QVBoxLayout(self)
+        layout.setAlignment(Qt.AlignTop)
+        layout.setContentsMargins(0, 0, 0, 0)
         self.applicant_1_data_group = ApplicantDataGroup(
-            title="Wnioskodawca 1", parent=self, checkbox_description="Adres taki sam jak dziecka", initial_height=200
+            title="Wnioskodawca 1", parent=self, checkbox_description="Adres inny niż dziecka", initial_height=130
         )
         self.applicant_2_data_group = ApplicantDataGroup(
             title="Wnioskodawca 2",
             parent=self,
-            checkbox_description="Adres taki sam jak pierwszego rodzica",
+            checkbox_description="Adres inny niż pierwszego rodzica",
             initial_height=0,
         )
         add_remove_applicant_btn = QPushButton("Dodaj/usuń wnioskodawcę")
@@ -29,11 +32,12 @@ class ApplicantsTabContainer(ValidationMixin, QWidget):
     def toggle_applicant_2_group(self):
         if self.applicant_2_data_group.height():
             self.applicant_2_data_group.clear()
+            self.applicant_2_data_group.address_checkbox.checkbox.setChecked(False)
             self.applicant_2_data_group.checkable = False
             self.applicant_2_data_group.setFixedHeight(0)
         else:
             self.applicant_2_data_group.checkable = True
-            self.applicant_2_data_group.setFixedHeight(200)
+            self.applicant_2_data_group.setFixedHeight(130)
 
     @property
     def applicants(self) -> list[PersonalData]:
@@ -44,11 +48,11 @@ class ApplicantsTabContainer(ValidationMixin, QWidget):
         ]
 
     @property
-    def address_child_checkbox(self) -> bool:
+    def is_first_parent_address_different(self) -> bool:
         return self.applicant_1_data_group.address_checkbox.checkbox.isChecked()
 
     @property
-    def address_first_parent_checkbox(self) -> bool:
+    def is_second_parent_address_different(self) -> bool:
         return self.applicant_2_data_group.address_checkbox.checkbox.isChecked()
 
     def clear(self) -> None:
@@ -59,8 +63,8 @@ class ApplicantsTabContainer(ValidationMixin, QWidget):
 
     def populate_data(self, document_data: DocumentData) -> None:
         applicants = document_data.applicants
-        checkbox1 = document_data.address_child_checkbox
-        checkbox2 = document_data.address_first_parent_checkbox
+        checkbox1 = document_data.is_first_parent_address_different
+        checkbox2 = document_data.is_second_parent_address_different
 
         if len(applicants) == 1:
             self.applicant_1_data_group.populate_applicant_data(applicants[0])
