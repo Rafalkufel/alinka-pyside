@@ -10,8 +10,9 @@ from .general_data_group import GeneralDataGroupContainer
 from .school_data_group import SchoolDataGroupContainer
 
 
-class ChildDataTabContainer(QWidget, ValidationMixin):
+class ChildDataTabContainer(ValidationMixin, QWidget):
     def __init__(self, parent: QWidget):
+        self.application_container = parent
         super().__init__(parent)
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
@@ -23,34 +24,7 @@ class ChildDataTabContainer(QWidget, ValidationMixin):
         layout.addWidget(self.child_data_group)
         layout.addWidget(self.school_data_group)
 
-        self.validation_groups = [self.school_data_group, self.child_data_group]
-
-    def validate_required_fields(self) -> bool:
-        """Validate all validation groups and highlight missing fields"""
-        is_valid = True
-
-        for group in self.validation_groups:
-            if not group.validate_required_fields():
-                is_valid = False
-
-        return is_valid
-
-    def clear_highlights(self):
-        """Clear highlighting from all validation groups"""
-        for group in self.validation_groups:
-            group.clear_highlights()
-
-    @property
-    def is_valid(self) -> bool:
-        return all(
-            container.is_valid for container in [self.general_data_group, self.child_data_group, self.school_data_group]
-        )
-
-    @property
-    def error_message(self) -> str | None:
-        if not self.is_valid:
-            return "Uzupełnij formularz"
-        return None
+        self.containers = [self.general_data_group, self.child_data_group, self.school_data_group]
 
     @property
     def child_data(self) -> ChildData:
@@ -71,10 +45,6 @@ class ChildDataTabContainer(QWidget, ValidationMixin):
     @property
     def school_data(self) -> SchoolData:
         selected_school_name = self.school_data_group.school.combobox.currentText()
-
-        if not selected_school_name or selected_school_name.strip() == "":
-            raise ValueError("No school selected. Please select a school from the dropdown.")
-
         school: SchoolDbSchema = get_school_by_name(selected_school_name)
 
         if not school:
@@ -91,11 +61,29 @@ class ChildDataTabContainer(QWidget, ValidationMixin):
         )
 
     def clear(self) -> None:
-        self.general_data_group.clear()
-        self.child_data_group.clear()
-        self.school_data_group.clear()
+        for c in self.containers:
+            c.clear()
 
     def populate_data(self, document_data: DocumentData) -> None:
-        self.general_data_group.populate_data(document_data)
-        self.child_data_group.populate_data(document_data)
-        self.school_data_group.populate_data(document_data)
+        for c in self.containers:
+            c.populate_data(document_data)
+
+    @property
+    def is_valid(self) -> bool:
+        return all(c.is_valid for c in self.containers)
+
+    @property
+    def error_message(self) -> str | None:
+        for c in self.containers:
+            if not c.is_valid:
+                return c.error_message
+
+        return None
+
+    def validate(self) -> None:
+        return all([c.validate() for c in self.containers])
+
+    def clear_validation_state(self) -> None:
+        main_body_container = self.application_container.content_container.main_body_container
+        header_container = main_body_container.header_container
+        header_container.clear_message()

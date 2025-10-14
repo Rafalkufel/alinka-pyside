@@ -3,9 +3,10 @@ from PySide6.QtGui import QStandardItem, QStandardItemModel
 from PySide6.QtWidgets import QGroupBox, QHeaderView, QTableView, QVBoxLayout, QWidget
 
 from alinka.db.queries import get_schools
+from alinka.widget.components import ValidationMixin
 
 
-class SchoolListGroup(QGroupBox):
+class SchoolListGroup(ValidationMixin, QGroupBox):
     def __init__(self, parent: QWidget):
         super().__init__(title="Lista szkół", parent=parent)
         self.school_tab = parent

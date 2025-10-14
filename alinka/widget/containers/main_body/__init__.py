@@ -1,11 +1,13 @@
 from PySide6.QtWidgets import QFrame, QVBoxLayout, QWidget
 
+from alinka.widget.components import ValidationMixin
+
 from .content import ContentContainer
 from .footer import FooterContainer
 from .header import HeaderContainer
 
 
-class MainBody(QFrame):
+class MainBody(ValidationMixin, QFrame):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
         self.central_widget = parent
