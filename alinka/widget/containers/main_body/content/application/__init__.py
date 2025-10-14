@@ -1,7 +1,10 @@
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import QTabWidget, QWidget
 
+from alinka.constants.common import INVALID_FORM_MESSAGE
 from alinka.db.queries import get_support_center_data
 from alinka.schemas import DocumentData, SupportCenterData
+from alinka.widget.components import ValidationMixin
 
 from .application_tabs import (
     ApplicantsTabContainer,
@@ -11,10 +14,12 @@ from .application_tabs import (
 )
 
 
-class ApplicationContainer(QTabWidget):
+class ApplicationContainer(ValidationMixin, QTabWidget):
     def __init__(self, parent: QWidget, visible: bool = False):
         super().__init__(parent)
+        self.content_container = parent
         self.id = None
+
         self.child_tab_container = ChildDataTabContainer(self)
         self.applicants_tab_container = ApplicantsTabContainer(self)
         self.application_tab_container = ApplicationTabContainer(self)
@@ -24,34 +29,65 @@ class ApplicationContainer(QTabWidget):
         self.addTab(self.applicants_tab_container, "Wnioskodawcy")
         self.addTab(self.application_tab_container, "Wniosek")
         self.addTab(self.meeting_tab_container, "Zespół")
+        self.setCurrentIndex(0)
+
+        self.previous_tab_index = self.currentIndex()
+        self.currentChanged.connect(self.validate_previous_tab)
 
         self.setCurrentWidget(self.child_tab_container)
         self.setVisible(visible)
 
-    @property
-    def is_valid(self) -> bool:
-        return all(
-            tab.is_valid
-            for tab in [
-                self.child_tab_container,
-                self.applicants_tab_container,
-                self.application_tab_container,
-                self.meeting_tab_container,
-            ]
-        )
-
-    @property
-    def error_message(self) -> str | None:
-        for tab in [
+        self.containers = [
             self.child_tab_container,
             self.applicants_tab_container,
             self.application_tab_container,
             self.meeting_tab_container,
-        ]:
-            if not tab.is_valid:
-                return tab.error_message
+        ]
 
-        return None
+    def hideEvent(self, event):
+        """Clear validation state when ApplicationContainer is hidden"""
+        self.clear_validation_state()
+        return super().hideEvent(event)
+
+    @property
+    def is_valid(self) -> bool:
+        return all(tab.is_valid for tab in self.containers)
+
+    @property
+    def error_message(self) -> str | None:
+        if not all(tab.is_valid for tab in self.containers):
+            return INVALID_FORM_MESSAGE
+        else:
+            return None
+
+    def clear_validation_state(self) -> None:
+        self.tabBar().setTabTextColor(self.currentIndex(), QColor("black"))
+        header_container = self.content_container.main_body_container.header_container
+        header_container.clear_message()
+
+    def validate_previous_tab(self, new_index: int) -> None:
+        previous_tab = self.widget(self.previous_tab_index)
+        if not previous_tab.validate():
+            self.tabBar().setTabTextColor(self.previous_tab_index, QColor("red"))
+            header_container = self.content_container.main_body_container.header_container
+            header_container.set_error_message(INVALID_FORM_MESSAGE)
+        else:
+            self.tabBar().setTabTextColor(self.previous_tab_index, QColor("green"))
+            self.clear_validation_state()
+
+        self.previous_tab_index = new_index
+
+    def validate(self) -> bool:
+        if not all([tab.validate() for tab in self.containers]):
+            for index, tab in enumerate(self.containers):
+                if not tab.is_valid:
+                    self.tabBar().setTabTextColor(index, QColor("red"))
+
+            header_container = self.content_container.main_body_container.header_container
+            header_container.set_error_message(self.error_message)
+        else:
+            self.clear_validation_state()
+            return self.is_valid
 
     @property
     def document_data(self) -> DocumentData:

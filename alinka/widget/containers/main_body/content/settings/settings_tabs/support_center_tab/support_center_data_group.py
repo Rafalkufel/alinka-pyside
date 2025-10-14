@@ -3,10 +3,10 @@ from PySide6.QtWidgets import QGridLayout, QGroupBox, QWidget
 
 from alinka.db.queries import get_support_center_data
 from alinka.schemas.document_schema import SupportCenterData
-from alinka.widget.components import LabeledInputComponent
+from alinka.widget.components import LabeledInputComponent, ValidationMixin
 
 
-class SupportCenterDataGroup(QGroupBox):
+class SupportCenterDataGroup(ValidationMixin, QGroupBox):
     province_id: int | None = None
     district_id: int | None = None
     rspo: int | None = None
@@ -38,6 +38,16 @@ class SupportCenterDataGroup(QGroupBox):
         layout.addWidget(self.postal_code, 5, 0)
         layout.addWidget(self.post, 5, 1)
 
+        self.components = [
+            self.name_nominative,
+            self.name_genitive,
+            self.institute_name,
+            self.kurator,
+            self.address,
+            self.town,
+            self.postal_code,
+            self.post,
+        ]
         self.populate_fields_on_init()
 
     def populate_fields(self, **kwargs):
@@ -60,14 +70,11 @@ class SupportCenterDataGroup(QGroupBox):
             self.populate_fields(**support_center_data.model_dump())
 
     def clear(self):
-        self.name_nominative.clear()
-        self.name_genitive.clear()
-        self.institute_name.clear()
-        self.kurator.clear()
-        self.address.clear()
-        self.town.clear()
-        self.postal_code.clear()
-        self.post.clear()
+        for c in self.components:
+            c.clear()
+        self.province_id = None
+        self.district_id = None
+        self.rspo = None
 
     @property
     def support_center_data(self):
@@ -84,3 +91,21 @@ class SupportCenterDataGroup(QGroupBox):
             institute_name=self.institute_name.text,
             kurator=self.kurator.text,
         )
+
+    @property
+    def is_valid(self) -> bool:
+        return all(c.is_valid for c in self.components)
+
+    @property
+    def error_message(self) -> str | None:
+        for c in self.components:
+            if not c.is_valid:
+                return c.error_message
+
+        return None
+
+    def validate(self) -> bool:
+        return all([c.validate() for c in self.components])
+
+    def clear_validation_state(self) -> None:
+        self.parent().clear_validation_state()

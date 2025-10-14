@@ -16,10 +16,25 @@ from alinka.widget.components import (
     LabeledComboBoxComponent,
     LabeledDateComponent,
     LabeledInputComponent,
+    ValidationMixin,
 )
 
 
-class MeetingTabContainer(QWidget):
+class MeetingDatetimeFrame(ValidationMixin, QFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.meeting_date = LabeledDateComponent("Data zespołu", self)
+        self.meeting_date.date_input.setDate(QDate.currentDate())
+        self.meeting_time = LabeledInputComponent("Godzina zespołu", self)
+
+        layout.addWidget(self.meeting_date)
+        layout.addWidget(self.meeting_time)
+
+
+class MeetingTabContainer(ValidationMixin, QWidget):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
         layout = QVBoxLayout(self)
@@ -40,17 +55,13 @@ class MeetingTabContainer(QWidget):
         self.meeting_leader = LabeledComboBoxComponent("Przewodniczący zespołu", self)
         self.meeting_leader.combobox.setPlaceholderText("Wybierz z listy...")
 
-        meeting_datetime_frame = QFrame(self)
-        meeting_datetime_frame_layout = QHBoxLayout(meeting_datetime_frame)
-        self.meeting_date = LabeledDateComponent("Data zespołu", meeting_datetime_frame)
-        self.meeting_date.date_input.setDate(QDate.currentDate())
-        self.meeting_time = LabeledInputComponent("Godzina zespołu", meeting_datetime_frame)
-        meeting_datetime_frame_layout.addWidget(self.meeting_date)
-        meeting_datetime_frame_layout.addWidget(self.meeting_time)
+        self.meeting_datetime_frame = MeetingDatetimeFrame(self)
+        self.meeting_date = self.meeting_datetime_frame.meeting_date
+        self.meeting_time = self.meeting_datetime_frame.meeting_time
 
+        layout.addWidget(self.meeting_datetime_frame)
         layout.addWidget(self.meeting_member_group)
         layout.addWidget(self.meeting_leader)
-        layout.addWidget(meeting_datetime_frame)
 
     def populate_meeting_members(self, meeting_members: list[MeetingMemberData] | None = None) -> None:
         self.model.clear()
@@ -106,17 +117,8 @@ class MeetingTabContainer(QWidget):
             members=meeting_members, date=self.meeting_date.date_input.date().toPython(), time=self.meeting_time.text
         )
 
-    @property
-    def is_valid(self) -> bool:
-        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/93
-        return True
-
-    def error_message(self) -> str | None:
-        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/93
-        return None
-
     def clear(self):
-        self.meeting_leader.combobox.setCurrentIndex(-1)
+        self.meeting_leader.remove_selection()
         self.meeting_date.date_input.setDate(QDate.currentDate())
         self.meeting_time.clear()
         self.model.clear()

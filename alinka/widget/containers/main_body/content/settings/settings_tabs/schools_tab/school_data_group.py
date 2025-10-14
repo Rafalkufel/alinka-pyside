@@ -2,10 +2,10 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QGridLayout, QGroupBox, QWidget
 
 from alinka.schemas import SchoolData
-from alinka.widget.components import LabeledInputComponent
+from alinka.widget.components import LabeledInputComponent, ValidationMixin
 
 
-class SchoolDataGroup(QGroupBox):
+class SchoolDataGroup(ValidationMixin, QGroupBox):
     rspo_id: int | None = None
     rspo_type_id: int | None = None
 

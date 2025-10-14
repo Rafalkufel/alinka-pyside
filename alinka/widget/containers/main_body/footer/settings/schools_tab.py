@@ -17,8 +17,11 @@ class SettingsSchoolsContainer(QFrame):
         layout.addWidget(add_remove_applicant_btn)
 
     def add_school(self) -> None:
-        content_container = self.settings_footer_container.footer_container.main_body_container.content_container
-        school_tab_container = content_container.settings_container.schools_tab_container
+        main_body_container = self.settings_footer_container.footer_container.main_body_container
+        school_tab_container = main_body_container.content_container.settings_container.schools_tab_container
+        if not school_tab_container.validate():
+            main_body_container.header_container.set_error_message(school_tab_container.error_message)
+            return
 
         try:
             create_school(

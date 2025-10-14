@@ -1,10 +1,14 @@
 from PySide6.QtWidgets import QGridLayout, QGroupBox, QWidget
 
 from alinka.schemas import PersonalData
-from alinka.widget.components import LabeledCheckboxComponent, LabeledInputComponent
+from alinka.widget.components import (
+    LabeledCheckboxComponent,
+    LabeledInputComponent,
+    ValidationMixin,
+)
 
 
-class ApplicantDataGroup(QGroupBox):
+class ApplicantDataGroup(ValidationMixin, QGroupBox):
     def __init__(self, title: str, parent: QWidget, checkbox_description: str, initial_height: int):
         super().__init__(title=title, parent=parent)
         self.setFixedHeight(initial_height)
@@ -46,15 +50,6 @@ class ApplicantDataGroup(QGroupBox):
                 postal_code=self.postal_code.text,
                 post=self.post.text,
             )
-
-    @property
-    def is_valid(self) -> bool:
-        # should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
-        return True
-
-    def error_message(self) -> str | None:
-        # should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/91
-        return None
 
     def clear_ApplicantDataGroup(self) -> None:
         self.full_name.clear()

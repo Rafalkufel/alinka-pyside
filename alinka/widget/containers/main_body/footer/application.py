@@ -45,9 +45,7 @@ class ApplicationFooterContainer(QFrame):
         content_container = self.footer_container.main_body_container.content_container
         application_container = content_container.application_container
         # Call validate_required_fields on the child tab
-        if not application_container.child_tab_container.validate_required_fields():
-            error_message = application_container.child_tab_container.error_message
-            content_container.main_body_container.header_container.set_error_message(error_message)
+        if not application_container.validate():
             return
         self.validate_document_data()
 
@@ -63,3 +61,4 @@ class ApplicationFooterContainer(QFrame):
         content_container.show_browser_container()
         application_container.clear()
         application_container.setCurrentWidget(application_container.child_tab_container)
+        self.footer_container.show_browser_footer_container()

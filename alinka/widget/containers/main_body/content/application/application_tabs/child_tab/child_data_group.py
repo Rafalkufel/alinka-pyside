@@ -1,4 +1,5 @@
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QValidator
 from PySide6.QtWidgets import QGridLayout, QGroupBox
 
 from alinka.schemas import DocumentData
@@ -6,8 +7,28 @@ from alinka.widget.components import LabeledInputComponent, ValidationMixin
 from alinka.widget.validators import PeselValidator
 
 
-class ChildDataGroupContainer(QGroupBox, ValidationMixin):
+class PeselComponent(LabeledInputComponent):
     def __init__(self, parent):
+        super().__init__("PESEL", parent)
+        self.pesel_validator = PeselValidator()
+        self.line_edit.setValidator(self.pesel_validator)
+        self.line_edit.textChanged.connect(self.validate)
+
+    @property
+    def is_valid(self) -> bool:
+        validation_state, _, _ = self.pesel_validator.validate(self.text, 0)
+        return validation_state == QValidator.Acceptable
+
+    @property
+    def error_message(self) -> str | None:
+        if not self.is_valid:
+            return "Nieprawidłowy PESEL"
+        return None
+
+
+class ChildDataGroupContainer(ValidationMixin, QGroupBox):
+    def __init__(self, parent):
+        self.child_data_container = parent
         super().__init__(title="Uczeń", parent=parent)
         layout = QGridLayout(self)
         layout.setAlignment(Qt.AlignTop)
@@ -17,9 +38,7 @@ class ChildDataGroupContainer(QGroupBox, ValidationMixin):
         layout.addWidget(self.child_name_gen, 0, 1)
 
         self.birth_place = LabeledInputComponent("Miejsce urodzenia", self, required=True)
-        self.pesel_validator = PeselValidator()
-        self.pesel = LabeledInputComponent("PESEL", self, validator=self.pesel_validator, required=True)
-        self.pesel.line_edit.textChanged.connect(self.check_and_update_pesel_input)
+        self.pesel = PeselComponent(self)
         layout.addWidget(self.birth_place, 1, 0)
         layout.addWidget(self.pesel, 1, 1)
 
@@ -33,7 +52,7 @@ class ChildDataGroupContainer(QGroupBox, ValidationMixin):
         layout.addWidget(self.postal_code, 3, 0)
         layout.addWidget(self.post, 3, 1)
 
-        self.required_fields = [
+        self.components = [
             self.child_name_nom,
             self.child_name_gen,
             self.birth_place,
@@ -44,56 +63,9 @@ class ChildDataGroupContainer(QGroupBox, ValidationMixin):
             self.post,
         ]
 
-        self.auto_clear_fields = [
-            self.child_name_nom,
-            self.child_name_gen,
-            self.birth_place,
-            self.address,
-            self.town,
-            self.postal_code,
-            self.post,
-        ]
-
-        self.connect_field_clear_handlers(self.auto_clear_fields)
-
-    def check_and_update_pesel_input(self, pesel: str) -> None:
-        state, _, _ = self.pesel_validator.validate(pesel, 0)
-        if state == PeselValidator.Intermediate and len(pesel) >= 11:
-            self.pesel.toggle_highlight("mistyrose")
-        elif state == PeselValidator.Acceptable:
-            self.pesel.toggle_highlight("lightgreen")
-        else:
-            self.pesel.toggle_highlight("")
-
-    def validate_required_fields(self) -> bool:
-        """Validate required fields and highlight missing ones"""
-        return super().validate_required_fields(self.required_fields)
-
-    def clear_highlights(self):
-        """Clear highlighting from all fields"""
-        super().clear_highlights(self.auto_clear_fields)
-        self.pesel.toggle_highlight("")
-
-    @property
-    def is_valid(self) -> bool:
-        return all(component.is_valid for component in self.required_fields)
-
-    @property
-    def error_message(self) -> str | None:
-        for component in self.required_fields:
-            if not component.is_valid:
-                return component.error_message
-        return None
-
     def clear(self) -> None:
-        self.child_name_nom.clear()
-        self.child_name_gen.clear()
-        self.birth_place.clear()
-        self.pesel.clear()
-        self.address.clear()
-        self.town.clear()
-        self.postal_code.clear()
-        self.post.clear()
+        for c in self.components:
+            c.clear()
 
     def populate_data(self, document_data: DocumentData) -> None:
         child = document_data.child
@@ -105,10 +77,23 @@ class ChildDataGroupContainer(QGroupBox, ValidationMixin):
         self.town.text = child.town
         self.postal_code.text = child.postal_code
         self.post.text = child.post
-        for component in [self.components_list]:
-            if not component.is_valid:
-                return component.error_message
+
+    @property
+    def is_valid(self) -> bool:
+        return all(c.is_valid for c in self.components)
+
+    @property
+    def error_message(self) -> str | None:
+        for c in self.components:
+            if not c.is_valid:
+                return c.error_message
         return None
+
+    def validate(self) -> bool:
+        return all([c.validate() for c in self.components])
+
+    def clear_validation_state(self) -> None:
+        self.child_data_container.clear_validation_state()
 
     @property
     def components_list(self) -> list[LabeledInputComponent]:

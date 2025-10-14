@@ -8,10 +8,14 @@ from alinka.constants.common import (
     Issue,
     Reason,
 )
-from alinka.widget.components import LabeledComboBoxComponent, LabeledDateComponent
+from alinka.widget.components import (
+    LabeledComboBoxComponent,
+    LabeledDateComponent,
+    ValidationMixin,
+)
 
 
-class ApplicationTabContainer(QWidget):
+class ApplicationTabContainer(ValidationMixin, QWidget):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
         layout = QVBoxLayout(self)
@@ -155,15 +159,6 @@ class ApplicationTabContainer(QWidget):
     @property
     def activity_form(self) -> ActivityForm | None:
         return self._activity_form.combobox.currentData()
-
-    @property
-    def is_valid(self) -> bool:
-        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/92
-        return True
-
-    def error_message(self) -> str | None:
-        # Should be implemented in https://github.com/CodeForPoznan/alinka-pyside/issues/92
-        return None
 
     def clear(self):
         self.application_date.date_input.clear()
