@@ -94,20 +94,3 @@ class ChildDataGroupContainer(ValidationMixin, QGroupBox):
 
     def clear_validation_state(self) -> None:
         self.child_data_container.clear_validation_state()
-
-    @property
-    def components_list(self) -> list[LabeledInputComponent]:
-        return [
-            self.child_name_nom,
-            self.child_name_gen,
-            self.birth_place,
-            self.pesel,
-            self.address,
-            self.town,
-            self.postal_code,
-            self.post,
-        ]
-
-    def clear_ChildDataGroupContainer(self) -> None:
-        for component in self.components_list:
-            component.clear()

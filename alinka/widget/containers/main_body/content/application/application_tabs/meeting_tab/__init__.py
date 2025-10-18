@@ -119,6 +119,7 @@ class MeetingTabContainer(ValidationMixin, QWidget):
 
     def clear(self):
         self.meeting_leader.remove_selection()
+        self.meeting_leader.combobox.clear()
         self.meeting_date.date_input.setDate(QDate.currentDate())
         self.meeting_time.clear()
         self.model.clear()
@@ -130,10 +131,3 @@ class MeetingTabContainer(ValidationMixin, QWidget):
         self.meeting_time.text = meeting_data.time
         self.populate_meeting_members(meeting_data.members)
         self.meeting_leader.combobox.setCurrentText(meeting_data.members[0].name)
-
-    def clear_MeetingTabContainer(self) -> None:
-        self.model.clear()
-        self.populate_meeting_members()
-        self.meeting_leader.combobox.clear()
-        self.meeting_date.date_input.setDate(QDate.currentDate())
-        self.meeting_time.clear()

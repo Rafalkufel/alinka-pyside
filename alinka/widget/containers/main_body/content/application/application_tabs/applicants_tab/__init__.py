@@ -28,7 +28,7 @@ class ApplicantsTabContainer(ValidationMixin, QWidget):
 
     def toggle_applicant_2_group(self):
         if self.applicant_2_data_group.height():
-            self.applicant_2_data_group.clear_ApplicantDataGroup()
+            self.applicant_2_data_group.clear()
             self.applicant_2_data_group.checkable = False
             self.applicant_2_data_group.setFixedHeight(0)
         else:
@@ -74,7 +74,3 @@ class ApplicantsTabContainer(ValidationMixin, QWidget):
             self.applicant_1_data_group.address_checkbox.checkbox.setChecked(checkbox1)
             self.applicant_2_data_group.address_checkbox.checkbox.setChecked(checkbox2)
             self.applicant_2_data_group.setFixedHeight(200)
-
-    def clear_ApplicantsTabContainer(self) -> None:
-        self.applicant_1_data_group.clear_ApplicantDataGroup()
-        self.applicant_2_data_group.clear_ApplicantDataGroup()

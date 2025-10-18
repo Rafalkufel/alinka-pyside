@@ -117,7 +117,7 @@ def test_clear_applicant_data_group(applicant_data_group: ApplicantDataGroup) ->
     assert applicant_data_group.post.text == "Warszawa"
 
     # Call the method
-    applicant_data_group.clear_ApplicantDataGroup()
+    applicant_data_group.clear()
 
     # Check all fields are cleared and checkbox is unchecked
     assert applicant_data_group.full_name.text == ""
@@ -129,11 +129,11 @@ def test_clear_applicant_data_group(applicant_data_group: ApplicantDataGroup) ->
     assert applicant_data_group.post.text == ""
 
 
-@patch.object(ApplicantDataGroup, "clear_ApplicantDataGroup")
+@patch.object(ApplicantDataGroup, "clear")
 def test_clear_applicants_tab_container(
     mocked_clear: MagicMock, applicants_tab_container: ApplicantsTabContainer
 ) -> None:
-    applicants_tab_container.clear_ApplicantsTabContainer()
+    applicants_tab_container.clear()
     assert mocked_clear.call_count == 2
 
 
@@ -177,7 +177,7 @@ def test_clear_application_tab_container(application_tab_container: ApplicationT
     assert application_tab_container.application_period.combobox.currentText() == "TestPeriod"
 
     # Call the method
-    application_tab_container.clear_ApplicationTabContainer()
+    application_tab_container.clear()
 
     # All fields reset
     assert application_tab_container.application_date.date_input.date() == QDate.currentDate()
@@ -221,7 +221,7 @@ def test_clear_child_data_group_container(child_data_group_container: ChildDataG
     assert child_data_group_container.post.text == "Kraków"
 
     # Call the method
-    child_data_group_container.clear_ChildDataGroupContainer()
+    child_data_group_container.clear()
 
     # All fields should now be empty
     assert child_data_group_container.child_name_nom.text == ""
@@ -256,7 +256,7 @@ def test_clear_school_data_group_container(school_data_group_container: SchoolDa
     assert school_data_group_container.school_profession.text == "Technik informatyk"
 
     # Call the method
-    school_data_group_container.clear_SchoolDataGroupContainer()
+    school_data_group_container.clear()
 
     # All fields and selections should be cleared/reset
     # school_type and school repopulated/reset
@@ -278,23 +278,23 @@ def test_clear_general_data_group_container(general_data_group_container: Genera
     assert general_data_group_container.file_no.text == "abc"
 
     # Call the method
-    general_data_group_container.clear_GeneralDataGroupContainer()
+    general_data_group_container.clear()
 
     # Both fields should now be empty
     assert general_data_group_container.decision_no.text == ""
     assert general_data_group_container.file_no.text == ""
 
 
-@patch.object(GeneralDataGroupContainer, "clear_GeneralDataGroupContainer")
-@patch.object(ChildDataGroupContainer, "clear_ChildDataGroupContainer")
-@patch.object(SchoolDataGroupContainer, "clear_SchoolDataGroupContainer")
+@patch.object(GeneralDataGroupContainer, "clear")
+@patch.object(ChildDataGroupContainer, "clear")
+@patch.object(SchoolDataGroupContainer, "clear")
 def test_clear_child_data_tab_container(
     mocked_school_clear: MagicMock,
     mocked_child_data_clear: MagicMock,
     mocked_general_clear: MagicMock,
     child_data_tab_container: ChildDataTabContainer,
 ) -> None:
-    child_data_tab_container.clear_ChildDataTabContainer()
+    child_data_tab_container.clear()
     mocked_school_clear.assert_called_once()
     mocked_child_data_clear.assert_called_once()
     mocked_general_clear.assert_called_once()
@@ -321,7 +321,7 @@ def test_clear_meeting_tab_container(meeting_tab_container: MeetingTabContainer)
     assert meeting_tab_container.meeting_time.text == "14:00"
 
     # Call the method
-    meeting_tab_container.clear_MeetingTabContainer()
+    meeting_tab_container.clear()
 
     # Check model has been repopulated (populate_meeting_members may add 0 or more rows)
     assert meeting_tab_container.model.rowCount() >= 0
@@ -333,10 +333,10 @@ def test_clear_meeting_tab_container(meeting_tab_container: MeetingTabContainer)
     assert meeting_tab_container.meeting_time.text == ""
 
 
-@patch.object(ChildDataTabContainer, "clear_ChildDataTabContainer")
-@patch.object(ApplicantsTabContainer, "clear_ApplicantsTabContainer")
-@patch.object(ApplicationTabContainer, "clear_ApplicationTabContainer")
-@patch.object(MeetingTabContainer, "clear_MeetingTabContainer")
+@patch.object(ChildDataTabContainer, "clear")
+@patch.object(ApplicantsTabContainer, "clear")
+@patch.object(ApplicationTabContainer, "clear")
+@patch.object(MeetingTabContainer, "clear")
 def test_clear_application_container(
     mocked_meeting_tab_container: MagicMock,
     mocked_application_tab_container: MagicMock,
@@ -344,7 +344,7 @@ def test_clear_application_container(
     mocked_child_data_tab_container: MagicMock,
     application_container: ApplicationContainer,
 ) -> None:
-    application_container.clear_ApplicationContainer()
+    application_container.clear()
     assert application_container.id is None
     mocked_meeting_tab_container.assert_called_once()
     mocked_application_tab_container.assert_called_once()

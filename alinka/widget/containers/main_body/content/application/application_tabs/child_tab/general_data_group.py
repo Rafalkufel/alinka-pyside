@@ -43,7 +43,3 @@ class GeneralDataGroupContainer(ValidationMixin, QGroupBox):
 
     def clear_validation_state(self) -> None:
         self.child_tab_container.clear_validation_state()
-
-    def clear_GeneralDataGroupContainer(self) -> None:
-        self.decision_no.clear()
-        self.file_no.clear()

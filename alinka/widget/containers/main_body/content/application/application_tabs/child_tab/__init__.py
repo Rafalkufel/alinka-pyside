@@ -87,8 +87,3 @@ class ChildDataTabContainer(ValidationMixin, QWidget):
         main_body_container = self.application_container.content_container.main_body_container
         header_container = main_body_container.header_container
         header_container.clear_message()
-
-    def clear_ChildDataTabContainer(self) -> None:
-        self.general_data_group.clear_GeneralDataGroupContainer()
-        self.child_data_group.clear_ChildDataGroupContainer()
-        self.school_data_group.clear_SchoolDataGroupContainer()

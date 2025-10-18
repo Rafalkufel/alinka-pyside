@@ -39,6 +39,15 @@ class ApplicantDataGroup(ValidationMixin, QGroupBox):
         self.postal_code.text = applicant_data.postal_code
         self.post.text = applicant_data.post
 
+    def clear(self) -> None:
+        self.full_name.clear()
+        self.full_name_gen.clear()
+        self.address_checkbox.checkbox.setChecked(False)
+        self.address.clear()
+        self.town.clear()
+        self.postal_code.clear()
+        self.post.clear()
+
     @property
     def applicant_data(self) -> PersonalData | None:
         if self.full_name.text:
@@ -50,12 +59,3 @@ class ApplicantDataGroup(ValidationMixin, QGroupBox):
                 postal_code=self.postal_code.text,
                 post=self.post.text,
             )
-
-    def clear_ApplicantDataGroup(self) -> None:
-        self.full_name.clear()
-        self.full_name_gen.clear()
-        self.address_checkbox.checkbox.setChecked(False)
-        self.address.clear()
-        self.town.clear()
-        self.postal_code.clear()
-        self.post.clear()

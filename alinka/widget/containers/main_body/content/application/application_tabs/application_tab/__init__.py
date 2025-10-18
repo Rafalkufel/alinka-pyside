@@ -161,7 +161,7 @@ class ApplicationTabContainer(ValidationMixin, QWidget):
         return self._activity_form.combobox.currentData()
 
     def clear(self):
-        self.application_date.date_input.clear()
+        self.application_date.date_input.setDate(QDate.currentDate())
         self.application_subject.combobox.setCurrentIndex(-1)
         self.application_reason.combobox.setCurrentIndex(-1)
         self.application_reason_2.combobox.setCurrentIndex(-1)
@@ -170,30 +170,3 @@ class ApplicationTabContainer(ValidationMixin, QWidget):
         self._activity_form.setFixedHeight(0)
         self._activity_form.combobox.setEnabled(False)
         self.application_period.combobox.setCurrentIndex(-1)
-
-    def clear_application_reason_2(self) -> None:
-        self.application_reason_2.combobox.clear()
-        self.application_reason_2.combobox.setEnabled(False)
-        self.application_reason_2.setFixedHeight(0)
-
-    def clear_activity_form(self) -> None:
-        self._activity_form.combobox.clear()
-        self._activity_form.setFixedHeight(0)
-        self._activity_form.combobox.setEnabled(False)
-
-    def clear_ApplicationTabContainer(self) -> None:
-        self.application_date.date_input.setDate(QDate.currentDate())
-
-        self.application_subject.combobox.clear()
-        self.populate_application_subject()
-
-        self.application_reason.combobox.clear()
-        self.populate_application_reason()
-
-        self.clear_application_reason_2()
-
-        self.clear_activity_form()
-
-        self.application_period.combobox.clear()
-        self.application_period.combobox.clearEditText()
-        self.application_period.combobox.setEditable(True)

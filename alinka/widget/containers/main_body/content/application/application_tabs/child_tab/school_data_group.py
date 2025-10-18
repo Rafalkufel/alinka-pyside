@@ -73,9 +73,12 @@ class SchoolDataGroupContainer(ValidationMixin, QGroupBox):
             self.populate_school_combobox()
 
     def clear(self) -> None:
-        for c in self.components:
-            c.clear()
-        self.populate_school_combobox()
+        self.school_type.combobox.clear()
+        self.school.combobox.clear()
+        self.school_type.combobox.addItems(SchoolTypes.values())
+        self.student_checkbox.checkbox.setChecked(False)
+        self.school_klass.clear()
+        self.school_profession.clear()
 
     def populate_data(self, document_data: DocumentData) -> None:
         school_data = document_data.school
@@ -103,11 +106,3 @@ class SchoolDataGroupContainer(ValidationMixin, QGroupBox):
 
     def clear_validation_state(self) -> None:
         self.child_data_container.clear_validation_state()
-
-    def clear_SchoolDataGroupContainer(self):
-        self.school_type.combobox.clear()
-        self.school.combobox.clear()
-        self.school_type.combobox.addItems(SchoolTypes.values())
-        self.student_checkbox.checkbox.setChecked(False)
-        self.school_klass.clear()
-        self.school_profession.clear()
