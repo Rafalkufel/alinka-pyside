@@ -81,7 +81,10 @@ class TeamMemberTableModel(QAbstractTableModel):
 
         tm_dict = {k: self.data(index.siblingAtColumn(i)) for i, k in enumerate(self.columns)}
         tm_dict[self.columns[index.column()]] = value
-        tm = TeamMemberDbSchema.model_validate(tm_dict)
+        try:
+            tm = TeamMemberDbSchema.model_validate(tm_dict)
+        except ValidationError:
+            return False
         upsert_team_members([tm])
 
         self.dataChanged.emit(index, index)

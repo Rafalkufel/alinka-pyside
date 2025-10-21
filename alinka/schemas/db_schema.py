@@ -1,6 +1,6 @@
 from datetime import date
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class BaseDbSchema(BaseModel):
@@ -96,8 +96,8 @@ class SupportCenterDbSchema(BaseDbSchema):
 
 
 class TeamMemberDbCreateSchema(BaseDbSchema):
-    name: str
-    function: str
+    name: str = Field(..., min_length=1)
+    function: str = Field(..., min_length=1)
 
 
 class TeamMemberDbSchema(TeamMemberDbCreateSchema):
