@@ -236,7 +236,6 @@ def test_clear_child_data_group_container(child_data_group_container: ChildDataG
 
 def test_clear_school_data_group_container(school_data_group_container: SchoolDataGroupContainer) -> None:
     # Set initial values
-    school_data_group_container.school_type.combobox.addItem("ExtraType", "extype")
     school_data_group_container.school_type.combobox.setCurrentIndex(
         school_data_group_container.school_type.combobox.count() - 1
     )

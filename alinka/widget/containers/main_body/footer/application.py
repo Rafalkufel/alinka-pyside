@@ -15,7 +15,7 @@ class ApplicationFooterContainer(QFrame):
         self.print_btn.clicked.connect(self.print_documents)
         self.clear_application_btn = QPushButton("Wyczyść formularz", self)
         self.clear_application_btn.setStyleSheet("background-color: red; color: white;")
-        self.clear_application_btn.clicked.connect(self.content_container.application_container.clear)
+        self.clear_application_btn.clicked.connect(self.clear_application)
         layout.addWidget(self.clear_application_btn, stretch=1)
         layout.addWidget(self.print_btn, stretch=3)
 
@@ -57,3 +57,6 @@ class ApplicationFooterContainer(QFrame):
         application_container.clear()
         application_container.setCurrentWidget(application_container.child_tab_container)
         self.footer_container.show_browser_footer_container()
+
+    def clear_application(self):
+        self.content_container.application_container.clear()
