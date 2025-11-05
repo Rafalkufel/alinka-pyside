@@ -90,8 +90,8 @@ class DocumentData(BaseModel):
     child: ChildData
     school: SchoolData
     applicants: list[PersonalData] = Field(..., min_length=1, max_length=2)
-    address_child_checkbox: bool = False
-    address_first_parent_checkbox: bool = False
+    is_first_parent_address_different: bool = False
+    is_second_parent_address_different: bool = False
     issue: Issue
     period: str
     reasons: list[Reason] = Field(None, description="Can be one or more reasons")
@@ -114,12 +114,12 @@ class DocumentData(BaseModel):
     def applicants_data(self) -> list[PersonalData]:
         """
         This fields contains applicants data taking into account
-        address_child_checkbox and address_first_parent_checkbox
+        first parent's address checkbox and second parent's checkbox
         """
         applicant1 = copy(self.applicants[0])
         applicants = [applicant1]
 
-        if self.address_child_checkbox:
+        if not self.is_first_parent_address_different:
             applicant1.address = self.child.address
             applicant1.town = self.child.town
             applicant1.postal_code = self.child.postal_code
@@ -128,7 +128,7 @@ class DocumentData(BaseModel):
         if len(self.applicants) > 1:
             applicant2 = copy(self.applicants[1])
             applicants.append(applicant2)
-            if self.address_first_parent_checkbox:
+            if not self.is_second_parent_address_different:
                 applicant2.address = applicant1.address
                 applicant2.town = applicant1.town
                 applicant2.postal_code = applicant1.postal_code
@@ -202,16 +202,28 @@ class DocumentData(BaseModel):
 
     @computed_field
     def parent_descriptions(self) -> str:
-        if self.address_child_checkbox or self.address_first_parent_checkbox:
-            parents_names = " i ".join([parent.full_name for parent in self.applicants])
-            if self.address_child_checkbox:
-                parents_description = f"{parents_names}, {self.child.full_address}"
+        if self.is_second_parent_address_different:
+            if self.is_first_parent_address_different:
+                parents_description = ", ".join(
+                    [f"{parent.full_name}, {parent.full_address}" for parent in self.applicants]
+                )
             else:
-                parents_description = f"{parents_names}, {self.applicants[0].full_address}"
+                parents_description = ", ".join(
+                    [
+                        f"{self.applicants[0].full_name}",
+                        f"{self.child.full_address}",
+                        f"{self.applicants[1].full_name}, {self.applicants[1].full_address}",
+                    ]
+                )
         else:
-            parents_description = ", ".join(
-                [f"{parent.full_name}, {parent.full_address}" for parent in self.applicants]
-            )
+            parents_names = " i ".join([parent.full_name for parent in self.applicants])
+            if self.is_first_parent_address_different:
+                parents_description = f"{parents_names}, {self.applicants[0].full_address}"
+
+            else:
+                parents_description = f"{parents_names}, {self.child.full_address}"
+
+        print(parents_description)
         return parents_description
 
     @computed_field

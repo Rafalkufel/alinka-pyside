@@ -31,8 +31,10 @@ class DecisionDbSchema(BaseDbSchema):
     school_postal_code: str
     school_post: str | None = None
 
-    address_child_checkbox: bool = False
-    address_first_parent_checkbox: bool = False
+    # if True then first parent address is different than child's
+    is_first_parent_address_different: bool = False
+    # if True then second parent address is different than first parent's
+    is_second_parent_address_different: bool = False
     first_parent_full_name: str
     first_parent_full_name_gen: str
     first_parent_address: str
