@@ -31,7 +31,7 @@ class ApplicationTabContainer(ValidationMixin, QWidget):
         self.application_reason = LabeledComboBoxComponent("Z uwagi na", self)
         self.application_reason.combobox.setPlaceholderText("Wybierz z listy...")
         self.application_reason.combobox.currentTextChanged.connect(self.change_application_reason)
-        self.application_reason_2 = LabeledComboBoxComponent("Z uwagi na", self)
+        self.application_reason_2 = LabeledComboBoxComponent("Z uwagi na", self, unselectable=True)
         self.application_reason_2.combobox.setPlaceholderText("Wybierz z listy...")
         self.application_reason_2.setFixedHeight(0)
 
@@ -67,8 +67,8 @@ class ApplicationTabContainer(ValidationMixin, QWidget):
             self.application_reason.combobox.addItem(reason_description, reason)
 
     def change_application_reason(self):
-        self.application_reason_2.combobox.clear()
-        self.application_period.combobox.clear()
+        self.application_reason_2.clear()
+        self.application_period.clear()
         primary_reason = self.application_reason.combobox.currentData()
         if primary_reason == Reason.GLEBOKIE:
             self._activity_form.setFixedHeight(45)
@@ -154,11 +154,11 @@ class ApplicationTabContainer(ValidationMixin, QWidget):
 
     def clear(self):
         self.application_date.date_input.clear()
-        self.application_subject.combobox.setCurrentIndex(-1)
-        self.application_reason.combobox.setCurrentIndex(-1)
-        self.application_reason_2.combobox.setCurrentIndex(-1)
+        self.application_subject.remove_selection()
+        self.application_reason.remove_selection()
+        self.application_reason_2.remove_selection()
         self.application_reason_2.setFixedHeight(0)
-        self._activity_form.combobox.setCurrentIndex(-1)
+        self._activity_form.remove_selection()
         self._activity_form.setFixedHeight(0)
         self._activity_form.combobox.setEnabled(False)
-        self.application_period.combobox.setCurrentIndex(-1)
+        self.application_period.clear()

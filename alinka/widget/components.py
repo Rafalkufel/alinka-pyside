@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
 )
 
 from alinka import rspo_client
+from alinka.constants.common import CHOOSE_FROM_LIST_MESSAGE
 
 
 class ValidationMixin:
@@ -129,12 +130,15 @@ class LabeledComboBoxComponent(ValidationMixin, QFrame):
         min_length: int | None = None,
         required: bool = False,
         static: bool = False,
+        unselectable: bool = False,
     ):
         self.label = text
         self.is_required = required
         # If static, options won't change dynamically, e.g. school types
         # clear means in this case remove selection only
         self.is_static = static
+        # If unselectable, user is able to remove selection (set to no selection)
+        self.is_unselectable = unselectable
         super().__init__(parent)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -143,7 +147,9 @@ class LabeledComboBoxComponent(ValidationMixin, QFrame):
         self.combobox = QComboBox(self)
         if min_length:
             self.combobox.setMinimumWidth(min_length)
-
+        if self.is_unselectable:
+            self.combobox.insertItem(0, CHOOSE_FROM_LIST_MESSAGE)
+            self.combobox.currentIndexChanged.connect(self._clear_if_unselected)
         self.combobox.currentIndexChanged.connect(self.clear_validation_state)
         layout.addWidget(label)
         layout.addWidget(self.combobox)
@@ -158,11 +164,20 @@ class LabeledComboBoxComponent(ValidationMixin, QFrame):
         if index >= 0:
             self.combobox.setCurrentIndex(index)
 
+    def _clear_if_unselected(self) -> None:
+        if self.is_unselectable and self.combobox.currentIndex() == 0:
+            self.remove_selection()
+
     def remove_selection(self) -> None:
         self.combobox.setCurrentIndex(-1)
 
+    def _insert_invitation_item(self) -> None:
+        self.combobox.insertItem(0, CHOOSE_FROM_LIST_MESSAGE)
+
     def clear_options(self) -> None:
         self.combobox.clear()
+        if self.is_unselectable:
+            self._insert_invitation_item()
 
     def clear(self) -> None:
         self.remove_selection()
