@@ -151,6 +151,7 @@ class LabeledComboBoxComponent(ValidationMixin, QFrame):
             self.combobox.insertItem(0, CHOOSE_FROM_LIST_MESSAGE)
             self.combobox.currentIndexChanged.connect(self._clear_if_unselected)
         self.combobox.currentIndexChanged.connect(self.clear_validation_state)
+        self.combobox.currentTextChanged.connect(self.clear_validation_state)
         layout.addWidget(label)
         layout.addWidget(self.combobox)
 
@@ -236,19 +237,47 @@ class LabeledCheckboxComponent(ValidationMixin, QFrame):
 
 
 class LabeledDateComponent(ValidationMixin, QFrame):
-    def __init__(self, text, parent):
+    def __init__(self, text, parent, required: bool = False):
         super().__init__(parent)
+        self.required = required
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         label = QLabel(text=text, parent=self)
         self.date_input = QDateEdit(self)
         self.date_input.setCalendarPopup(True)
-        self.date_input.dateTime()
         layout.addWidget(label)
         layout.addWidget(self.date_input)
 
     def clear(self) -> None:
         self.date_input.clear()
+
+    def display_validation_result(self, validation_result: bool) -> None:
+        if validation_result:
+            self.toggle_highlight("lightgreen")
+        else:
+            self.toggle_highlight("mistyrose")
+
+    def toggle_highlight(self, color: str | None) -> None:
+        if color:
+            self.date_input.setStyleSheet(f"background-color: {color};")
+        else:
+            self.date_input.setStyleSheet("")
+
+    @property
+    def is_valid(self) -> bool:
+        if self.required and not self.date_input.date():
+            return False
+        return True
+
+    @property
+    def error_message(self) -> str | None:
+        if not self.is_valid:
+            return f"Pole '{self.label}' jest wymagane."
+
+    def clear_validation_state(self) -> None:
+        """Reset component and it's parent validation state"""
+        self.parent().clear_validation_state()
+        self.toggle_highlight(None)
 
 
 class SelectProvinceDistrictGroup(ValidationMixin, QFrame):

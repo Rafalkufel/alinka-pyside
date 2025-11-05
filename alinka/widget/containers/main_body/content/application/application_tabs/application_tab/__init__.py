@@ -2,6 +2,7 @@ from PySide6.QtCore import QDate, Qt
 from PySide6.QtWidgets import QVBoxLayout, QWidget
 
 from alinka.constants.common import (
+    INVALID_FORM_MESSAGE,
     ISSUE_DESCRIPTION_NOMINATIVE_MAPPER,
     REASON_DESCRIPTION_ACCUSATIVE_LONG_MAPPER,
     ActivityForm,
@@ -17,18 +18,19 @@ from alinka.widget.components import (
 
 class ApplicationTabContainer(ValidationMixin, QWidget):
     def __init__(self, parent: QWidget):
+        self.application_container = parent
         super().__init__(parent)
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
-        self.application_date = LabeledDateComponent("Data wniosku", self)
+        self.application_date = LabeledDateComponent("Data wniosku", self, required=True)
         self.application_date.date_input.setDate(QDate.currentDate())
-        self.application_subject = LabeledComboBoxComponent("Wniosek o", self)
+        self.application_subject = LabeledComboBoxComponent("Wniosek o", self, required=True)
         self.application_subject.combobox.setPlaceholderText("Wybierz z listy...")
         for issue, description in ISSUE_DESCRIPTION_NOMINATIVE_MAPPER.items():
             self.application_subject.combobox.addItem(description, issue)
         self.application_subject.combobox.currentTextChanged.connect(self.change_application_subject)
 
-        self.application_reason = LabeledComboBoxComponent("Z uwagi na", self)
+        self.application_reason = LabeledComboBoxComponent("Z uwagi na", self, required=True)
         self.application_reason.combobox.setPlaceholderText("Wybierz z listy...")
         self.application_reason.combobox.currentTextChanged.connect(self.change_application_reason)
         self.application_reason_2 = LabeledComboBoxComponent("Z uwagi na", self, unselectable=True)
@@ -40,7 +42,7 @@ class ApplicationTabContainer(ValidationMixin, QWidget):
         self._activity_form.combobox.setEnabled(False)
         self._activity_form.combobox.setPlaceholderText("Wybierz z listy...")
 
-        self.application_period = LabeledComboBoxComponent("Na okres", self)
+        self.application_period = LabeledComboBoxComponent("Na okres", self, required=True)
         self.application_period.combobox.setEditable(True)
         layout.addWidget(self.application_date)
         layout.addWidget(self.application_subject)
@@ -162,3 +164,47 @@ class ApplicationTabContainer(ValidationMixin, QWidget):
         self._activity_form.setFixedHeight(0)
         self._activity_form.combobox.setEnabled(False)
         self.application_period.clear()
+
+    @property
+    def is_valid(self) -> bool:
+        return all(
+            [
+                self.application_date.is_valid,
+                self.application_subject.is_valid,
+                self.application_reason.is_valid,
+                self.is_activity_form_valid,
+                self.application_period.is_valid,
+            ]
+        )
+
+    @property
+    def error_message(self) -> str | None:
+        if not self.is_valid:
+            return INVALID_FORM_MESSAGE
+
+    @property
+    def is_activity_form_valid(self) -> bool:
+        if (
+            self.application_subject.combobox.currentData() == Issue.REWALIDACYJNE
+            and self._activity_form.combobox.currentIndex() == -1
+        ):
+            return False
+        return True
+
+    def validate_activity_form(self) -> bool:
+        self._activity_form.display_validation_result(self.is_activity_form_valid)
+        return self.is_activity_form_valid
+
+    def validate(self) -> bool:
+        return all(
+            [
+                self.application_date.validate(),
+                self.application_subject.validate(),
+                self.application_reason.validate(),
+                self.validate_activity_form(),
+                self.application_period.validate(),
+            ]
+        )
+
+    def clear_validation_state(self):
+        self.application_container.clear_validation_state()
