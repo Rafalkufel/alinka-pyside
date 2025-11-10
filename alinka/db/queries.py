@@ -1,5 +1,4 @@
 from sqlalchemy import delete, or_
-from sqlalchemy.dialects.sqlite import insert
 
 from alinka.db.connection import db_session
 from alinka.db.models import Decision, School, SupportCenter, TeamMember
@@ -142,16 +141,28 @@ def get_team_members() -> list[TeamMemberDbSchema]:
         return [TeamMemberDbSchema.model_validate(tm) for tm in team_members]
 
 
-def upsert_team_members(team_members_data: list[TeamMemberDbCreateSchema]) -> None:
+def get_meeting_member_by_id(member_id: int) -> TeamMemberDbSchema:
     with db_session() as db:
-        for tm in team_members_data:
-            upsert_stmt = (
-                insert(TeamMember)
-                .values(tm.model_dump())
-                .on_conflict_do_update(index_elements=["id"], set_={"name": tm.name, "function": tm.function})
-            )
-            db.execute(upsert_stmt)
+        team_member = db.query(TeamMember).filter(TeamMember.id == member_id).one()
+        return TeamMemberDbSchema.model_validate(team_member)
+
+
+def insert_team_member(team_member_data: TeamMemberDbCreateSchema) -> TeamMemberDbSchema:
+    with db_session() as db:
+        team_member = TeamMember(**team_member_data.model_dump())
+        db.add(team_member)
         db.commit()
+        return TeamMemberDbSchema.model_validate(team_member)
+
+
+def update_team_member(team_member_data: TeamMemberDbSchema) -> TeamMemberDbSchema:
+    with db_session() as db:
+        db.query(TeamMember).filter(TeamMember.id == team_member_data.id).update(
+            team_member_data.model_dump(exclude={"id"}), synchronize_session="auto"
+        )
+        db.commit()
+        team_member = db.query(TeamMember).filter(TeamMember.id == team_member_data.id).one()
+        return TeamMemberDbSchema.model_validate(team_member)
 
 
 def delete_team_member(team_member_id: int) -> None:
@@ -160,4 +171,4 @@ def delete_team_member(team_member_id: int) -> None:
         db.execute(stmt)
         db.commit()
 
-    return get_team_members()
+    return None
