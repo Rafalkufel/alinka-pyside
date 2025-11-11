@@ -20,3 +20,7 @@ class HeaderContainer(QFrame):
     def clear_message(self):
         self.header_content.setText("")
         self.header_content.setStyleSheet("")
+
+    def set_info_message(self, message: str):
+        self.header_content.setText(message)
+        self.header_content.setStyleSheet("color: black;")
