@@ -44,11 +44,6 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
             self.meeting_tab_container,
         ]
 
-    def hideEvent(self, event):
-        """Clear validation state when ApplicationContainer is hidden"""
-        self.clear_validation_state()
-        return super().hideEvent(event)
-
     @property
     def is_valid(self) -> bool:
         return all(tab.is_valid for tab in self.containers)
@@ -76,6 +71,15 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
             self.clear_validation_state()
 
         self.previous_tab_index = new_index
+
+    def finish_application_flow(self) -> None:
+        """
+        When application flow is finished (either by generating documents or cancelling)
+        we should prepare the form for a new application.
+        """
+        self.clear()
+        self.setCurrentWidget(self.child_tab_container)
+        self.clear_validation_state()
 
     def validate(self) -> bool:
         if not all([tab.validate() for tab in self.containers]):
