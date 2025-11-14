@@ -235,6 +235,10 @@ class LabeledCheckboxComponent(ValidationMixin, QFrame):
     def clear(self) -> None:
         self.checkbox.setChecked(False)
 
+    @property
+    def is_checked(self) -> bool:
+        return self.checkbox.isChecked()
+
 
 class LabeledDateComponent(ValidationMixin, QFrame):
     def __init__(self, text, parent, required: bool = False):
