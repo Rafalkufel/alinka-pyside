@@ -9,39 +9,37 @@ class SidebarMenuContainer(QFrame):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(9, 9, 9, 9)
         layout.setAlignment(Qt.AlignTop)
-        search_child_btn = QPushButton("Wyszukaj", self)
-        search_child_btn.clicked.connect(self.show_browser)
-        layout.addWidget(search_child_btn)
+        self.search_child_btn = QPushButton("Wyszukaj", self)
+        self.search_child_btn.clicked.connect(self.show_browser)
+        layout.addWidget(self.search_child_btn)
         self.create_documents_btn = QPushButton("Utwórz dokument", self)
         self.create_documents_btn.clicked.connect(self.show_application)
         layout.addWidget(self.create_documents_btn)
-        settings_btn = QPushButton("Ustawienia", self)
-        settings_btn.clicked.connect(self.show_settings)
-        layout.addWidget(settings_btn)
+        self.settings_btn = QPushButton("Ustawienia", self)
+        self.settings_btn.clicked.connect(self.show_settings)
+        layout.addWidget(self.settings_btn)
 
-    def show_browser(self):
-        self.sidebar_menu.central_widget.main_body.content_container.show_browser_container()
-        self.sidebar_menu.central_widget.main_body.footer_container.show_browser_footer_container()
+    @property
+    def main_body(self):
+        return self.sidebar_menu.central_widget.main_body
 
     def showEvent(self, event):
-        main_body = self.sidebar_menu.central_widget.main_body
-        main_body.content_container.validate_basic_settings()
+        self.main_body.content_container.validate_basic_settings()
         return super().showEvent(event)
 
-    def toggle_create_application_btn(self, enabled: bool):
-        self.create_documents_btn.setEnabled(enabled)
+    def show_browser(self):
+        self.main_body.content_container.show_browser_container()
+        self.main_body.footer_container.show_browser_footer_container()
 
     def show_application(self) -> None:
-        main_body = self.sidebar_menu.central_widget.main_body
-        if not main_body.content_container.validate_basic_settings():
+        if not self.main_body.content_container.validate_basic_settings():
             return None
-        main_body.content_container.show_application_container()
-        main_body.footer_container.show_application_footer_container()
+        self.main_body.content_container.show_application_container()
+        self.main_body.footer_container.show_application_footer_container()
 
     def show_settings(self) -> None:
-        main_body = self.sidebar_menu.central_widget.main_body
-        main_body.content_container.show_settings_container()
-        main_body.footer_container.show_settings_footer_container()
+        self.main_body.content_container.show_settings_container()
+        self.main_body.footer_container.show_settings_footer_container()
 
 
 class SidebarMenu(QFrame):
