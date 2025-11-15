@@ -16,7 +16,7 @@ class SettingsContainer(ValidationMixin, QTabWidget):
 
     @property
     def is_valid(self) -> bool:
-        self.support_center_tab_container.is_valid
+        return self.support_center_tab_container.is_valid
 
     @property
     def error_message(self) -> str | None:
