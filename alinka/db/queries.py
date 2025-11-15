@@ -5,6 +5,7 @@ from alinka.db.connection import db_session
 from alinka.db.models import Decision, School, SupportCenter, TeamMember
 from alinka.schemas import (
     DecisionDbSchema,
+    SchoolDbCreateSchema,
     SchoolDbSchema,
     SupportCenterDbSchema,
     TeamMemberDbCreateSchema,
@@ -62,9 +63,19 @@ def filter_schools_by_type(school_type: str | None = None) -> list[SchoolDbSchem
         return [SchoolDbSchema.model_validate(school) for school in query]
 
 
-def get_school_by_name(school_name: str) -> SchoolDbSchema:
+def get_school_by_name(school_name: str) -> SchoolDbSchema | None:
     with db_session() as db:
         school = db.query(School).filter(School.name == school_name).one_or_none()
+        if not school:
+            return None
+        return SchoolDbSchema.model_validate(school)
+
+
+def get_school_by_id(school_id: int) -> SchoolDbSchema | None:
+    with db_session() as db:
+        school = db.query(School).filter(School.id == school_id).one_or_none()
+        if not school:
+            return None
         return SchoolDbSchema.model_validate(school)
 
 
@@ -78,6 +89,13 @@ def check_if_any_school_exists() -> bool:
     with db_session() as db:
         any_school = db.query(School).first()
         return bool(any_school)
+
+
+def delete_school(school_id: int) -> None:
+    with db_session() as db:
+        stmt = delete(School).where(School.id == school_id)
+        db.execute(stmt)
+        db.commit()
 
 
 def upsert_support_center(support_center_data: dict) -> SupportCenterDbSchema:
@@ -101,12 +119,21 @@ def get_support_center_data() -> SupportCenterDbSchema | None:
             return SupportCenterDbSchema.model_validate(support_center)
 
 
-def create_school(school_data: dict) -> SchoolDbSchema:
+def create_school(school_data: SchoolDbCreateSchema) -> SchoolDbSchema:
     with db_session() as db:
-        school = School(**school_data)
+        school = School(**school_data.model_dump())
         db.add(school)
         db.commit()
         return SchoolDbSchema.model_validate(school)
+
+
+def update_school(school_data: SchoolDbSchema) -> SchoolDbSchema:
+    with db_session() as db:
+        db.query(School).filter(School.id == school_data.id).update(
+            school_data.model_dump(), synchronize_session="auto"
+        )
+        db.commit()
+        return school_data
 
 
 def get_team_members() -> list[TeamMemberDbSchema]:

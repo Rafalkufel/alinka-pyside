@@ -2,11 +2,7 @@ from PySide6.QtWidgets import QTabWidget, QWidget
 
 from alinka.widget.components import ValidationMixin
 
-from .settings_tabs import (
-    SchoolTabContainer,
-    SupportCenterTabContainer,
-    TeamMemberTabContainer,
-)
+from .settings_tabs import SupportCenterTabContainer, TeamMemberTabContainer
 
 
 class SettingsContainer(ValidationMixin, QTabWidget):
@@ -15,10 +11,8 @@ class SettingsContainer(ValidationMixin, QTabWidget):
         self.content_container = parent
         self.setVisible(visible)
         self.support_center_tab_container = SupportCenterTabContainer(self)
-        self.schools_tab_container = SchoolTabContainer(self)
         self.team_member_tab_container = TeamMemberTabContainer(self)
         self.addTab(self.support_center_tab_container, "Dane poradni")
-        self.addTab(self.schools_tab_container, "Szkoły")
         self.addTab(self.team_member_tab_container, "Zespół orzekający")
         self.currentChanged.connect(self.handle_footer_visibility)
 
@@ -28,7 +22,6 @@ class SettingsContainer(ValidationMixin, QTabWidget):
             tab.is_valid
             for tab in [
                 self.support_center_tab_container,
-                self.schools_tab_container,
                 self.team_member_tab_container,
             ]
         )
@@ -37,7 +30,6 @@ class SettingsContainer(ValidationMixin, QTabWidget):
     def error_message(self) -> str | None:
         for tab in [
             self.support_center_tab_container,
-            self.schools_tab_container,
             self.team_member_tab_container,
         ]:
             if not tab.is_valid:
@@ -55,6 +47,4 @@ class SettingsContainer(ValidationMixin, QTabWidget):
             case 0:
                 setting_footer_container.show_footer_support_center_data_container()
             case 1:
-                setting_footer_container.show_footer_schools_container()
-            case 2:
                 setting_footer_container.show_footer_team_members_container()
