@@ -11,6 +11,7 @@ from .application_tabs import (
     ApplicationTabContainer,
     ChildDataTabContainer,
     MeetingTabContainer,
+    SchoolTabContainer,
 )
 
 
@@ -21,11 +22,13 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
         self.id = None
 
         self.child_tab_container = ChildDataTabContainer(self)
+        self.school_tab_container = SchoolTabContainer(self)
         self.applicants_tab_container = ApplicantsTabContainer(self)
         self.application_tab_container = ApplicationTabContainer(self)
         self.meeting_tab_container = MeetingTabContainer(self)
 
         self.addTab(self.child_tab_container, "Uczeń")
+        self.addTab(self.school_tab_container, "Szkoła")
         self.addTab(self.applicants_tab_container, "Wnioskodawcy")
         self.addTab(self.application_tab_container, "Wniosek")
         self.addTab(self.meeting_tab_container, "Zespół")
@@ -39,6 +42,7 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
 
         self.containers = [
             self.child_tab_container,
+            self.school_tab_container,
             self.applicants_tab_container,
             self.application_tab_container,
             self.meeting_tab_container,
@@ -99,7 +103,7 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
             file_no=self.child_tab_container.general_data_group.file_no.text,
             decision_no=self.child_tab_container.general_data_group.decision_no.text,
             child=self.child_tab_container.child_data,
-            school=self.child_tab_container.school_data,
+            school=self.school_tab_container.school_data,
             applicants=self.applicants_tab_container.applicants,
             is_first_parent_address_different=self.applicants_tab_container.is_first_parent_address_different,
             is_second_parent_address_different=self.applicants_tab_container.is_second_parent_address_different,

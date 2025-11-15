@@ -3,7 +3,11 @@ from PySide6.QtGui import QValidator
 from PySide6.QtWidgets import QGridLayout, QGroupBox
 
 from alinka.schemas import DocumentData
-from alinka.widget.components import LabeledInputComponent, ValidationMixin
+from alinka.widget.components import (
+    LabeledCheckboxComponent,
+    LabeledInputComponent,
+    ValidationMixin,
+)
 from alinka.widget.validators import PeselValidator
 
 
@@ -52,6 +56,14 @@ class ChildDataGroupContainer(ValidationMixin, QGroupBox):
         layout.addWidget(self.postal_code, 3, 0)
         layout.addWidget(self.post, 3, 1)
 
+        self.student_checkbox = LabeledCheckboxComponent("Uczeń", self)
+        layout.addWidget(self.student_checkbox, 4, 0)
+
+        self.school_klass = LabeledInputComponent("Klasa", self)
+        self.school_profession = LabeledInputComponent("Zawód", self)
+        layout.addWidget(self.school_klass, 5, 0)
+        layout.addWidget(self.school_profession, 5, 1)
+
         self.components = [
             self.child_name_nom,
             self.child_name_gen,
@@ -61,6 +73,9 @@ class ChildDataGroupContainer(ValidationMixin, QGroupBox):
             self.town,
             self.postal_code,
             self.post,
+            self.student_checkbox,
+            self.school_klass,
+            self.school_profession,
         ]
 
     def clear(self) -> None:
@@ -77,6 +92,12 @@ class ChildDataGroupContainer(ValidationMixin, QGroupBox):
         self.town.text = child.town
         self.postal_code.text = child.postal_code
         self.post.text = child.post
+        self.student_checkbox.checkbox.setChecked(child.student)
+        self.school_klass.text = child.klass
+        self.school_profession.text = child.profession
+
+    def child_data(self):
+        pass
 
     @property
     def is_valid(self) -> bool:
