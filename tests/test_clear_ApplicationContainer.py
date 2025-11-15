@@ -26,8 +26,8 @@ from alinka.widget.containers.main_body.content.application.application_tabs.chi
 from alinka.widget.containers.main_body.content.application.application_tabs.child_tab.general_data_group import (
     GeneralDataGroupContainer,
 )
-from alinka.widget.containers.main_body.content.application.application_tabs.child_tab.school_data_group import (
-    SchoolDataGroupContainer,
+from alinka.widget.containers.main_body.content.application.application_tabs.school_tab import (
+    SchoolTabContainer,
 )
 from alinka.widget.containers.main_body.content.application.application_tabs.meeting_tab import (
     MeetingTabContainer,
@@ -71,8 +71,8 @@ def child_data_group_container(qapp: QApplication) -> ChildDataGroupContainer:
 
 
 @pytest.fixture
-def school_data_group_container(qapp: QApplication) -> SchoolDataGroupContainer:
-    return SchoolDataGroupContainer(parent=None)
+def school_tab_container(qapp: QApplication) -> SchoolTabContainer:
+    return SchoolTabContainer(parent=None)
 
 
 @pytest.fixture
@@ -102,19 +102,19 @@ def test_clear_applicant_data_group(applicant_data_group: ApplicantDataGroup) ->
     applicant_data_group.full_name.text = "Jan Kowalski"
     applicant_data_group.full_name_gen.text = "Jana Kowalskiego"
     applicant_data_group.address_checkbox.checkbox.setChecked(True)
-    applicant_data_group.address.text = "ul. Przykładowa 1"
-    applicant_data_group.town.text = "Warszawa"
-    applicant_data_group.postal_code.text = "00-001"
-    applicant_data_group.post.text = "Warszawa"
+    applicant_data_group.address_frame.address.text = "ul. Przykładowa 1"
+    applicant_data_group.address_frame.town.text = "Warszawa"
+    applicant_data_group.address_frame.postal_code.text = "00-001"
+    applicant_data_group.address_frame.post.text = "Warszawa"
 
     # Sanity check
     assert applicant_data_group.full_name.text == "Jan Kowalski"
     assert applicant_data_group.full_name_gen.text == "Jana Kowalskiego"
     assert applicant_data_group.address_checkbox.checkbox.isChecked()
-    assert applicant_data_group.address.text == "ul. Przykładowa 1"
-    assert applicant_data_group.town.text == "Warszawa"
-    assert applicant_data_group.postal_code.text == "00-001"
-    assert applicant_data_group.post.text == "Warszawa"
+    assert applicant_data_group.address_frame.address.text == "ul. Przykładowa 1"
+    assert applicant_data_group.address_frame.town.text == "Warszawa"
+    assert applicant_data_group.address_frame.postal_code.text == "00-001"
+    assert applicant_data_group.address_frame.post.text == "Warszawa"
 
     # Call the method
     applicant_data_group.clear()
@@ -123,10 +123,10 @@ def test_clear_applicant_data_group(applicant_data_group: ApplicantDataGroup) ->
     assert applicant_data_group.full_name.text == ""
     assert applicant_data_group.full_name_gen.text == ""
     assert not applicant_data_group.address_checkbox.checkbox.isChecked()
-    assert applicant_data_group.address.text == ""
-    assert applicant_data_group.town.text == ""
-    assert applicant_data_group.postal_code.text == ""
-    assert applicant_data_group.post.text == ""
+    assert applicant_data_group.address_frame.address.text == ""
+    assert applicant_data_group.address_frame.town.text == ""
+    assert applicant_data_group.address_frame.postal_code.text == ""
+    assert applicant_data_group.address_frame.post.text == ""
 
 
 @patch.object(ApplicantDataGroup, "clear")
@@ -209,6 +209,9 @@ def test_clear_child_data_group_container(child_data_group_container: ChildDataG
     child_data_group_container.town.text = "Kraków"
     child_data_group_container.postal_code.text = "31-123"
     child_data_group_container.post.text = "Kraków"
+    child_data_group_container.student_checkbox.checkbox.setChecked(True)
+    child_data_group_container.school_klass.text = "3a"
+    child_data_group_container.school_profession.text = "Technik informatyk"
 
     # Sanity check
     assert child_data_group_container.child_name_nom.text == "Anna Nowak"
@@ -219,6 +222,9 @@ def test_clear_child_data_group_container(child_data_group_container: ChildDataG
     assert child_data_group_container.town.text == "Kraków"
     assert child_data_group_container.postal_code.text == "31-123"
     assert child_data_group_container.post.text == "Kraków"
+    assert child_data_group_container.student_checkbox.checkbox.isChecked()
+    assert child_data_group_container.school_klass.text == "3a"
+    assert child_data_group_container.school_profession.text == "Technik informatyk"
 
     # Call the method
     child_data_group_container.clear()
@@ -232,39 +238,26 @@ def test_clear_child_data_group_container(child_data_group_container: ChildDataG
     assert child_data_group_container.town.text == ""
     assert child_data_group_container.postal_code.text == ""
     assert child_data_group_container.post.text == ""
+    assert child_data_group_container.school_klass.text == ""
+    assert child_data_group_container.school_profession.text == ""
+    assert not child_data_group_container.student_checkbox.checkbox.isChecked()
 
 
-def test_clear_school_data_group_container(school_data_group_container: SchoolDataGroupContainer) -> None:
+def test_clear_school_tab_container(school_tab_container: SchoolTabContainer) -> None:
     # Set initial values
-    school_data_group_container.school_type.combobox.setCurrentIndex(
-        school_data_group_container.school_type.combobox.count() - 1
+    school_tab_container.school_type.combobox.setCurrentIndex(
+        school_tab_container.school_type.combobox.count() - 1
     )
-    school_data_group_container.school.combobox.addItem("TestSchool", "school1")
-    school_data_group_container.school.combobox.setCurrentIndex(school_data_group_container.school.combobox.count() - 1)
-    school_data_group_container.student_checkbox.checkbox.setChecked(True)
-    school_data_group_container.school_klass.text = "3a"
-    school_data_group_container.school_profession.text = "Technik informatyk"
 
     # Sanity check
-    assert school_data_group_container.school_type.combobox.count() > 0
-    assert school_data_group_container.school_type.combobox.currentText() != ""
-    assert school_data_group_container.school.combobox.count() > 0
-    assert school_data_group_container.school.combobox.currentText() != ""
-    assert school_data_group_container.student_checkbox.checkbox.isChecked()
-    assert school_data_group_container.school_klass.text == "3a"
-    assert school_data_group_container.school_profession.text == "Technik informatyk"
+    assert school_tab_container.school_type.combobox.count() > 0
+    assert school_tab_container.school_type.combobox.currentText() != ""
 
     # Call the method
-    school_data_group_container.clear()
+    school_tab_container.clear()
 
-    # All fields and selections should be cleared/reset
-    # school_type and school repopulated/reset
-    assert school_data_group_container.school_type.combobox.count() == len(SchoolTypes.values())
-    assert school_data_group_container.school_type.combobox.currentText() in ("", None)
-    assert school_data_group_container.school.combobox.count() == 0
-    assert school_data_group_container.school_klass.text == ""
-    assert school_data_group_container.school_profession.text == ""
-    assert not school_data_group_container.student_checkbox.checkbox.isChecked()
+    assert school_tab_container.school_type.combobox.count() == len(SchoolTypes.values()) + 1 # including empty option
+    assert school_tab_container.school_type.combobox.currentText() in ("", None)
 
 
 def test_clear_general_data_group_container(general_data_group_container: GeneralDataGroupContainer) -> None:
@@ -286,15 +279,12 @@ def test_clear_general_data_group_container(general_data_group_container: Genera
 
 @patch.object(GeneralDataGroupContainer, "clear")
 @patch.object(ChildDataGroupContainer, "clear")
-@patch.object(SchoolDataGroupContainer, "clear")
 def test_clear_child_data_tab_container(
-    mocked_school_clear: MagicMock,
     mocked_child_data_clear: MagicMock,
     mocked_general_clear: MagicMock,
     child_data_tab_container: ChildDataTabContainer,
 ) -> None:
     child_data_tab_container.clear()
-    mocked_school_clear.assert_called_once()
     mocked_child_data_clear.assert_called_once()
     mocked_general_clear.assert_called_once()
 
@@ -305,7 +295,7 @@ def test_clear_meeting_tab_container(meeting_tab_container: MeetingTabContainer)
     item1.setData(1)
     item1.setCheckable(True)
     item1.setCheckState(Qt.CheckState.Checked)
-    meeting_tab_container.model.appendRow(item1)
+    meeting_tab_container.meeting_member_group.model.appendRow(item1)
     meeting_tab_container.meeting_leader.combobox.addItem("Leader 1", "leader1")
     meeting_tab_container.meeting_leader.combobox.setCurrentIndex(0)
     custom_date = QDate(2020, 2, 2)
@@ -313,7 +303,7 @@ def test_clear_meeting_tab_container(meeting_tab_container: MeetingTabContainer)
     meeting_tab_container.meeting_time.text = "14:00"
 
     # Sanity check
-    assert meeting_tab_container.model.rowCount() > 0
+    assert meeting_tab_container.meeting_member_group.model.rowCount() > 0
     assert meeting_tab_container.meeting_leader.combobox.count() > 0
     assert meeting_tab_container.meeting_leader.combobox.currentText() == "Leader 1"
     assert meeting_tab_container.meeting_date.date_input.date() == custom_date
@@ -323,7 +313,7 @@ def test_clear_meeting_tab_container(meeting_tab_container: MeetingTabContainer)
     meeting_tab_container.clear()
 
     # Check model has been repopulated (populate_meeting_members may add 0 or more rows)
-    assert meeting_tab_container.model.rowCount() >= 0
+    assert meeting_tab_container.meeting_member_group.model.rowCount() >= 0
     # meeting_leader combobox cleared
     assert meeting_tab_container.meeting_leader.combobox.count() == 0
     # date set to today
