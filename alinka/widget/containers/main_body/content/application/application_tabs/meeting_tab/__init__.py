@@ -20,6 +20,7 @@ from alinka.db.queries import (
 from alinka.schemas import MeetingData, MeetingMemberData
 from alinka.schemas.document_schema import DocumentData
 from alinka.widget.components import (
+    ConfirmationModal,
     LabeledComboBoxComponent,
     LabeledDateComponent,
     LabeledInputComponent,
@@ -135,6 +136,12 @@ class HandleMemberFrame(ValidationMixin, QFrame):
         selected_member = self.get_selected_member()
         if not selected_member:
             return None
+        if not ConfirmationModal(
+            self,
+            "Potwierdzenie usunięcia członka zespołu",
+            "Czy na pewno chcesz usunąć tego członka zespołu?",
+        ).confirm():
+            return
         delete_team_member(selected_member.id)
         self.team_member_changed.emit()
 

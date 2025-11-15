@@ -18,7 +18,11 @@ from alinka.db.queries import (
     get_schools,
 )
 from alinka.schemas import SchoolData, SchoolDbSchema
-from alinka.widget.components import LabeledComboBoxComponent, ValidationMixin
+from alinka.widget.components import (
+    ConfirmationModal,
+    LabeledComboBoxComponent,
+    ValidationMixin,
+)
 
 from .school_dialog import SchoolDialog
 
@@ -88,6 +92,12 @@ class HandleSchoolFrame(ValidationMixin, QFrame):
     def remove_school(self):
         selected_school = self.get_selected_school()
         if not selected_school:
+            return
+        if not ConfirmationModal(
+            self,
+            "Potwierdzenie usunięcia szkoły",
+            "Czy na pewno chcesz usunąć tę szkołę?",
+        ).confirm():
             return
         delete_school(selected_school.id)
         self.school_list_changed.emit()

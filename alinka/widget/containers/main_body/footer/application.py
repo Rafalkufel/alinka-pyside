@@ -1,15 +1,9 @@
-from PySide6.QtWidgets import (
-    QFileDialog,
-    QFrame,
-    QHBoxLayout,
-    QMessageBox,
-    QPushButton,
-    QWidget,
-)
+from PySide6.QtWidgets import QFileDialog, QFrame, QHBoxLayout, QPushButton, QWidget
 
 from alinka.config import settings
 from alinka.widget.actions import generate_and_save_decision
 from alinka.widget.toast import show_success, show_validation_error
+from alinka.widget.components import ConfirmationModal
 
 
 class ApplicationFooterContainer(QFrame):
@@ -79,20 +73,11 @@ class ApplicationFooterContainer(QFrame):
         self.redirect_to_browser()
 
     def cancel_application(self) -> None:
-        msgbox = QMessageBox(self)
-        msgbox.setWindowTitle("Potwierdzenie anulowania")
-        msgbox.setText(
-            "Czy na pewno chcesz anulować tworzenie dokumentu?\n\nWszystkie wprowadzone dane zostaną utracone."
-        )
-        msgbox.setIcon(QMessageBox.Icon.Question)
-
-        yes_button = msgbox.addButton("Tak", QMessageBox.ButtonRole.YesRole)
-        no_button = msgbox.addButton("Nie", QMessageBox.ButtonRole.NoRole)
-
-        msgbox.setDefaultButton(no_button)
-        msgbox.exec()
-
-        if msgbox.clickedButton() != yes_button:
+        if not ConfirmationModal(
+            self,
+            "Potwierdzenie anulowania",
+            "Czy na pewno chcesz anulować tworzenie dokumentu?\n\nWszystkie wprowadzone dane zostaną utracone.",
+        ).confirm():
             return
 
         self.content_container.main_body_container.header_container.set_info_message("Tworzenie dokumentu anulowane")

@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QTableView,
+    QMessageBox,
     QVBoxLayout,
     QWidget,
 )
@@ -433,3 +434,20 @@ class SelectProvinceDistrictGroup(ValidationMixin, QFrame):
     def on_district_changed(self):
         """In case of district change we should only trigger selection changed signal"""
         self.selection_changed.emit()
+
+
+class ConfirmationModal(QMessageBox):
+    def __init__(self, parent: QWidget, title: str, message: str):
+        super().__init__(parent)
+        self.setWindowTitle(title)
+        self.setText(message)
+        self.setIcon(QMessageBox.Icon.Question)
+
+        self.yes_button = self.addButton("Tak", QMessageBox.ButtonRole.YesRole)
+        self.no_button = self.addButton("Nie", QMessageBox.ButtonRole.NoRole)
+
+        self.setDefaultButton(self.no_button)
+
+    def confirm(self) -> bool:
+        self.exec()
+        return self.clickedButton() == self.yes_button
