@@ -26,11 +26,11 @@ from alinka.widget.containers.main_body.content.application.application_tabs.chi
 from alinka.widget.containers.main_body.content.application.application_tabs.child_tab.general_data_group import (
     GeneralDataGroupContainer,
 )
-from alinka.widget.containers.main_body.content.application.application_tabs.school_tab import (
-    SchoolTabContainer,
-)
 from alinka.widget.containers.main_body.content.application.application_tabs.meeting_tab import (
     MeetingTabContainer,
+)
+from alinka.widget.containers.main_body.content.application.application_tabs.school_tab import (
+    SchoolTabContainer,
 )
 
 os.environ["QT_QPA_PLATFORM"] = "offscreen"
@@ -245,9 +245,7 @@ def test_clear_child_data_group_container(child_data_group_container: ChildDataG
 
 def test_clear_school_tab_container(school_tab_container: SchoolTabContainer) -> None:
     # Set initial values
-    school_tab_container.school_type.combobox.setCurrentIndex(
-        school_tab_container.school_type.combobox.count() - 1
-    )
+    school_tab_container.school_type.combobox.setCurrentIndex(school_tab_container.school_type.combobox.count() - 1)
 
     # Sanity check
     assert school_tab_container.school_type.combobox.count() > 0
@@ -256,7 +254,7 @@ def test_clear_school_tab_container(school_tab_container: SchoolTabContainer) ->
     # Call the method
     school_tab_container.clear()
 
-    assert school_tab_container.school_type.combobox.count() == len(SchoolTypes.values()) + 1 # including empty option
+    assert school_tab_container.school_type.combobox.count() == len(SchoolTypes.values()) + 1  # including empty option
     assert school_tab_container.school_type.combobox.currentText() in ("", None)
 
 
