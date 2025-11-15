@@ -118,8 +118,10 @@ class LabeledInputComponent(ValidationMixin, QFrame):
 
     def clear_validation_state(self) -> None:
         """Reset component and it's parent validation state"""
-        self.parent().clear_validation_state()
-        self.toggle_highlight(None)
+        parent = self.parent()
+        if hasattr(parent, "clear_validation_state"):
+            parent.clear_validation_state()
+            self.toggle_highlight(None)
 
 
 class LabeledComboBoxComponent(ValidationMixin, QFrame):
@@ -202,8 +204,10 @@ class LabeledComboBoxComponent(ValidationMixin, QFrame):
 
     def clear_validation_state(self) -> None:
         """Reset component and it's parent validation state"""
-        self.parent().clear_validation_state()
-        self.toggle_highlight(None)
+        parent = self.parent()
+        if hasattr(parent, "clear_validation_state"):
+            parent.clear_validation_state()
+            self.toggle_highlight(None)
 
     @property
     def is_valid(self) -> bool:
@@ -280,8 +284,10 @@ class LabeledDateComponent(ValidationMixin, QFrame):
 
     def clear_validation_state(self) -> None:
         """Reset component and it's parent validation state"""
-        self.parent().clear_validation_state()
-        self.toggle_highlight(None)
+        parent = self.parent()
+        if hasattr(parent, "clear_validation_state"):
+            parent.clear_validation_state()
+            self.toggle_highlight(None)
 
 
 class SelectProvinceDistrictGroup(ValidationMixin, QFrame):
