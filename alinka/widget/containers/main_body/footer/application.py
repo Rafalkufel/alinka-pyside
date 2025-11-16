@@ -20,10 +20,10 @@ class ApplicationFooterContainer(QFrame):
         layout.setContentsMargins(9, 9, 9, 9)
         self.cancel_btn = QPushButton("Anuluj", self)
         self.cancel_btn.clicked.connect(self.cancel_application)
-        self.print_btn = QPushButton("Drukuj dokumenty", self)
-        self.print_btn.clicked.connect(self.print_documents)
+        self.save_and_export_btn = QPushButton("Zapisz i eksportuj", self)
+        self.save_and_export_btn.clicked.connect(self.print_documents)
         layout.addWidget(self.cancel_btn)
-        layout.addWidget(self.print_btn)
+        layout.addWidget(self.save_and_export_btn)
 
         self.setVisible(visible)
 
