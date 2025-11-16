@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
 
 from alinka.config import settings
 from alinka.widget.actions import generate_and_save_decision
+from alinka.widget.toast import show_success, show_validation_error
 
 
 class ApplicationFooterContainer(QFrame):
@@ -17,12 +18,18 @@ class ApplicationFooterContainer(QFrame):
         self.footer_container = parent
         self.content_container = self.footer_container.main_body_container.content_container
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(9, 9, 9, 9)
+        layout.setContentsMargins(16, 12, 16, 12)
+        layout.setSpacing(12)
+
         self.cancel_btn = QPushButton("Anuluj", self)
         self.cancel_btn.clicked.connect(self.cancel_application)
+        layout.addWidget(self.cancel_btn)
+
+        layout.addStretch()
+
         self.print_btn = QPushButton("Drukuj dokumenty", self)
         self.print_btn.clicked.connect(self.print_documents)
-        layout.addWidget(self.cancel_btn)
+        self.print_btn.setFixedWidth(200)
         layout.addWidget(self.print_btn)
 
         self.setVisible(visible)
@@ -47,11 +54,11 @@ class ApplicationFooterContainer(QFrame):
     def validate_document_data(self) -> None:
         if not self.content_container.validate_basic_settings():
             error_message = self.content_container.settings_container.error_message
-            self.content_container.main_body_container.header_container.set_error_message(error_message)
+            show_validation_error(self, error_message)
             return
         if not self.content_container.validate_application():
             error_message = self.content_container.application_container.error_message
-            self.content_container.main_body_container.header_container.set_error_message(error_message)
+            show_validation_error(self, error_message)
             return
 
     def print_documents(self) -> None:
@@ -68,9 +75,7 @@ class ApplicationFooterContainer(QFrame):
             return
 
         generate_and_save_decision(form_data=self.document_data, generate=True, destination_path=destination_path)
-        self.content_container.main_body_container.header_container.set_success_message(
-            "Dokumenty zostały wygenerowane"
-        )
+        show_success(self, "Dokumenty zostały wygenerowane pomyślnie")
         self.redirect_to_browser()
 
     def cancel_application(self) -> None:
@@ -90,6 +95,5 @@ class ApplicationFooterContainer(QFrame):
         if msgbox.clickedButton() != yes_button:
             return
 
-        self.content_container = self.footer_container.main_body_container.content_container
         self.content_container.main_body_container.header_container.set_info_message("Tworzenie dokumentu anulowane")
         self.redirect_to_browser()

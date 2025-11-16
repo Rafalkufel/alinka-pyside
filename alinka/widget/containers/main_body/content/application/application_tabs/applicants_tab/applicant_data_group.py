@@ -10,14 +10,12 @@ from alinka.widget.components import (
 
 
 class ParentAddressFrame(ValidationMixin, QFrame):
-    def __init__(self, parent: QWidget, initial_height: int = 0):
+    def __init__(self, parent: QWidget):
         super().__init__(parent)
-        self.applicant_frame = parent
-        self.setFixedHeight(initial_height)
-
         layout = QGridLayout(self)
         layout.setAlignment(Qt.AlignTop)
         layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(8)
         self.address = LabeledInputComponent("Adres", self, required=True)
         self.town = LabeledInputComponent("Miejscowość", self, required=True)
         layout.addWidget(self.address, 0, 0)
@@ -29,6 +27,7 @@ class ParentAddressFrame(ValidationMixin, QFrame):
         layout.addWidget(self.post, 1, 1)
 
         self.setLayout(layout)
+        self.setVisible(False)
 
         self.components = [self.address, self.town, self.postal_code, self.post]
 
@@ -44,29 +43,46 @@ class ParentAddressFrame(ValidationMixin, QFrame):
 
     @property
     def is_valid(self) -> bool:
-        return all(component.is_valid for component in self.components)
+        """Check if all address components are filled when visible."""
+        if not self.isVisible():
+            return True
+        return all(component.text for component in self.components)
 
     @property
     def error_message(self) -> str | None:
-        for component in self.components:
-            if not component.is_valid:
-                return component.error_message
+        """Get error message for address validation."""
+        if not self.is_valid:
+            for component in self.components:
+                if not component.text:
+                    return f"{component.label} jest wymagane"
         return None
 
     def validate(self) -> bool:
-        return all([component.validate() for component in self.components])
+        """Validate address components."""
+        for component in self.components:
+            component.validate()
+
+        is_valid = self.is_valid
+        self.display_validation_result(is_valid)
+        return is_valid
+
+    def display_validation_result(self, validation_result: bool) -> None:
+        """Update visual validation state."""
+        pass
 
     def clear_validation_state(self) -> None:
-        self.applicant_frame.clear_validation_state()
+        """Reset validation state for address components."""
+        for component in self.components:
+            component.clear_validation_state()
 
 
 class ApplicantDataGroup(ValidationMixin, QGroupBox):
-    def __init__(self, title: str, parent: QWidget, checkbox_description: str, initial_height: int):
+    def __init__(self, title: str, parent: QWidget, checkbox_description: str, initial_visible: bool = True):
         super().__init__(title=title, parent=parent)
-        self.applicants_tab_container = parent
-        self.setFixedHeight(initial_height)
         layout = QGridLayout(self)
         layout.setAlignment(Qt.AlignTop)
+        layout.setSpacing(8)
+        layout.setContentsMargins(10, 10, 10, 10)
         self.full_name = LabeledInputComponent("Imię i nazwisko", self, 200, required=True)
         self.full_name_gen = LabeledInputComponent("Imię i nazwisko (dopełniacz)", self, 200, required=True)
         layout.addWidget(self.full_name, 0, 0)
@@ -74,43 +90,21 @@ class ApplicantDataGroup(ValidationMixin, QGroupBox):
 
         self.address_checkbox = LabeledCheckboxComponent(checkbox_description, self, "right")
         self.address_checkbox.checkbox.checkStateChanged.connect(self.show_hide_address_frame)
-        layout.addWidget(self.address_checkbox, 1, 0)
+        # Make checkbox span both columns to prevent overlap
+        layout.addWidget(self.address_checkbox, 1, 0, 1, 2)
 
-        self.address_frame = ParentAddressFrame(self, 0)
+        self.address_frame = ParentAddressFrame(self)
         layout.addWidget(self.address_frame, 2, 0, 1, 2)
 
-    @property
-    def components(self) -> list[QFrame]:
-        components = [self.full_name, self.full_name_gen]
-        if self.address_checkbox.is_checked:
-            components.extend(self.address_frame.components)
-        return components
+        # Set initial visibility
+        self.setVisible(initial_visible)
 
     def show_hide_address_frame(self) -> None:
-        if self.address_checkbox.is_checked:
-            self.setFixedHeight(220)
-            self.address_frame.setFixedHeight(130)
+        if self.address_checkbox.checkbox.isChecked():
+            self.address_frame.setVisible(True)
         else:
-            self.setFixedHeight(130)
-            self.address_frame.setFixedHeight(0)
+            self.address_frame.setVisible(False)
             self.address_frame.clear()
-
-    @property
-    def is_visible(self) -> bool:
-        return self.height() > 0
-
-    @is_visible.setter
-    def is_visible(self, value: bool) -> None:
-        if value:
-            self.setFixedHeight(130)
-            self.checkable = True
-        else:
-            self.clear()
-            self.checkable = False
-            self.setFixedHeight(0)
-
-    def toggle(self) -> None:
-        self.is_visible = not self.is_visible
 
     def populate_applicant_data(self, applicant_data: PersonalData) -> None:
         self.full_name.text = applicant_data.full_name
@@ -120,7 +114,7 @@ class ApplicantDataGroup(ValidationMixin, QGroupBox):
     def clear(self) -> None:
         self.full_name.clear()
         self.full_name_gen.clear()
-        self.address_checkbox.clear()
+        self.address_checkbox.checkbox.setChecked(False)
         self.address_frame.clear()
 
     @property
@@ -137,25 +131,60 @@ class ApplicantDataGroup(ValidationMixin, QGroupBox):
 
     @property
     def is_valid(self) -> bool:
-        if not self.is_visible:
-            return True
-        return all(component.is_valid for component in self.components)
+        """Check if the applicant data group is valid.
+
+        Checks actual field values regardless of Qt visibility state.
+        """
+        if not self.full_name.is_valid or not self.full_name_gen.is_valid:
+            return False
+
+        if self.address_checkbox.is_checked:
+            address_components = [
+                self.address_frame.address,
+                self.address_frame.town,
+                self.address_frame.postal_code,
+                self.address_frame.post,
+            ]
+            return all(component.text for component in address_components)
+
+        return True
 
     @property
     def error_message(self) -> str | None:
-        if not self.is_visible:
-            return None
+        """Get error message if validation fails."""
+        if not self.is_valid:
+            # Check name fields first
+            if not self.full_name.is_valid:
+                return self.full_name.error_message
+            if not self.full_name_gen.is_valid:
+                return self.full_name_gen.error_message
 
-        for component in self.components:
-            if not component.is_valid:
-                return component.error_message
-
+            # Check address fields if checkbox is checked
+            if self.address_checkbox.is_checked:
+                if not self.address_frame.address.text:
+                    return "Adres jest wymagany"
+                if not self.address_frame.town.text:
+                    return "Miejscowość jest wymagana"
+                if not self.address_frame.postal_code.text:
+                    return "Kod pocztowy jest wymagany"
+                if not self.address_frame.post.text:
+                    return "Poczta jest wymagana"
         return None
 
     def validate(self) -> bool:
-        if not self.is_visible:
-            return True
-        return all([component.validate() for component in self.components])
+        """Validate the applicant data group and update visual state."""
+        self.full_name.validate()
+        self.full_name_gen.validate()
+
+        if self.address_checkbox.is_checked:
+            self.address_frame.validate()
+
+        is_valid = self.is_valid
+        return is_valid
 
     def clear_validation_state(self) -> None:
-        self.applicants_tab_container.clear_validation_state()
+        """Reset validation state for this component and its children."""
+        self.full_name.clear_validation_state()
+        self.full_name_gen.clear_validation_state()
+        if self.address_checkbox.is_checked:
+            self.address_frame.clear_validation_state()

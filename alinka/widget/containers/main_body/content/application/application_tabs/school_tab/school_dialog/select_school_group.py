@@ -20,6 +20,8 @@ class SelectSchoolGroup(ValidationMixin, QGroupBox):
         super().__init__(title="Wybierz szkołę", parent=parent)
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
+        layout.setSpacing(5)
+        layout.setContentsMargins(10, 10, 10, 10)
 
         self.province_district_group = SelectProvinceDistrictGroup(self)
         self.province_district_group.selection_changed.connect(self.province_district_changed)
@@ -32,7 +34,9 @@ class SelectSchoolGroup(ValidationMixin, QGroupBox):
 
         self.school_type_combobox = LabeledComboBoxComponent("Rodzaj szkoły", self, required=True, static=True)
         self.school_type_combobox.combobox.setPlaceholderText("Wybierz rodzaj szkoły...")
-        self.school_type_combobox.combobox.addItems(SchoolTypes.values())
+        self.school_type_combobox.addItems(SchoolTypes.values())
+        # Explicitly enable after adding items
+        self.school_type_combobox.combobox.setEnabled(True)
         self.school_type_combobox.combobox.currentTextChanged.connect(self.populate_schools_combobox)
         layout.addWidget(self.school_type_combobox)
 
@@ -95,7 +99,7 @@ class SelectSchoolGroup(ValidationMixin, QGroupBox):
 
         communes = rspo_client.list_communes(province_id=selected_province_id, district_id=selected_district_id)
         for commune in communes:
-            self.commune_combobox.combobox.addItem(commune.name, commune.id)
+            self.commune_combobox.addItem(commune.name, commune.id)
 
     def populate_schools_combobox(self):
         self.schools_combobox.clear()
@@ -117,7 +121,7 @@ class SelectSchoolGroup(ValidationMixin, QGroupBox):
             )
         )
         for school in self.schools.items:
-            self.schools_combobox.combobox.addItem(school.name, school.id)
+            self.schools_combobox.addItem(school.name, school.id)
 
     @property
     def selected_school(self) -> SchoolDbCreateSchema | None:
@@ -161,4 +165,5 @@ class SelectSchoolGroup(ValidationMixin, QGroupBox):
         return all([c.validate() for c in self.components])
 
     def clear_validation_state(self) -> None:
-        self.parent().clear_validation_state()
+        for c in self.components:
+            c.clear_validation_state()

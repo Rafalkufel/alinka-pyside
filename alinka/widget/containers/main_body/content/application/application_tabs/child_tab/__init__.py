@@ -14,6 +14,8 @@ class ChildDataTabContainer(ValidationMixin, QWidget):
         super().__init__(parent)
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(10)
         self.general_data_group = GeneralDataGroupContainer(self)
         self.child_data_group = ChildDataGroupContainer(self)
 
@@ -58,8 +60,9 @@ class ChildDataTabContainer(ValidationMixin, QWidget):
 
         return None
 
-    def validate(self) -> None:
+    def validate(self) -> bool:
         return all([c.validate() for c in self.containers])
 
     def clear_validation_state(self) -> None:
-        self.application_container.clear_validation_state()
+        for container in self.containers:
+            container.clear_validation_state()
