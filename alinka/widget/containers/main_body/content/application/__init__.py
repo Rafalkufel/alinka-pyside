@@ -211,6 +211,7 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
 
     def clear(self):
         self.child_tab_container.clear()
+        self.school_tab_container.clear()
         self.applicants_tab_container.clear()
         self.application_tab_container.clear()
         self.meeting_tab_container.clear()
