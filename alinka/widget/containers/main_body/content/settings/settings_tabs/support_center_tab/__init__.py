@@ -1,10 +1,11 @@
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import QVBoxLayout, QWidget, QPushButton, QLabel, QWidget,QHBoxLayout
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
 
 from alinka.db.queries import get_support_center_data
 from alinka.widget.components import ValidationMixin
 
 from .support_center_dialog import SupportCenterDialog
+
 
 class HandleSupportCenterFrame(ValidationMixin, QWidget):
     support_center_changed = Signal()

@@ -2,8 +2,6 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QGridLayout, QGroupBox, QSizePolicy, QWidget
 
 from alinka.db.queries import get_support_center_data
-from alinka.schemas.document_schema import SupportCenterData
-from alinka.schemas.rspo_schema import Institution
 from alinka.schemas.db_schema import SupportCenterDbSchema
 from alinka.widget.components import LabeledInputComponent, ValidationMixin
 

@@ -1,8 +1,10 @@
-from PySide6.QtWidgets import QDialog, QVBoxLayout, QWidget, QHBoxLayout, QPushButton
+from PySide6.QtWidgets import QDialog, QHBoxLayout, QPushButton, QVBoxLayout, QWidget
+
+from alinka.db.queries import get_support_center_data, upsert_support_center
 from alinka.widget.components import ValidationMixin
+
 from .select_support_center_group import SelectSupportCenterGroup
 from .support_center_data_group import SupportCenterDataGroup
-from alinka.db.queries import get_support_center_data, upsert_support_center
 
 
 class SupportCenterDialog(ValidationMixin, QDialog):
@@ -59,4 +61,3 @@ class SupportCenterDialog(ValidationMixin, QDialog):
             return
         self.save_support_center_data()
         super().accept()
-    

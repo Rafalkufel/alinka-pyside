@@ -73,5 +73,5 @@ class SelectSupportCenterGroup(ValidationMixin, QGroupBox):
             "address": support_center.address,
             "town": support_center.town,
             "postal_code": support_center.postal_code,
-            "post": support_center.post
+            "post": support_center.post,
         }
