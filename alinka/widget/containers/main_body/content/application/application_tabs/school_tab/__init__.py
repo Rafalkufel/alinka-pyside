@@ -191,6 +191,7 @@ class SchoolTabContainer(ValidationMixin, QWidget):
 
         # Add stretch to push all content to the top
         layout.addStretch()
+
     def on_checkbox_changed(self, item):
         """Handle checkbox state changes to ensure only one checkbox is selected at a time"""
         if item.column() == 0 and item.checkState() == Qt.Checked:
@@ -252,7 +253,6 @@ class SchoolTabContainer(ValidationMixin, QWidget):
             name_item.setEditable(False)
             name_item.setData(school.id)  # Store school ID in the name item
 
-            # Create other columns
             row = [
                 name_item,
                 QStandardItem(school.type),
@@ -261,14 +261,12 @@ class SchoolTabContainer(ValidationMixin, QWidget):
             ]
 
             # Make all columns except name non-editable
-            for i in range(1, len(row)):
-                row[i].setEditable(False)
+            for c in row[1:]:
+                c.setEditable(False)
 
             self.model.appendRow(row)
 
         self.table_view.resizeColumnsToContents()
-
-        # Update button states after populating
         self.update_button_states()
 
     def clear(self):
