@@ -146,17 +146,10 @@ class HandleMemberFrame(ValidationMixin, QFrame):
         self.team_member_changed.emit()
 
     def get_selected_member(self) -> MeetingMemberData | None:
-        # Navigate to MeetingTabContainer (parent of parent)
-        parent_widget = self.parent()
-        if parent_widget and hasattr(parent_widget, "parent"):
-            meeting_tab_container = parent_widget.parent()
-            if not hasattr(meeting_tab_container, "selected_members_id"):
-                return None
-            selected_members_id = meeting_tab_container.selected_members_id
-            if len(selected_members_id) != 1:
-                return None
-            return get_meeting_member_by_id(selected_members_id[0])
-        return None
+        selected_members_id = self.parent().selected_members_id
+        if len(selected_members_id) != 1:
+            return None
+        return get_meeting_member_by_id(selected_members_id[0])
 
 
 class MeetingMemberGroup(ValidationMixin, QGroupBox):

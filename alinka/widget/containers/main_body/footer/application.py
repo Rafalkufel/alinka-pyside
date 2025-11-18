@@ -2,8 +2,8 @@ from PySide6.QtWidgets import QFileDialog, QFrame, QHBoxLayout, QPushButton, QWi
 
 from alinka.config import settings
 from alinka.widget.actions import generate_and_save_decision
-from alinka.widget.toast import show_success, show_validation_error
 from alinka.widget.components import ConfirmationModal
+from alinka.widget.toast import show_success, show_validation_error
 
 
 class ApplicationFooterContainer(QFrame):

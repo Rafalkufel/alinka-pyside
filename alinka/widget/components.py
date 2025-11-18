@@ -8,8 +8,8 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
-    QTableView,
     QMessageBox,
+    QTableView,
     QVBoxLayout,
     QWidget,
 )
