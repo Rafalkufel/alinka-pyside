@@ -125,14 +125,13 @@ class SchoolTabContainer(ValidationMixin, QWidget):
 
         self.model = QStandardItemModel()
         self.model.setHorizontalHeaderLabels(["Nazwa Szkoły", "Typ Szkoły", "Adres", "Miejscowość"])
+        self.model.itemChanged.connect(self.on_checkbox_changed)
 
         self.table_view = QTableView(self)
         self.table_view.setModel(self.model)
         self.table_view.setEditTriggers(QTableView.NoEditTriggers)
-        self.table_view.setSelectionBehavior(QTableView.SelectRows)
-        self.table_view.setSelectionMode(QTableView.SingleSelection)
+        self.table_view.setSelectionMode(QTableView.NoSelection)
         self.table_view.resizeColumnsToContents()
-        self.table_view.selectionModel().selectionChanged.connect(self.selection_changed)
 
         # Add modern styling to match the meeting tab
         self.table_view.setStyleSheet(
@@ -180,10 +179,11 @@ class SchoolTabContainer(ValidationMixin, QWidget):
 
         header = self.table_view.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.Stretch)
-        self.populate_school_list()
 
         self.handle_school_frame = HandleSchoolFrame(self)
         self.handle_school_frame.school_list_changed.connect(self.populate_school_list)
+
+        self.populate_school_list()
 
         layout.addWidget(self.school_type)
         layout.addWidget(self.table_view)
@@ -191,6 +191,25 @@ class SchoolTabContainer(ValidationMixin, QWidget):
 
         # Add stretch to push all content to the top
         layout.addStretch()
+
+    def on_checkbox_changed(self, item):
+        """Handle checkbox state changes to ensure only one checkbox is selected at a time"""
+        if item.column() == 0 and item.checkState() == Qt.Checked:
+            # Uncheck all other checkboxes
+            for row in range(self.model.rowCount()):
+                if row != item.row():
+                    checkbox_item = self.model.item(row, 0)
+                    if checkbox_item and checkbox_item.checkState() == Qt.Checked:
+                        checkbox_item.setCheckState(Qt.Unchecked)
+
+        # Update button states
+        self.update_button_states()
+
+    def update_button_states(self):
+        """Update the state of edit and remove buttons based on checkbox selection"""
+        is_selected = bool(self.get_selected_school())
+        self.handle_school_frame.edit_school_btn.setEnabled(is_selected)
+        self.handle_school_frame.remove_school_btn.setEnabled(is_selected)
 
     def selection_changed(self):
         is_selected = bool(self.get_selected_school())
@@ -205,34 +224,57 @@ class SchoolTabContainer(ValidationMixin, QWidget):
 
     @property
     def is_selected(self) -> bool:
-        selected_indexes = self.table_view.selectionModel().selectedRows()
-        return selected_indexes and len(selected_indexes) == 1
+        """Check if exactly one checkbox is selected"""
+        checked_count = 0
+        for row in range(self.model.rowCount()):
+            name_item = self.model.item(row, 0)
+            if name_item and name_item.checkState() == Qt.Checked:
+                checked_count += 1
+        return checked_count == 1
 
     def get_selected_school(self) -> SchoolDbSchema | None:
-        if not self.is_selected:
-            return None
-
-        selected_row = self.table_view.selectionModel().selectedRows()[0].row()
-        school_id = self.model.item(selected_row, 0).data()
-        return get_school_by_id(school_id)
+        """Get the school data for the checked row"""
+        for row in range(self.model.rowCount()):
+            name_item = self.model.item(row, 0)
+            if name_item and name_item.checkState() == Qt.Checked:
+                school_id = name_item.data()  # School ID is stored in the name column
+                return get_school_by_id(school_id)
+        return None
 
     def populate_school_list(self):
         self.model.setRowCount(0)
         school_type = self.school_type.combobox.currentText()
         schools = get_schools() if not school_type else filter_schools_by_type(school_type)
         for school in schools:
+            # Create name item with checkbox
+            name_item = QStandardItem(school.name)
+            name_item.setCheckable(True)
+            name_item.setCheckState(Qt.Unchecked)
+            name_item.setEditable(False)
+            name_item.setData(school.id)  # Store school ID in the name item
+
             row = [
-                QStandardItem(school.name),
+                name_item,
                 QStandardItem(school.type),
                 QStandardItem(school.address),
                 QStandardItem(school.town),
             ]
-            for item in row:
-                item.setData(school.id)
+
+            # Make all columns except name non-editable
+            for c in row[1:]:
+                c.setEditable(False)
+
             self.model.appendRow(row)
 
+        self.table_view.resizeColumnsToContents()
+        self.update_button_states()
+
     def clear(self):
-        self.table_view.clearSelection()
+        """Clear all checkbox selections"""
+        for row in range(self.model.rowCount()):
+            name_item = self.model.item(row, 0)
+            if name_item:
+                name_item.setCheckState(Qt.Unchecked)
 
     @property
     def school_data(self) -> SchoolData | None:
@@ -274,11 +316,6 @@ class SchoolTabContainer(ValidationMixin, QWidget):
             self.table_view.setProperty("validationState", "invalid")
         self.table_view.style().unpolish(self.table_view)
         self.table_view.style().polish(self.table_view)
-
-    def toggle_highlight(self, color: str | None) -> None:
-        # Keep this method for compatibility but it's no longer used
-        # Validation now uses the property-based approach
-        pass
 
     def clear_validation_state(self):
         self.table_view.setProperty("validationState", "")
