@@ -152,25 +152,21 @@ class HandleMemberFrame(ValidationMixin, QFrame):
         return None
 
 
-class MeetingTabContainer(ValidationMixin, QWidget):
-    def __init__(self, parent: QWidget):
-        super().__init__(parent)
+class MeetingMemberGroup(ValidationMixin, QGroupBox):
+    # signal emitted when the selection changes
+    # it should result in updating the meeting leader combobox
+    selection_changed = Signal()
+
+    def __init__(self, title: str, parent: QWidget):
+        super().__init__(title=title, parent=parent)
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
-        layout.setSpacing(8)
-
-        # Track team member IDs to detect changes
-        self._last_team_members_ids = set()
-
-        self.meeting_member_group = QGroupBox("Członkowie zespołu", self)
-        meeting_member_group_layout = QVBoxLayout(self.meeting_member_group)
-        meeting_member_group_layout.setAlignment(Qt.AlignTop)
-        meeting_member_group_layout.setContentsMargins(10, 5, 10, 5)
-        meeting_member_group_layout.setSpacing(5)
+        layout.setContentsMargins(10, 5, 10, 5)
+        layout.setSpacing(5)
 
         self.model = QStandardItemModel()
         self.model.itemChanged.connect(self.item_changed)
-        self.listView = QListView(self.meeting_member_group)
+        self.listView = QListView(self)
         self.listView.setModel(self.model)
         self.listView.setAlternatingRowColors(True)
 
@@ -234,18 +230,103 @@ class MeetingTabContainer(ValidationMixin, QWidget):
         self.listView.setMaximumHeight(280)
         self.listView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
-        # Add the handle member frame with buttons
-        self.handle_member_frame = HandleMemberFrame(self.meeting_member_group)
+        self.handle_member_frame = HandleMemberFrame(self)
         self.handle_member_frame.team_member_changed.connect(self.populate_meeting_members)
 
-        meeting_member_group_layout.addWidget(self.listView, 0)
-        meeting_member_group_layout.addWidget(self.handle_member_frame)
+        layout.addWidget(self.listView, 0)
+        layout.addWidget(self.handle_member_frame)
 
-        self.meeting_leader = LabeledComboBoxComponent("Przewodniczący zespołu", self, unselectable=True, required=True)
+    @property
+    def selected_members_id(self) -> list[int]:
+        return [
+            item.data()
+            for item in self.model.findItems("*", Qt.MatchWildcard)
+            if item.checkState() == Qt.CheckState.Checked
+        ]
+
+    def populate_meeting_members(self, meeting_members: list[MeetingMemberData] | None = None) -> None:
+        selected_members_id = self.selected_members_id
+        meeting_members = self.get_meeting_members()
+
+        self.model.itemChanged.disconnect(self.item_changed)
+        self.model.clear()
+        for meeting_member_data in meeting_members:
+            item = QStandardItem(f"{meeting_member_data['name']} - {meeting_member_data['function']}")
+            item.setData(meeting_member_data["id"])
+            item.setCheckable(True)
+            item.setEditable(False)
+            item.setCheckState(
+                Qt.CheckState.Checked if meeting_member_data["id"] in selected_members_id else Qt.CheckState.Unchecked
+            )
+            self.model.appendRow(item)
+
+        self.model.itemChanged.connect(self.item_changed)
+        self.selection_changed.emit()
+
+    def clear_selection(self) -> None:
+        for row_index in range(0, self.model.rowCount()):
+            member = self.model.item(row_index)
+            member.setCheckState(Qt.CheckState.Unchecked)
+
+    def item_changed(self):
+        self.handle_member_frame.edit_member_btn.setEnabled(len(self.selected_members_id) == 1)
+        self.handle_member_frame.remove_member_btn.setEnabled(len(self.selected_members_id) == 1)
+        self.selection_changed.emit()
+        self.clear_validation_state()
+
+    def get_meeting_members(self) -> dict:
+        return [tm.model_dump() for tm in get_team_members()]
+
+    def clear(self) -> None:
+        self.populate_meeting_members()
+        self.clear_selection()
+
+    @property
+    def is_valid(self) -> bool:
+        return len(self.selected_members_id) > 1
+
+    @property
+    def error_message(self) -> str | None:
+        if len(self.selected_members_id) < 2:
+            return "Należy wybrać co najmniej dwóch członków zespołu."
+        return None
+
+    def display_validation_result(self, validation_result: bool):
+        if validation_result:
+            self.listView.setProperty("validationState", "invalid")
+        else:
+            self.listView.setProperty("validationState", "valid")
+        self.listView.style().unpolish(self.listView)
+        self.listView.style().polish(self.listView)
+
+    def validate(self) -> bool:
+        self.display_validation_result(self.is_valid)
+        return self.is_valid
+
+    def clear_validation_state(self):
+        self.listView.setProperty("validationState", "")
+        self.listView.style().unpolish(self.listView)
+        self.listView.style().polish(self.listView)
+        return self.parent().clear_validation_state()
+
+
+class MeetingTabContainer(ValidationMixin, QWidget):
+    def __init__(self, parent: QWidget):
+        super().__init__(parent)
+        self.application_container = parent
+        layout = QVBoxLayout(self)
+        layout.setAlignment(Qt.AlignTop)
+        layout.setSpacing(8)
 
         self.meeting_datetime_frame = MeetingDatetimeFrame(self)
         self.meeting_date = self.meeting_datetime_frame.meeting_date
         self.meeting_time = self.meeting_datetime_frame.meeting_time
+
+        self.meeting_member_group = MeetingMemberGroup("Członkowie zespołu", self)
+        self.meeting_member_group.selection_changed.connect(self.meeting_member_selection_changed)
+
+        self.meeting_leader = LabeledComboBoxComponent("Przewodniczący zespołu", self, required=True)
+        self.meeting_leader.combobox.setPlaceholderText("Wybierz z listy...")
 
         layout.addWidget(self.meeting_datetime_frame)
         layout.addWidget(self.meeting_member_group)
@@ -255,157 +336,49 @@ class MeetingTabContainer(ValidationMixin, QWidget):
         layout.addStretch()
 
         # Populate after all widgets are initialized
-        self.populate_meeting_members()
+        self.meeting_member_group.populate_meeting_members()
 
         # Collect all components for validation
         self.components = [self.meeting_datetime_frame, self.meeting_leader]
 
+    def meeting_member_selection_changed(self) -> None:
+        self.meeting_leader.combobox.clear()
+        for row_index in range(0, self.meeting_member_group.model.rowCount()):
+            member = self.meeting_member_group.model.item(row_index)
+            if member.checkState() == Qt.CheckState.Unchecked:
+                continue
+            self.meeting_leader.addItem(member.text(), member.data())
+
     @property
     def is_valid(self) -> bool:
-        # Check if at least one team member is selected
-        if not self.selected_members_id:
-            return False
-        # Check all components (date, time, and meeting leader)
         return all(c.is_valid for c in self.components)
 
     @property
     def error_message(self) -> str | None:
-        if not self.selected_members_id:
-            return "Wybierz przynajmniej jednego członka zespołu."
         for c in self.components:
             if not c.is_valid:
                 return c.error_message
         return None
 
     def validate(self) -> bool:
-        # Validate all components and check if members are selected
-        has_members = len(self.selected_members_id) > 0
-        components_valid = all([c.validate() for c in self.components])
+        results = [c.validate() for c in [self.meeting_datetime_frame, self.meeting_member_group, self.meeting_leader]]
+        return all(results)
 
-        # Highlight the list view if no members are selected
-        if not has_members:
-            self.listView.setProperty("validationState", "invalid")
-        else:
-            self.listView.setProperty("validationState", "valid")
-        self.listView.style().unpolish(self.listView)
-        self.listView.style().polish(self.listView)
-
-        return has_members and components_valid
-
-    def clear_validation_state(self) -> None:
-        for c in self.components:
-            c.clear_validation_state()
-        # Clear list view validation state
-        self.listView.setProperty("validationState", "")
-        self.listView.style().unpolish(self.listView)
-        self.listView.style().polish(self.listView)
-
-    @property
-    def selected_members_id(self) -> list[int]:
-        """Get IDs of selected (checked) members"""
-        return [
-            item.data()
-            for item in [self.model.item(i) for i in range(self.model.rowCount())]
-            if item.checkState() == Qt.CheckState.Checked
-        ]
-
-    def populate_meeting_members(self, meeting_members: list[MeetingMemberData] | None = None) -> None:
-        # Store current selection
-        selected_ids = self.selected_members_id if hasattr(self, "model") else []
-
-        # Temporarily disconnect to avoid multiple signals during population
-        self.model.itemChanged.disconnect(self.item_changed)
-
-        self.model.clear()
-        for meeting_member_data in self.get_meeting_members_data():
-            display_text = f"{meeting_member_data['name']} - " f"{meeting_member_data['function']}"
-            item = QStandardItem(display_text)
-            item.setData(meeting_member_data["id"])
-            item.setCheckable(True)
-            item.setEditable(False)
-            # Restore selection if this member was previously selected
-            if meeting_member_data["id"] in selected_ids:
-                item.setCheckState(Qt.CheckState.Checked)
-            else:
-                item.setCheckState(Qt.CheckState.Unchecked)
-            self.model.appendRow(item)
-
-        # Reconnect the signal
-        self.model.itemChanged.connect(self.item_changed)
-
-        # Manually trigger item_changed to update button states
-        self.item_changed()
-
-        # Update the cached IDs
-        current_team_members_data = self.get_meeting_members_data()
-        self._last_team_members_ids = {tm["id"] for tm in current_team_members_data}
-
-    def refresh_team_members(self):
-        """Force refresh of team members list (called from settings when members change)"""
-        self.model.clear()
-        self.populate_meeting_members()
-        # Clear the przewodniczący dropdown since selections have changed
-        self.meeting_leader.clear_options()
-
-    def showEvent(self, event):
-        # Only refresh if team members have changed
-        current_team_members_data = self.get_meeting_members_data()
-        current_ids = {tm["id"] for tm in current_team_members_data}
-
-        if current_ids != self._last_team_members_ids:
-            # Team members have changed, need to refresh
-            self.model.clear()
-            self.populate_meeting_members()
-            self._last_team_members_ids = current_ids
-
-        return super().showEvent(event)
-
-    def item_changed(self):
-        # Update edit/remove button states
-        selected_count = len(self.selected_members_id)
-        self.handle_member_frame.edit_member_btn.setEnabled(selected_count == 1)
-        self.handle_member_frame.remove_member_btn.setEnabled(selected_count == 1)
-
-        # Update meeting leader dropdown
-        self.meeting_leader.clear_options()
-        for row_index in range(0, self.model.rowCount()):
-            member = self.model.item(row_index)
-            if member.checkState() == Qt.CheckState.Unchecked:
-                continue
-            self.meeting_leader.addItem(member.text(), member.data())
-
-        # Clear validation state when team member selection changes
-        if hasattr(self, "listView"):
-            self.listView.setProperty("validationState", "")
-            self.listView.style().unpolish(self.listView)
-            self.listView.style().polish(self.listView)
+    def clear_validation_state(self):
+        self.application_container.clear_validation_state()
 
     def get_meeting_members_data(self) -> dict:
         return [tm.model_dump() for tm in get_team_members()]
 
-    def get_meeting_member_by_id(self, meeting_member_id) -> MeetingMemberData:
-        # To refactor. Maybe direct call to db?
-        meeting_members_data = self.get_meeting_members_data()
-        meeting_member = list(
-            filter(lambda meeting_member: meeting_member["id"] == meeting_member_id, meeting_members_data)
-        )[0]
-        return MeetingMemberData(
-            id=meeting_member["id"], name=meeting_member["name"], function=meeting_member["function"]
-        )
-
     @property
     def meeting_data(self) -> MeetingData:
         meeting_members = list()
-        # Get the selected leader's ID from the combobox
-        leader_id = self.meeting_leader.combobox.currentData()
-
-        for row_index in range(0, self.model.rowCount()):
-            member = self.model.item(row_index)
+        for row_index in range(0, self.meeting_member_group.model.rowCount()):
+            member = self.meeting_member_group.model.item(row_index)
             if member.checkState() == Qt.CheckState.Unchecked:
                 continue
-            meeting_member_data = self.get_meeting_member_by_id(member.data())
-            # Compare by ID instead of name
-            if meeting_member_data.id == leader_id:
+            meeting_member_data = get_meeting_member_by_id(member.data())
+            if meeting_member_data.name == self.meeting_leader.combobox.currentText():
                 meeting_members.insert(0, meeting_member_data)
             else:
                 meeting_members.append(meeting_member_data)
@@ -418,17 +391,12 @@ class MeetingTabContainer(ValidationMixin, QWidget):
         self.meeting_leader.remove_selection()
         self.meeting_date.date_input.setDate(QDate.currentDate())
         self.meeting_time.clear()
-        self.model.clear()
+        self.meeting_member_group.clear()
 
     def populate_data(self, document_data: DocumentData) -> None:
         self.clear()
         meeting_data = document_data.meeting_data
         self.meeting_date.date_input.setDate(meeting_data.date)
         self.meeting_time.text = meeting_data.time
-        self.populate_meeting_members(meeting_data.members)
-        # Set leader by ID instead of name
-        if meeting_data.members:
-            leader_id = meeting_data.members[0].id
-            index = self.meeting_leader.combobox.findData(leader_id)
-            if index >= 0:
-                self.meeting_leader.combobox.setCurrentIndex(index)
+        self.meeting_member_group.populate_meeting_members(meeting_data.members)
+        self.meeting_leader.combobox.setCurrentText(meeting_data.members[0].name)
