@@ -20,6 +20,7 @@ from alinka.db.queries import (
 from alinka.schemas import MeetingData, MeetingMemberData
 from alinka.schemas.document_schema import DocumentData
 from alinka.widget.components import (
+    ConfirmationModal,
     LabeledComboBoxComponent,
     LabeledDateComponent,
     LabeledInputComponent,
@@ -135,21 +136,20 @@ class HandleMemberFrame(ValidationMixin, QFrame):
         selected_member = self.get_selected_member()
         if not selected_member:
             return None
+        if not ConfirmationModal(
+            self,
+            "Potwierdzenie usunięcia członka zespołu",
+            "Czy na pewno chcesz usunąć tego członka zespołu?",
+        ).confirm():
+            return
         delete_team_member(selected_member.id)
         self.team_member_changed.emit()
 
     def get_selected_member(self) -> MeetingMemberData | None:
-        # Navigate to MeetingTabContainer (parent of parent)
-        parent_widget = self.parent()
-        if parent_widget and hasattr(parent_widget, "parent"):
-            meeting_tab_container = parent_widget.parent()
-            if not hasattr(meeting_tab_container, "selected_members_id"):
-                return None
-            selected_members_id = meeting_tab_container.selected_members_id
-            if len(selected_members_id) != 1:
-                return None
-            return get_meeting_member_by_id(selected_members_id[0])
-        return None
+        selected_members_id = self.parent().selected_members_id
+        if len(selected_members_id) != 1:
+            return None
+        return get_meeting_member_by_id(selected_members_id[0])
 
 
 class MeetingMemberGroup(ValidationMixin, QGroupBox):
