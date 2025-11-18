@@ -70,10 +70,12 @@ class ContentContainer(ValidationMixin, QFrame):
                 self.window(), error_message, tab_names=invalid_tab_names if invalid_tab_names else None
             )
             self.sidebar_menu_container.create_documents_btn.setEnabled(False)
+            self.sidebar_menu_container.search_child_btn.setEnabled(False)
             self.show_settings_container()
             return False
         else:
             self.sidebar_menu_container.create_documents_btn.setEnabled(True)
+            self.sidebar_menu_container.search_child_btn.setEnabled(True)
             return True
 
     def showEvent(self, event):

@@ -377,7 +377,9 @@ class MeetingTabContainer(ValidationMixin, QWidget):
             member = self.meeting_member_group.model.item(row_index)
             if member.checkState() == Qt.CheckState.Unchecked:
                 continue
-            meeting_member_data = get_meeting_member_by_id(member.data())
+            mm_data = get_meeting_member_by_id(member.data())
+            meeting_member_data = MeetingMemberData(**mm_data.model_dump())
+
             if meeting_member_data.name == self.meeting_leader.combobox.currentText():
                 meeting_members.insert(0, meeting_member_data)
             else:

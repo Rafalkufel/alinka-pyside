@@ -30,7 +30,6 @@ class SettingsContainer(ValidationMixin, QTabWidget):
         self.addTab(self.support_center_tab_container, "Dane poradni")
         self.addTab(self.app_settings_tab_container, "Ustawienia aplikacji")
         self.addTab(self.creators_tab_container, "O aplikacji")
-        self.currentChanged.connect(self.handle_footer_visibility)
         self.currentChanged.connect(self.update_breadcrumb)
 
     @property
@@ -47,18 +46,6 @@ class SettingsContainer(ValidationMixin, QTabWidget):
     @property
     def support_center_data(self):
         return self.support_center_tab_container.support_center_data
-
-    def handle_footer_visibility(self, index):
-        footer_container = self.content_container.main_body_container.footer_container
-        setting_footer_container = footer_container.settings_footer_container
-        match index:
-            case 0:
-                setting_footer_container.setVisible(True)  # Ensure visible
-                setting_footer_container.show_footer_support_center_data_container()
-            case 1:  # App settings tab - no footer needed
-                setting_footer_container.hide()
-            case 2:  # Creators tab - no footer needed
-                setting_footer_container.hide()
 
     def update_breadcrumb(self, index: int):
         """Update breadcrumb when tab changes"""
