@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import QGroupBox, QSizePolicy, QVBoxLayout, QWidget
 
 from alinka import rspo_client
@@ -12,9 +12,10 @@ from alinka.widget.components import (
 
 
 class SelectSupportCenterGroup(ValidationMixin, QGroupBox):
+    support_center_selected = Signal()
+
     def __init__(self, parent: QWidget):
         super().__init__(title="Wybierz poradnię z RPSO", parent=parent)
-        self.support_center_tab = parent
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
         layout.setSpacing(2)
@@ -25,14 +26,13 @@ class SelectSupportCenterGroup(ValidationMixin, QGroupBox):
 
         self.support_center_combobox = LabeledComboBoxComponent("Poradnia", self)
         self.support_center_combobox.combobox.setPlaceholderText("Wybierz z listy...")
-        self.support_center_combobox.combobox.currentTextChanged.connect(self.populate_support_center_data)
+        self.support_center_combobox.combobox.currentTextChanged.connect(self.selected)
         layout.addWidget(self.province_district_group)
         layout.addWidget(self.support_center_combobox)
 
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
 
     def populate_support_centers_combobox(self):
-        self.clear_support_center_data()
         selected_province_id = self.province_district_group.province_id
         selected_district_id = self.province_district_group.district_id
         if not all([selected_province_id, selected_district_id]):
@@ -57,21 +57,21 @@ class SelectSupportCenterGroup(ValidationMixin, QGroupBox):
             self.support_center_combobox.combobox.setEnabled(True)
             print(f"Error loading support centers: {e}")
 
-    def populate_support_center_data(self):
+    def selected(self):
+        self.support_center_selected.emit()
+
+    def selected_support_center_data(self) -> dict[str, str] | None:
         selected_support_center_rspo = self.support_center_combobox.combobox.currentData()
         if not selected_support_center_rspo:
-            return
+            return None
         support_center = [sc for sc in self.support_centers.items if sc.rspo_id == selected_support_center_rspo][0]
-        self.support_center_tab.support_center_data_group.populate_fields(
-            province_id=self.province_district_group.province_id,
-            district_id=self.province_district_group.district_id,
-            rspo=support_center.rspo_id,
-            name_nominative=support_center.name,
-            address=support_center.address,
-            town=support_center.town,
-            postal_code=support_center.postal_code,
-            post=support_center.post,
-        )
-
-    def clear_support_center_data(self):
-        self.support_center_tab.support_center_data_group.clear()
+        return {
+            "rspo": support_center.rspo_id,
+            "province_id": self.province_district_group.province_id,
+            "district_id": self.province_district_group.district_id,
+            "name_nominative": support_center.name,
+            "address": support_center.address,
+            "town": support_center.town,
+            "postal_code": support_center.postal_code,
+            "post": support_center.post
+        }

@@ -97,14 +97,14 @@ def delete_school(school_id: int) -> None:
         db.commit()
 
 
-def upsert_support_center(support_center_data: dict) -> SupportCenterDbSchema:
+def upsert_support_center(support_center_data: SupportCenterDbSchema) -> SupportCenterDbSchema:
     with db_session() as db:
         if db.query(SupportCenter).where(SupportCenter.id == 1).one_or_none():
-            db.query(SupportCenter).where(SupportCenter.id == 1).update(support_center_data, synchronize_session="auto")
+            db.query(SupportCenter).where(SupportCenter.id == 1).update(support_center_data.model_dump(), synchronize_session="auto")
             db.commit()
             support_center = db.query(SupportCenter).where(SupportCenter.id == 1).one()
         else:
-            support_center = SupportCenter(**support_center_data)
+            support_center = SupportCenter(**support_center_data.model_dump())
             db.add(support_center)
             db.commit()
 
