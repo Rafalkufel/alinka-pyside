@@ -87,7 +87,7 @@ def show_toast(
         toast.setTitle(title)
     else:
         # Hide title if not provided
-        toast.setShowDuration(False)
+        toast.setShowDurationBar(False)
 
     # Set message
     toast.setText(message)
