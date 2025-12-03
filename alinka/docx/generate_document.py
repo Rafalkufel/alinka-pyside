@@ -42,7 +42,7 @@ class DocumentGenerator:
         ]
 
     @property
-    def footnotes_template_name(self):
+    def footnotes_file_path(self) -> str:
         return "/".join([self.document_type, "word", "footnotes.xml"])
 
     def get_rendered_document(self):
@@ -64,7 +64,7 @@ class DocumentGenerator:
 
             # Write footnotes file for the specific document type
             document.writestr(
-                data=self._get_resource_bytes(self.footnotes_template_name),
+                data=self._get_resource_bytes(self.footnotes_file_path),
                 zinfo_or_arcname=os.path.join("word", "footnotes.xml"),
             )
 
