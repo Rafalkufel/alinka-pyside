@@ -380,7 +380,7 @@ class MeetingTabContainer(ValidationMixin, QWidget):
             mm_data = get_meeting_member_by_id(member.data())
             meeting_member_data = MeetingMemberData(**mm_data.model_dump())
 
-            if meeting_member_data.name == self.meeting_leader.combobox.currentText():
+            if member.data() == self.meeting_leader.combobox.currentData():
                 meeting_members.insert(0, meeting_member_data)
             else:
                 meeting_members.append(meeting_member_data)
