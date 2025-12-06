@@ -1,3 +1,4 @@
+from PySide6.QtCore import QSettings
 from PySide6.QtWidgets import QFileDialog, QFrame, QHBoxLayout, QPushButton, QWidget
 
 from alinka.config import settings
@@ -9,6 +10,7 @@ from alinka.widget.toast import show_success, show_validation_error
 class ApplicationFooterContainer(QFrame):
     def __init__(self, parent: QWidget, visible: bool = False):
         super().__init__(parent)
+        self.user_settings = QSettings(settings.APP_AUTHOR, settings.APP_NAME)
         self.footer_container = parent
         self.content_container = self.footer_container.main_body_container.content_container
         layout = QHBoxLayout(self)
@@ -64,9 +66,13 @@ class ApplicationFooterContainer(QFrame):
 
         dialogTitle = "Wybierz katalog zapisu dokumentu"
 
-        destination_path = QFileDialog.getExistingDirectory(self, dialogTitle, settings.DOCUMENTS_PATH)
+        destination_path = QFileDialog.getExistingDirectory(
+            self, dialogTitle, self.user_settings.value("last_dir", settings.DOCUMENTS_PATH)
+        )
         if not destination_path:
             return
+
+        self.user_settings.setValue("last_dir", destination_path)
 
         generate_and_save_decision(form_data=self.document_data, generate=True, destination_path=destination_path)
         show_success(self, "Dokumenty zostały wygenerowane pomyślnie")
