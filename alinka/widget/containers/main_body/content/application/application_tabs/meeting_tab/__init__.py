@@ -307,7 +307,6 @@ class MeetingMemberGroup(ValidationMixin, QGroupBox):
         self.listView.setProperty("validationState", "")
         self.listView.style().unpolish(self.listView)
         self.listView.style().polish(self.listView)
-        return self.parent().clear_validation_state()
 
 
 class MeetingTabContainer(ValidationMixin, QWidget):
@@ -365,7 +364,8 @@ class MeetingTabContainer(ValidationMixin, QWidget):
         return all(results)
 
     def clear_validation_state(self):
-        self.application_container.clear_validation_state()
+        for c in self.components:
+            c.clear_validation_state()
 
     def get_meeting_members_data(self) -> dict:
         return [tm.model_dump() for tm in get_team_members()]
