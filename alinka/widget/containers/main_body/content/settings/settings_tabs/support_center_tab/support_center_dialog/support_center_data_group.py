@@ -26,10 +26,10 @@ class SupportCenterDataGroup(ValidationMixin, QGroupBox):
         self.name_genitive = LabeledInputComponent("Nazwa poradnii (dopełniacz)", self, min_length=100)
         layout.addWidget(self.name_genitive, 1, 0, 1, 2)
 
-        self.institute_name = LabeledInputComponent("Zespół orzekający", self, min_length=100)
+        self.institute_name = LabeledInputComponent("Nazwa zespołu orzekającego", self, min_length=100)
         layout.addWidget(self.institute_name, 2, 0, 1, 2)
 
-        self.kurator = LabeledInputComponent("Kurator", self)
+        self.kurator = LabeledInputComponent("Właściwy kurator oświaty i jego adres", self)
         layout.addWidget(self.kurator, 3, 0, 1, 2)
 
         self.address = LabeledInputComponent("Adres", self)
