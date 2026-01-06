@@ -86,6 +86,9 @@ class ApplicationContainer(ValidationMixin, QTabWidget):
         header_container.clear_message()
         # Don't clear invalid tab styling here - let validate() handle it
 
+        for c in self.containers:
+            c.clear_validation_state()
+
     def update_breadcrumb(self, index: int):
         """Update breadcrumb when tab changes"""
         header_container = self.content_container.main_body_container.header_container
