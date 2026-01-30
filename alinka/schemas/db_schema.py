@@ -69,6 +69,8 @@ class DecisionDbSchema(BaseDbSchema):
 
     file_no: str | None = None
 
+    created_at: date | None = None
+
 
 class SchoolDbCreateSchema(BaseDbSchema):
     rspo_id: int | None = None
