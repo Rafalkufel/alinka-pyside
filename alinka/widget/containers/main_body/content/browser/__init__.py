@@ -97,9 +97,6 @@ class BrowseDecisionContainer(ValidationMixin, QWidget):
         header.resizeSection(3, 300)
         header.resizeSection(4, 200)
 
-        # # Do not call resizeColumnsToContents() here — it would override manual sizes.
-        # self.decision_table.setSelectionBehavior(QAbstractItemView.SelectRows)
-
         layout.addWidget(browse_input)
         layout.addWidget(self.decision_table)
 

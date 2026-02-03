@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -69,7 +69,7 @@ class DecisionDbSchema(BaseDbSchema):
 
     file_no: str | None = None
 
-    created_at: date | None = None
+    created_at: datetime | None = None
 
 
 class SchoolDbCreateSchema(BaseDbSchema):
