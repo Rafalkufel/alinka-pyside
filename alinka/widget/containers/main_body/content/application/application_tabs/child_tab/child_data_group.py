@@ -36,6 +36,8 @@ class ChildDataGroupContainer(ValidationMixin, QGroupBox):
         super().__init__(title="Uczeń", parent=parent)
         layout = QGridLayout(self)
         layout.setAlignment(Qt.AlignTop)
+        layout.setSpacing(8)
+        layout.setContentsMargins(10, 10, 10, 10)
         self.child_name_nom = LabeledInputComponent("Imię i nazwisko", self, 200, required=True)
         self.child_name_gen = LabeledInputComponent("Imię i nazwisko (dopełniacz)", self, 200, required=True)
         layout.addWidget(self.child_name_nom, 0, 0)
@@ -114,4 +116,5 @@ class ChildDataGroupContainer(ValidationMixin, QGroupBox):
         return all([c.validate() for c in self.components])
 
     def clear_validation_state(self) -> None:
-        self.child_data_container.clear_validation_state()
+        for c in self.components:
+            c.clear_validation_state()
