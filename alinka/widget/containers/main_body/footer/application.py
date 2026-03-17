@@ -19,14 +19,15 @@ class ApplicationFooterContainer(QFrame):
 
         self.cancel_btn = QPushButton("Anuluj", self)
         self.cancel_btn.clicked.connect(self.cancel_application)
-        layout.addWidget(self.cancel_btn)
 
         layout.addStretch()
 
-        self.print_btn = QPushButton("Drukuj dokumenty", self)
-        self.print_btn.clicked.connect(self.print_documents)
-        self.print_btn.setFixedWidth(200)
-        layout.addWidget(self.print_btn)
+        self.save_and_export_btn = QPushButton("Zapisz i eksportuj", self)
+        self.save_and_export_btn.clicked.connect(self.print_documents)
+        self.save_and_export_btn.setFixedWidth(200)
+
+        layout.addWidget(self.cancel_btn)
+        layout.addWidget(self.save_and_export_btn)
 
         self.setVisible(visible)
 
