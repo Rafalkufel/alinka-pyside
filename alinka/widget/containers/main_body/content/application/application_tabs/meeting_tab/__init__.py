@@ -5,12 +5,12 @@ from PySide6.QtWidgets import (
     QFrame,
     QGroupBox,
     QHBoxLayout,
+    QLabel,
     QListView,
     QPushButton,
     QSizePolicy,
     QVBoxLayout,
     QWidget,
-    QLabel,
 )
 
 from alinka.db.queries import (
