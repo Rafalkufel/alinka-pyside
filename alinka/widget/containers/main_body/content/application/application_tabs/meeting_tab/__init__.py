@@ -309,7 +309,6 @@ class MeetingMemberGroup(ValidationMixin, QGroupBox):
 
         if validation_result:
             self.error_label.setVisible(False)
-            self.error_label.setText("")
         else:
             self.error_label.setVisible(True)
             self.error_label.setText(self.error_message or "")
