@@ -27,7 +27,7 @@ class DecisionsTableModel(QAbstractTableModel):
             decision.child_pesel,
             decision.child_full_name,
             f"{decision.child_town}, {decision.child_address}",
-            decision.created_at.strftime("%Y-%m-%d %H:%M:%S") if decision.created_at else "",
+            decision.created_at.strftime("%Y-%m-%d %H:%M") if decision.created_at else "",
         ]
 
     @property
