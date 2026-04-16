@@ -27,6 +27,7 @@ class DecisionsTableModel(QAbstractTableModel):
             decision.child_pesel,
             decision.child_full_name,
             f"{decision.child_town}, {decision.child_address}",
+            decision.created_at.strftime("%Y-%m-%d %H:%M") if decision.created_at else "",
         ]
 
     @property
@@ -48,7 +49,7 @@ class DecisionsTableModel(QAbstractTableModel):
 
     @property
     def header_names(self):
-        return ["id", "PESEL dziecka", "Imię i nazwisko dziecka", "Adres dziecka"]
+        return ["id", "PESEL dziecka", "Imię i nazwisko dziecka", "Adres dziecka", "Data utworzenia"]
 
     def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole):
         if role == Qt.DisplayRole:
@@ -81,17 +82,20 @@ class BrowseDecisionContainer(ValidationMixin, QWidget):
         self.decision_table.resizeColumnsToContents()
         self.decision_table.setSelectionBehavior(QAbstractItemView.SelectRows)
 
+        # Configure header resize modes and sizes (including the new column index 4)
         header = self.decision_table.horizontalHeader()
 
         header.setSectionResizeMode(0, QHeaderView.Fixed)
         header.setSectionResizeMode(1, QHeaderView.Interactive)
         header.setSectionResizeMode(2, QHeaderView.Interactive)
         header.setSectionResizeMode(3, QHeaderView.Interactive)
+        header.setSectionResizeMode(4, QHeaderView.Fixed)
 
         header.setMinimumSectionSize(150)
         header.resizeSection(1, 150)
         header.resizeSection(2, 250)
         header.resizeSection(3, 300)
+        header.resizeSection(4, 200)
 
         layout.addWidget(browse_input)
         layout.addWidget(self.decision_table)

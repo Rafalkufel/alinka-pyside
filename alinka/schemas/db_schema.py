@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -68,6 +68,8 @@ class DecisionDbSchema(BaseDbSchema):
     meeting_members: list[dict[str, int | str]]
 
     file_no: str | None = None
+
+    created_at: datetime | None = None
 
 
 class SchoolDbCreateSchema(BaseDbSchema):
