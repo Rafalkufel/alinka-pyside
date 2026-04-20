@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (
     QFrame,
     QGroupBox,
     QHBoxLayout,
+    QLabel,
     QListView,
     QPushButton,
     QSizePolicy,
@@ -233,6 +234,12 @@ class MeetingMemberGroup(ValidationMixin, QGroupBox):
         self.handle_member_frame = HandleMemberFrame(self)
         self.handle_member_frame.team_member_changed.connect(self.populate_meeting_members)
 
+        # Label for error message
+        self.error_label = QLabel("", self)
+        self.error_label.setStyleSheet("color: red; font-size: 12px;")
+        self.error_label.setVisible(False)
+        layout.addWidget(self.error_label)
+
         layout.addWidget(self.listView, 0)
         layout.addWidget(self.handle_member_frame)
 
@@ -292,16 +299,24 @@ class MeetingMemberGroup(ValidationMixin, QGroupBox):
         return None
 
     def display_validation_result(self, validation_result: bool):
-        if validation_result:
-            self.listView.setProperty("validationState", "invalid")
-        else:
-            self.listView.setProperty("validationState", "valid")
+        state = "valid" if validation_result else "invalid"
+        self.listView.setProperty("validationState", state)
         self.listView.style().unpolish(self.listView)
         self.listView.style().polish(self.listView)
 
+        style = "" if validation_result else "border: 1px solid red;"
+        self.listView.setStyleSheet(style)
+
+        if validation_result:
+            self.error_label.setVisible(False)
+        else:
+            self.error_label.setVisible(True)
+            self.error_label.setText(self.error_message or "")
+
     def validate(self) -> bool:
-        self.display_validation_result(self.is_valid)
-        return self.is_valid
+        valid = self.is_valid
+        self.display_validation_result(valid)
+        return valid
 
     def clear_validation_state(self):
         self.listView.setProperty("validationState", "")
@@ -338,7 +353,7 @@ class MeetingTabContainer(ValidationMixin, QWidget):
         self.meeting_member_group.populate_meeting_members()
 
         # Collect all components for validation
-        self.components = [self.meeting_datetime_frame, self.meeting_leader]
+        self.components = [self.meeting_datetime_frame, self.meeting_member_group, self.meeting_leader]
 
     def meeting_member_selection_changed(self) -> None:
         self.meeting_leader.combobox.clear()
@@ -360,7 +375,7 @@ class MeetingTabContainer(ValidationMixin, QWidget):
         return None
 
     def validate(self) -> bool:
-        results = [c.validate() for c in [self.meeting_datetime_frame, self.meeting_member_group, self.meeting_leader]]
+        results = [c.validate() for c in self.components]
         return all(results)
 
     def clear_validation_state(self):
