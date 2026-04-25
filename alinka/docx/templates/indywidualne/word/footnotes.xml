@@ -104,11 +104,27 @@
         <w:footnoteRef/>
       </w:r>
       <w:r>
-        <w:t xml:space="preserve"> Wypełnia się w przypadkach, o których mowa w § 19 ust. 1 rozporządzenia Ministra Edukacji Narodowej z dnia 7 września 2017 r. w sprawie orzeczeń i opinii wydawanych przez zespoły orzekające działające w publicznych poradniach psychologiczno-pedagogicznych (Dz. U. z 2023 r. poz. 2061).</w:t>
+        <w:t xml:space="preserve"> Właściwe podkreślić. Jeżeli podkreślono odpowiedź TAK, należy wymienić wspomagające lub alternatywne metody komunikacji (AAC) lub język migowy, którymi posługuje się uczeń.</w:t>
       </w:r>
     </w:p>
   </w:footnote>
   <w:footnote w:id="6">
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Footnote"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+        </w:rPr>
+        <w:footnoteRef/>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> Wypełnia się w przypadkach, o których mowa w § 19 ust. 1 rozporządzenia Ministra Edukacji Narodowej z dnia 7 września 2017 r. w sprawie orzeczeń i opinii wydawanych przez zespoły orzekające działające w publicznych poradniach psychologiczno-pedagogicznych (Dz. U. z 2023 r. poz. 2061).</w:t>
+      </w:r>
+    </w:p>
+  </w:footnote>
+  <w:footnote w:id="7">
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Footnote"/>
