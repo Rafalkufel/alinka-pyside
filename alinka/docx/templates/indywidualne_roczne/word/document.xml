@@ -177,7 +177,7 @@
         <w:t xml:space="preserve"> uczęszczanie do przedszkola, oddziału przedszkolnego w szkole podstawowej lub innej formy wychowania przedszkolnego.</w:t>
       </w:r>
     </w:p>
-    {% with diagnosis_header="Zespół Orzekający określa ograniczenia w funkcjonowaniu dziecka wynikające z przebiegu choroby lub procesu terapeutycznego:" %}"
+    {% with diagnosis_header="zespół orzekający określa ograniczenia w funkcjonowaniu dziecka wynikające z przebiegu choroby lub procesu terapeutycznego:" %}"
       {% include "template_parts/diagnosis.xml" %}
     {% endwith %}
     {% include "template_parts/recommendations_header.xml" %}
@@ -196,7 +196,7 @@
         <w:pStyle w:val="newdocumentreason"/>
       </w:pPr>
       <w:r>
-        <w:t>W przypadku wydania nowego orzeczenia o potrzebie indywidualnego obowiązkowego rocznego przygotowania przedszkolnego należy wskazać okoliczności, które Zespół Orzekający uznał za istotne dla rozstrzygnięcia, oraz wyjaśnić powody, na podstawie których stwierdzono potrzebę wydania nowego orzeczenia</w:t>
+        <w:t>W przypadku wydania nowego orzeczenia o potrzebie indywidualnego obowiązkowego rocznego przygotowania przedszkolnego należy wskazać okoliczności, które zespół orzekający uznał za istotne dla rozstrzygnięcia, oraz wyjaśnić powody, na podstawie których stwierdzono potrzebę wydania nowego orzeczenia</w:t>
       </w:r>
       <w:r>
         <w:rPr>

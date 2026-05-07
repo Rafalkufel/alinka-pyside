@@ -25,6 +25,12 @@
     </w:rPr>
     <w:footnoteReference w:id="5"/>
   </w:r>
+  <w:r>
+    <w:rPr>
+      <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+    </w:rPr>
+    <w:t>)</w:t>
+  </w:r>
 </w:p>
 <w:p>
   <w:pPr>
