@@ -22,7 +22,7 @@
         <w:pStyle w:val="LegalBasis"/>
       </w:pPr>
       <w:r>
-        <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2023 r. poz. 900, 1672 i 1718),</w:t>
+        <w:t>Działając na podstawie art. 127 ust. 10 ustawy z dnia 14 grudnia 2016 r. – Prawo oświatowe (Dz. U. z 2025 r. poz. 1043, z późn. zm.),</w:t>
       </w:r>
     </w:p>
     {% include "template_parts/on_request.xml" %}
@@ -37,7 +37,6 @@
       </w:r>
     </w:p>
     {% include "template_parts/child_name.xml" %}
-    {% include "template_parts/child_birth.xml" %}
     {% include "template_parts/pesel.xml" %}
     {% include "template_parts/child_address.xml" %}
     <w:p>
@@ -53,7 +52,7 @@
         <w:pStyle w:val="Subtitle1"/>
       </w:pPr>
       <w:r>
-        <w:t>(nazwa i adres przedszkola, szkoły podstawowej, w której zorganizowano oddział przedszkolny, lub innej formy wychowania przedszkolnego)</w:t>
+        <w:t>(nazwa i adres przedszkola, innej formy wychowania przedszkolnego lub szkoły podstawowej, w której zorganizowano oddział przedszkolny)</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -79,7 +78,7 @@
         <w:footnoteReference w:id="1"/>
       </w:r>
       <w:r>
-        <w:t xml:space="preserve"> oraz adres ich zamieszkania)</w:t>
+        <w:t xml:space="preserve"> oraz adres albo adresy ich zamieszkania)</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -174,7 +173,7 @@
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t xml:space="preserve"> uczęszczanie do przedszkola, oddziału przedszkolnego w szkole podstawowej lub innej formy wychowania przedszkolnego.</w:t>
+        <w:t xml:space="preserve"> uczęszczanie do przedszkola, innej formy wychowania przedszkolnego lub oddziału przedszkolnego w szkole podstawowej.</w:t>
       </w:r>
     </w:p>
     {% with diagnosis_header="zespół orzekający określa ograniczenia w funkcjonowaniu dziecka wynikające z przebiegu choroby lub procesu terapeutycznego:" %}"
