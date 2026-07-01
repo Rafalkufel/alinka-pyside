@@ -177,7 +177,6 @@
       </w:r>
     </w:p>
 
-
 <!-- Diagnosis -->
 
     <w:p>
@@ -205,10 +204,10 @@
     {% with diagnosis_item="indywidualne potrzeby rozwojowe i edukacyjne oraz możliwości psychofizyczne ucznia wynikające z przebiegu choroby lub procesu terapeutycznego, innych trudności oraz mocnych stron i uzdolnień:" %}
       {% include "template_parts/diagnosis_list_item.xml" %}
     {% endwith %}
-    {% include "template_parts/recommendations_header.xml" %}
 
 <!-- Recommendations -->
 
+    {% include "template_parts/recommendations_header.xml" %}
     {% with recommendation="warunki i formy wsparcia umożliwiające realizację indywidualnych potrzeb rozwojowych i edukacyjnych oraz możliwości psychofizycznych ucznia w ramach:", level=0, dotted_line=False %}
       {% include "template_parts/recommendation_indywidualne.xml" %}
     {% endwith %}
