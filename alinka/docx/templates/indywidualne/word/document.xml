@@ -177,7 +177,6 @@
       </w:r>
     </w:p>
 
-
 <!-- Diagnosis -->
 
     <w:p>
@@ -205,10 +204,10 @@
     {% with diagnosis_item="indywidualne potrzeby rozwojowe i edukacyjne oraz możliwości psychofizyczne ucznia wynikające z przebiegu choroby lub procesu terapeutycznego, innych trudności oraz mocnych stron i uzdolnień:" %}
       {% include "template_parts/diagnosis_list_item.xml" %}
     {% endwith %}
-    {% include "template_parts/recommendations_header.xml" %}
 
 <!-- Recommendations -->
 
+    {% include "template_parts/recommendations_header.xml" %}
     {% with recommendation="warunki i formy wsparcia umożliwiające realizację indywidualnych potrzeb rozwojowych i edukacyjnych oraz możliwości psychofizycznych ucznia w ramach:", level=0, dotted_line=False %}
       {% include "template_parts/recommendation_indywidualne.xml" %}
     {% endwith %}
@@ -236,8 +235,13 @@
 
 <!-- Additional informations -->
 
-
-    {% include "template_parts/aac_information_indywidualne.xml" %}
+    {% include "template_parts/additional_information_header.xml" %}
+    {% with additional_information_text="Dziecko posługuje się wspomagającą lub alternatywną metodą komunikacji (AAC) lub językiem migowym: TAK/NIE", additional_information_footnote_id=5 %}
+      {% include "template_parts/additional_information_first_item.xml" %}
+    {% endwith %}
+    {% with additional_information_text="Inne:" %}
+      {% include "template_parts/additional_information_item.xml" %}
+    {% endwith %}
 
 <!-- New decision -->
 
@@ -270,6 +274,21 @@
         <w:t>:</w:t>
       </w:r>
     </w:p>
+    <w:p>
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t>..........</w:t>
+      </w:r>
+    </w:p>
 
 <!-- Revocation -->
 
@@ -298,16 +317,11 @@
         <w:t xml:space="preserve"> orzeczenie nr ...... o potrzebie indywidualnego nauczania z dnia .............. wydane przez .....................</w:t>
       </w:r>
     </w:p>
-    <w:p>
-      <w:pPr>
-        <w:rPr>
-          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
-          <w:lang w:val="pl-PL"/>
-        </w:rPr>
-      </w:pPr>
-    </w:p>
+
+<!-- appeal -->
+
   {% include "template_parts/appeal.xml" %}
-      <w:p>
+    <w:p>
       <w:pPr>
         <w:rPr>
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
