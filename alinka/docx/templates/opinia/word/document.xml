@@ -106,7 +106,7 @@
         <w:br w:type="page"/>
       </w:r>
     </w:p>
-    {% with diagnosis_header="Zespół Orzekający przedstawia diagnozę poziomu funkcjonowania dziecka, w tym informację o potencjale rozwojowym i mocnych stronach dziecka oraz występujących w środowisku barierach i ograniczeniach utrudniających jego funkcjonowanie:" %}"
+    {% with diagnosis_header="zespół orzekający przedstawia diagnozę poziomu funkcjonowania dziecka, w tym informację o potencjale rozwojowym i mocnych stronach dziecka oraz występujących w środowisku barierach i ograniczeniach utrudniających jego funkcjonowanie:" %}"
       {% include "template_parts/diagnosis.xml" %}
     {% endwith %}
     {% include "template_parts/recommendations_header.xml" %}
@@ -125,7 +125,7 @@
         <w:pStyle w:val="newdocumentreason"/>
       </w:pPr>
       <w:r>
-        <w:t>W przypadku wydania nowej opinii o potrzebie wczesnego wspomagania rozwoju dziecka należy wskazać okoliczności, które Zespół Orzekający uznał za istotne dla rozstrzygnięcia, oraz wyjaśnić powody, na podstawie których stwierdzono potrzebę wydania nowej opinii</w:t>
+        <w:t>W przypadku wydania nowej opinii o potrzebie wczesnego wspomagania rozwoju dziecka należy wskazać okoliczności, które zespół orzekający uznał za istotne dla rozstrzygnięcia, oraz wyjaśnić powody, na podstawie których stwierdzono potrzebę wydania nowej opinii</w:t>
       </w:r>
       <w:r>
         <w:rPr>
