@@ -108,8 +108,33 @@
 
 <!-- Diagnosis -->
 
-    {% with diagnosis_header="zespół orzekający przedstawia diagnozę poziomu funkcjonowania dziecka, w tym informację o potencjale rozwojowym i mocnych stronach dziecka oraz występujących w środowisku barierach i ograniczeniach utrudniających jego funkcjonowanie:" %}"
-      {% include "template_parts/diagnosis.xml" %}
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Section"/>
+      </w:pPr>
+      <w:r>
+        <w:t>Diagnoza</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Section-desc"/>
+      </w:pPr>
+      <w:r>
+        <w:t>Zespół orzekający określa poziom funkcjonowania dziecka, w tym informację o:</w:t>
+      </w:r>
+    </w:p>
+    {% with diagnosis_item="możliwościach psychofizycznych i potencjale rozwojowym dziecka, w tym jego mocnych stronach i uzdolnieniach:", level=0, dotted_line=True %}
+      {% include "template_parts/diagnosis_opinia_list_item.xml" %}
+    {% endwith %}
+    {% with diagnosis_item="występujących w środowisku opieki, wychowania i nauczania:", level=0, dotted_line=False %}
+      {% include "template_parts/diagnosis_opinia_list_item.xml" %}
+    {% endwith %}
+    {% with diagnosis_item="zasobach:", level=1, dotted_line=True %}
+      {% include "template_parts/diagnosis_opinia_list_item.xml" %}
+    {% endwith %}
+    {% with diagnosis_item="barierach i ograniczeniach wpływających na jego funkcjonowanie:", level=1, dotted_line=True %}
+      {% include "template_parts/diagnosis_opinia_list_item.xml" %}
     {% endwith %}
 
 <!-- Recommendations -->
