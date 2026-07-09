@@ -187,10 +187,22 @@
       <w:r>
         <w:rPr>
           <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:footnoteReference w:id="3"/>
+        <w:footnoteReference w:id="4"/>
       </w:r>
       <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+        </w:rPr>
+        <w:t>)</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
         <w:t>:</w:t>
       </w:r>
     </w:p>
@@ -206,23 +218,38 @@
           <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
           <w:lang w:val="pl-PL"/>
         </w:rPr>
-        <w:t>Opis okoliczności</w:t>
+        <w:t>..........</w:t>
       </w:r>
     </w:p>
+
+<!-- Revocation -->
+
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Revocation"/>
       </w:pPr>
       <w:r>
-        <w:t>Opinia uchyla opinię nr ......o potrzebie wczesnego wspomagania rozwoju dziecka z dnia ............ wydaną przez .............</w:t>
+        <w:t>Opinia uchyla</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t>4</w:t>
       </w:r>
       <w:r>
         <w:rPr>
           <w:rStyle w:val="Odwoanieprzypisudolnego"/>
         </w:rPr>
-        <w:footnoteReference w:id="4"/>
+        <w:t>)</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> opinię nr ...... o potrzebie wczesnego wspomagania rozwoju dziecka z dnia ............ wydaną przez ..............</w:t>
       </w:r>
     </w:p>
-  {% include "template_parts/director_signature.xml" %}
-  {% include "template_parts/recipients.xml" %}
+
+  {% include "template_parts/team_member_signature.xml" %}
+  {% include "template_parts/recipients_opinia.xml" %}
 {% endblock %}
