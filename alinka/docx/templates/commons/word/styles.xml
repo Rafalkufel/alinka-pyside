@@ -1090,6 +1090,35 @@
       <w:b/>
     </w:rPr>
   </w:style>
+  <w:style w:type="paragraph" w:customStyle="1" w:styleId="OpinionDiagnosisList">
+    <w:name w:val="Opinia diagnoza lista"/>
+    <w:basedOn w:val="Akapitzlist"/>
+    <w:qFormat/>
+    <w:pPr>
+      <w:numPr>
+        <w:numId w:val="7"/>
+      </w:numPr>
+      <w:jc w:val="both"/>
+    </w:pPr>
+    <w:rPr>
+      <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+      <w:sz w:val="24"/>
+      <w:lang w:val="pl-PL"/>
+    </w:rPr>
+  </w:style>
+  <w:style w:type="paragraph" w:customStyle="1" w:styleId="OpinionDiagnosisText">
+    <w:name w:val="Opinia treść diagnozy"/>
+    <w:basedOn w:val="Akapitzlist"/>
+    <w:qFormat/>
+    <w:pPr>
+      <w:jc w:val="both"/>
+    </w:pPr>
+    <w:rPr>
+      <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+      <w:sz w:val="24"/>
+      <w:lang w:val="pl-PL"/>
+    </w:rPr>
+  </w:style>
   <w:style w:type="paragraph" w:customStyle="1" w:styleId="diagnosis">
     <w:name w:val="diagnosis"/>
     <w:basedOn w:val="Normalny"/>

@@ -474,6 +474,38 @@
       </w:rPr>
     </w:lvl>
   </w:abstractNum>
+  <w:abstractNum w:abstractNumId="6">
+    <w:nsid w:val="6D4F8A21"/>
+    <w:multiLevelType w:val="multilevel"/>
+    <w:tmpl w:val="7A91C4E2"/>
+    <w:lvl w:ilvl="0">
+      <w:start w:val="1"/>
+      <w:numFmt w:val="decimal"/>
+      <w:pStyle w:val="OpinionDiagnosisList"/>
+      <w:lvlText w:val="%1)"/>
+      <w:lvlJc w:val="left"/>
+      <w:pPr>
+        <w:ind w:left="360" w:hanging="360"/>
+      </w:pPr>
+      <w:rPr>
+        <w:rFonts w:hint="default"/>
+        <w:sz w:val="24"/>
+      </w:rPr>
+    </w:lvl>
+    <w:lvl w:ilvl="1">
+      <w:start w:val="1"/>
+      <w:numFmt w:val="lowerLetter"/>
+      <w:lvlText w:val="%2)"/>
+      <w:lvlJc w:val="left"/>
+      <w:pPr>
+        <w:ind w:left="720" w:hanging="360"/>
+      </w:pPr>
+      <w:rPr>
+        <w:rFonts w:hint="default"/>
+        <w:sz w:val="24"/>
+      </w:rPr>
+    </w:lvl>
+  </w:abstractNum>
   <w:num w:numId="1">
     <w:abstractNumId w:val="1"/>
   </w:num>
@@ -491,5 +523,8 @@
   </w:num>
   <w:num w:numId="6">
     <w:abstractNumId w:val="5"/>
+  </w:num>
+  <w:num w:numId="7">
+    <w:abstractNumId w:val="6"/>
   </w:num>
 </w:numbering>
