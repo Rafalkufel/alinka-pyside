@@ -31,6 +31,55 @@ from alinka.widget.components import (
 from .member_dialog import MemberDialog
 
 
+MEMBER_LIST_VIEW_STYLESHEET = """
+    QListView {
+        outline: none;
+        background-color: white;
+    }
+    QListView[validationState="valid"] {
+        border: 2px solid #10b981;
+    }
+    QListView[validationState="invalid"] {
+        border: 2px solid #ef4444;
+    }
+    QListView::item {
+        padding: 8px;
+        padding-left: 12px;
+        border-bottom: 1px solid #e2e8f0;
+        min-height: 28px;
+    }
+    QListView::item {
+        background-color: white;
+    }
+    QListView::item:alternate {
+        background-color: #f9fafb;
+    }
+    QListView::item:hover {
+        background-color: #f3f4f6;
+    }
+    QListView::indicator {
+        width: 22px;
+        height: 22px;
+        border: 2px solid #64748b;
+        border-radius: 3px;
+        background-color: white;
+        margin-right: 8px;
+    }
+    QListView::indicator:hover {
+        border: 2px solid #10b981;
+        background-color: white;
+    }
+    QListView::indicator:checked {
+        background-color: white;
+        border: 2px solid #10b981;
+    }
+    QListView::indicator:checked:hover {
+        background-color: white;
+        border: 2px solid #059669;
+    }
+"""
+
+
 class MeetingDatetimeFrame(ValidationMixin, QFrame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -182,49 +231,7 @@ class MeetingMemberGroup(ValidationMixin, QGroupBox):
         self.listView.setUniformItemSizes(True)
 
         # Add visible borders and styling
-        self.listView.setStyleSheet(
-            """
-            QListView {
-                outline: none;
-                background-color: white;
-            }
-            QListView::item {
-                padding: 8px;
-                padding-left: 12px;
-                border-bottom: 1px solid #e2e8f0;
-                min-height: 28px;
-            }
-            QListView::item {
-                background-color: white;
-            }
-            QListView::item:alternate {
-                background-color: #f9fafb;
-            }
-            QListView::item:hover {
-                background-color: #f3f4f6;
-            }
-            QListView::indicator {
-                width: 22px;
-                height: 22px;
-                border: 2px solid #64748b;
-                border-radius: 3px;
-                background-color: white;
-                margin-right: 8px;
-            }
-            QListView::indicator:hover {
-                border: 2px solid #10b981;
-                background-color: white;
-            }
-            QListView::indicator:checked {
-                background-color: white;
-                border: 2px solid #10b981;
-            }
-            QListView::indicator:checked:hover {
-                background-color: white;
-                border: 2px solid #059669;
-            }
-        """
-        )
+        self.listView.setStyleSheet(MEMBER_LIST_VIEW_STYLESHEET)
 
         # Set reasonable height for up to 7 team members
         self.listView.setMinimumHeight(80)
@@ -303,9 +310,6 @@ class MeetingMemberGroup(ValidationMixin, QGroupBox):
         self.listView.setProperty("validationState", state)
         self.listView.style().unpolish(self.listView)
         self.listView.style().polish(self.listView)
-
-        style = "" if validation_result else "border: 1px solid red;"
-        self.listView.setStyleSheet(style)
 
         if validation_result:
             self.error_label.setVisible(False)
