@@ -3,7 +3,6 @@ from PySide6.QtGui import QStandardItem, QStandardItemModel
 from PySide6.QtWidgets import (
     QDialog,
     QFrame,
-    QGroupBox,
     QHBoxLayout,
     QLabel,
     QListView,
@@ -123,7 +122,7 @@ class HandleMemberFrame(ValidationMixin, QFrame):
     def __init__(self, parent: QWidget):
         super().__init__(parent)
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(10, 8, 10, 8)
+        layout.setContentsMargins(0, 8, 0, 8)
         layout.setSpacing(8)
 
         self.show_new_member_inputs_btn = QPushButton("Dodaj", self)
@@ -202,17 +201,21 @@ class HandleMemberFrame(ValidationMixin, QFrame):
         return get_meeting_member_by_id(selected_members_id[0])
 
 
-class MeetingMemberGroup(ValidationMixin, QGroupBox):
+class MeetingMemberGroup(ValidationMixin, QFrame):
     # signal emitted when the selection changes
     # it should result in updating the meeting leader combobox
     selection_changed = Signal()
 
     def __init__(self, title: str, parent: QWidget):
-        super().__init__(title=title, parent=parent)
+        super().__init__(parent=parent)
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignTop)
-        layout.setContentsMargins(10, 5, 10, 5)
-        layout.setSpacing(5)
+        layout.setContentsMargins(12, 8, 12, 8)
+        layout.setSpacing(8)
+
+        title_label = QLabel(text=title, parent=self)
+        title_label.setStyleSheet("font-weight: 600; color: #000000; font-size: 13px;")
+        layout.addWidget(title_label)
 
         self.model = QStandardItemModel()
         self.model.itemChanged.connect(self.item_changed)
@@ -245,9 +248,9 @@ class MeetingMemberGroup(ValidationMixin, QGroupBox):
         self.error_label = QLabel("", self)
         self.error_label.setStyleSheet("color: red; font-size: 12px;")
         self.error_label.setVisible(False)
-        layout.addWidget(self.error_label)
 
         layout.addWidget(self.listView, 0)
+        layout.addWidget(self.error_label)
         layout.addWidget(self.handle_member_frame)
 
     @property
