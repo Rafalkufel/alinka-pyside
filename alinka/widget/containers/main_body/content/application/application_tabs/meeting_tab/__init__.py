@@ -29,7 +29,6 @@ from alinka.widget.components import (
 
 from .member_dialog import MemberDialog
 
-
 MEMBER_LIST_VIEW_STYLESHEET = """
     QListView {
         outline: none;
