@@ -124,20 +124,7 @@
         <w:footnoteReference w:id="3"/>
       </w:r>
       <w:r>
-        <w:t xml:space="preserve"> oraz adres ich zamieszkania)</w:t>
-      </w:r>
-    </w:p>
-    <w:p>
-      <w:pPr>
-        <w:rPr>
-          <w:rFonts w:cs="Times New Roman"/>
-          <w:sz w:val="18"/>
-          <w:szCs w:val="16"/>
-          <w:lang w:val="pl-PL"/>
-        </w:rPr>
-      </w:pPr>
-      <w:r>
-        <w:br w:type="page"/>
+        <w:t xml:space="preserve"> oraz adres albo adresy ich zamieszkania)</w:t>
       </w:r>
     </w:p>
     <w:p>
@@ -150,7 +137,7 @@
         <w:pStyle w:val="time-span"/>
       </w:pPr>
       <w:r>
-        <w:t>w okresie do dnia</w:t>
+        <w:t>na okres</w:t>
       </w:r>
       <w:r>
         <w:rPr>
@@ -173,6 +160,19 @@
       </w:pPr>
       <w:r>
         <w:t>ze względu na niepełnosprawność intelektualną w stopniu głębokim.</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:cs="Times New Roman"/>
+          <w:sz w:val="18"/>
+          <w:szCs w:val="16"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:br w:type="page"/>
       </w:r>
     </w:p>
     {% with diagnosis_header="zespół orzekający przedstawia diagnozę funkcjonowania dziecka, z uwzględnieniem potencjału rozwojowego, mocnych stron dziecka oraz występujących w środowisku nauczania i wychowania barier i ograniczeń utrudniających jego funkcjonowanie:" %}"
