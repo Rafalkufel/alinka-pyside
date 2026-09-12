@@ -175,6 +175,7 @@
         <w:br w:type="page"/>
       </w:r>
     </w:p>
+
 <!-- Diagnosis -->
 
     <w:p>
@@ -286,7 +287,22 @@
     {% with recommendation="konieczność zapewnienia sprzętu specjalistycznego i środków dydaktycznych, niezbędnych w realizacji zajęć rewalidacyjno-wychowawczych:", level=0, dotted_line=True %}
       {% include "template_parts/recommendation_indywidualne.xml" %}
     {% endwith %}
-    {% include "template_parts/aac_information.xml" %}
+
+<!-- Additional informations -->
+
+    {% include "template_parts/additional_information_header.xml" %}
+    {% with additional_information_text="Dziecko posługuje się wspomagającą lub alternatywną metodą komunikacji (AAC) lub językiem migowym: TAK/NIE", additional_information_footnote_id=6 %}
+      {% include "template_parts/additional_information_first_item.xml" %}
+    {% endwith %}
+    {% with additional_information_text="Informacje o sprzęcie specjalistycznym i środkach dydaktycznych, z których korzysta dziecko:" %}
+      {% include "template_parts/additional_information_item.xml" %}
+    {% endwith %}
+    {% with additional_information_text="Inne:" %}
+      {% include "template_parts/additional_information_item.xml" %}
+    {% endwith %}
+
+<!-- New decision -->
+
     <w:p>
       <w:pPr>
         <w:pStyle w:val="newdocumentreason"/>
@@ -320,6 +336,9 @@
         <w:t>Opis</w:t>
       </w:r>
     </w:p>
+
+<!-- Revocation -->
+
     <w:p>
       <w:pPr>
         <w:pStyle w:val="Revocation"/>
@@ -362,6 +381,9 @@
         <w:t xml:space="preserve"> 2) orzeczenie nr ...... o potrzebie kształcenia specjalnego z dnia ........wydane przez ...................</w:t>
       </w:r>
     </w:p>
+
+<!-- appeal -->
+
   {% include "template_parts/appeal.xml" %}
   {% include "template_parts/director_signature.xml" %}
   {% include "template_parts/recipients.xml" %}
