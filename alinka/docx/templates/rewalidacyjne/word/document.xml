@@ -414,6 +414,22 @@
 <!-- appeal -->
 
   {% include "template_parts/appeal.xml" %}
-  {% include "template_parts/director_signature.xml" %}
+    <w:p>
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
+  {% include "template_parts/team_member_signature.xml" %}
+      <w:p>
+      <w:pPr>
+        <w:rPr>
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+    </w:p>
   {% include "template_parts/recipients.xml" %}
 {% endblock %}
