@@ -361,7 +361,36 @@
         <w:pStyle w:val="Revocation"/>
       </w:pPr>
       <w:r>
-        <w:t>1) orzeczenie nr ...... o potrzebie zajęć rewalidacyjno-wychowawczych zespołowych/indywidualnych</w:t>
+        <w:t xml:space="preserve">1) orzeczenie nr ...... o potrzebie zajęć rewalidacyjno-wychowawczych </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          {% if activity_form == "indywidualne" %}
+          <w:strike/>
+          {% endif %}
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t>zespołowych</w:t>
+      </w:r>
+      <w:r>
+        <w:t>/</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          {% if activity_form == "zespolowe" %}
+          <w:strike/>
+          {% endif %}
+          <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t>indywidualnych</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:strike w:val="0"/>
+        </w:rPr>
+        <w:t/>
       </w:r>
       <w:r>
         <w:rPr>
