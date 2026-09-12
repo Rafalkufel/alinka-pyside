@@ -223,4 +223,26 @@
       </w:r>
     </w:p>
   </w:footnote>
+  <w:footnote w:id="10">
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Footnote"/>
+        <w:rPr>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="Odwoanieprzypisudolnego"/>
+        </w:rPr>
+        <w:footnoteRef/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:lang w:val="pl-PL"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> Wnioskodawca określony zgodnie z § 6 ust. 1 pkt 12 rozporządzenia Ministra Edukacji z dnia … w sprawie orzeczeń i opinii wydawanych przez zespoły orzekające działające w publicznych poradniach psychologiczno-pedagogicznych; drugi z wnioskodawców zachowuje prawo do otrzymania kopii orzeczenia potwierdzonej za zgodność z oryginałem.</w:t>
+      </w:r>
+    </w:p>
+  </w:footnote>
 </w:footnotes>

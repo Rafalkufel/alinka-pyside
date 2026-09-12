@@ -431,5 +431,5 @@
         </w:rPr>
       </w:pPr>
     </w:p>
-  {% include "template_parts/recipients.xml" %}
+  {% include "template_parts/recipients_rewalidacyjne.xml" %}
 {% endblock %}
